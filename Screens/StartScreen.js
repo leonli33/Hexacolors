@@ -2,11 +2,11 @@ import React, {Component} from 'react'
 import {View, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 import Colors from '../Constants/Colors'
 
-class StartScreen extends Component {
+class StartScreen extends Component  {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.playButton}>
+                <TouchableOpacity style={styles.playButton} onPress={() => {this.props.navigation.navigate("Levels")}}>
                     <Image style={styles.playButtonImage} source={require('../Icons/play.png')}></Image>
                 </TouchableOpacity>
 

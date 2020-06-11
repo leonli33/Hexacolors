@@ -3,5 +3,5 @@ export default {
     tropicalYellow: '#FFD54D',
     tropicalGreen: '#99BE1B',
     tropicalBlue: '#4E78D7',
-    buttonBackground: '#F6E5DF'
+    buttonBackground: '#F6E5DF',
 }
