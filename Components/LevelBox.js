@@ -1,5 +1,5 @@
 import React, {Component, useDebugValue} from 'react'
-import {StyleSheet, View, Text, Dimensions, TouchableWithoutFeedback} from 'react-native'
+import {StyleSheet, View, Text, Dimensions, TouchableWithoutFeedback, Image} from 'react-native'
 import Colors from '../Constants/Colors'
 
 class LevelBox extends Component {
@@ -26,10 +26,12 @@ class LevelBox extends Component {
             bottomHalf: {
                 width: topHalfWidth,
                 height: bottomHalfHeight,
-                backgroundColor: Colors.tropicalBlue,
+                backgroundColor: '#B3B3B3',
                 marginLeft: '5%',
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
+                justifyContent: 'center',
+                alignItems: "center"
             },
             shadowAround: {
                 shadowColor: 'black',
@@ -48,7 +50,7 @@ class LevelBox extends Component {
                         <Text>{this.props.level}</Text>
                     </View>
                     <View style={styles.bottomHalf}>
-                        <Text></Text>
+                        <Image source={require('../Icons/lock.png')}></Image>
                     </View> 
                 </View>
             </TouchableWithoutFeedback>

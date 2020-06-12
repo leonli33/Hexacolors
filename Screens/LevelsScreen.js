@@ -11,7 +11,7 @@ class LevelsScreen extends Component {
 
     constructor() {
         super();
-        const colors = []
+        const colors = [];
         for(let i = 0; i < 10; i++) {
             let colorArr = [];
             for(let j = 0; j < 3; j++) {
@@ -27,13 +27,12 @@ class LevelsScreen extends Component {
     render() {
         return(
             <ScrollView style={styles.container}>
-                <View ></View>
                 {this.state.colorList.map((row, rowIndex) => {
                         return (
-                           <View key={rowIndex + 30} style={styles.row}>
+                           <View key={rowIndex + 31} style={styles.row}>
                                 {row.map((color, index) => {
                                     return (
-                                        <LevelBox nagivateTo={this.navigateTo} level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}></LevelBox>
+                                        <LevelBox hexColor={color} nagivateTo={this.navigateTo} level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}></LevelBox>
                                     );
                                 })}
                             </View> 
