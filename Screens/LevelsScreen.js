@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {StyleSheet, View, ScrollView} from 'react-native'
 import LevelBox from '../Components/LevelBox'
 import { color } from 'react-native-reanimated';
+import Colors from '../Constants/Colors'
 
 class LevelsScreen extends Component {
 
@@ -32,7 +33,9 @@ class LevelsScreen extends Component {
                            <View key={rowIndex + 31} style={styles.row}>
                                 {row.map((color, index) => {
                                     return (
-                                        <LevelBox hexColor={color} nagivateTo={this.navigateTo} level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}></LevelBox>
+                                        <LevelBox hexColor={color} nagivateTo={this.navigateTo} 
+                                            level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}>
+                                        </LevelBox>
                                     );
                                 })}
                             </View> 
@@ -48,7 +51,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        marginBottom: '5%'
+        marginBottom: '5%',
+        backgroundColor: Colors.backgroundCol
     },  
     row: {
         flexDirection: 'row',
