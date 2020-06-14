@@ -7,6 +7,7 @@ class ColorBox extends Component {
         const {width, height} = Dimensions.get('window');
         const boxSize = Math.round(width * (2/5));
         const sizeOfFont = Math.round(height / 33);
+        const color = "";
 
         const styles = StyleSheet.create({
             box: {
@@ -14,7 +15,8 @@ class ColorBox extends Component {
                 height: boxSize,
                 backgroundColor: '#000',
                 marginTop: '5%',
-                borderRadius: 10
+                borderRadius: 10,
+                borderWidth: 1
             },
             container:{
                 alignItems: 'center'
@@ -26,9 +28,9 @@ class ColorBox extends Component {
         })
         return (
             <View style={styles.container}>
-                <Text style={styles.boxTitle}>Target Color</Text>
-                <View style={styles.box}/>
-                <Text style={{...styles.boxTitle, marginTop: '5%'}}>#FAB006</Text>
+                <Text style={styles.boxTitle}>{this.props.title}</Text>
+                <View style={{...styles.box, backgroundColor: this.props.color}}/>
+                <Text style={{...styles.boxTitle, marginTop: '5%'}}>{this.props.color}</Text>
             </View>
             
         )
