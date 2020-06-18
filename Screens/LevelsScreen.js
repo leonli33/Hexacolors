@@ -3,17 +3,22 @@ import {StyleSheet, View, ScrollView} from 'react-native'
 import LevelBox from '../Components/LevelBox'
 import { color } from 'react-native-reanimated';
 import Colors from '../Constants/Colors'
+import {connect} from 'react-redux'
+import {ResetColors} from '../Redux/Actions'
 
 class LevelsScreen extends Component {
 
-    navigateTo = () => {
-        this.props.navigation.navigate("Game");
+    navigateTo = (levelID) => {
+        this.props.navigation.navigate("Game", {
+            level: levelID
+        });
+        this.props.ResetColors();
     }
 
     constructor() {
         super();
         const colors = [];
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < 7; i++) {
             let colorArr = [];
             for(let j = 0; j < 3; j++) {
                 colorArr.push(i)
@@ -30,11 +35,11 @@ class LevelsScreen extends Component {
             <ScrollView style={styles.container}>
                 {this.state.colorList.map((row, rowIndex) => {
                         return (
-                           <View key={rowIndex + 31} style={styles.row}>
+                           <View key={rowIndex + 21} style={styles.row}>
                                 {row.map((color, index) => {
                                     return (
                                         <LevelBox hexColor={color} nagivateTo={this.navigateTo} 
-                                            level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}>
+                                            targetColor={this.props.levelColorAnswer[(rowIndex * 3) + index + 1]} level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}>
                                         </LevelBox>
                                     );
                                 })}
@@ -60,4 +65,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LevelsScreen;
+function mapStateToProps(state) {
+    return {
+        colorElements: state.levelColors,
+        color: state.currentLevelUserHexCode,
+        colors: state.colorsChosenSoFar,
+        currentColorsChosen: state.colorsChosenSoFar,
+        levelColorAnswer: state.levelAnswer
+    }
+}
+
+export default connect(mapStateToProps, {ResetColors})(LevelsScreen);

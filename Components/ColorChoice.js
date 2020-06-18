@@ -20,11 +20,10 @@ class ColorChoice extends Component {
             container: {
                 shadowColor: 'black',
                 shadowOffset: {width:0, height:1},
-                shadowOpacity: 0.5,
+                shadowOpacity: 0.4,
                 shadowRadius: 4,
                 elevation: 5,
                 marginBottom: Math.round(width / 20),
-
             },
             hex: {
                 marginLeft: Math.round(colorWidth / 10),
@@ -32,10 +31,14 @@ class ColorChoice extends Component {
             }
         
         })
+        let shaded = <View></View>;
+        if(this.props.colorsChosen.includes(this.props.color)) shaded = <View style={{...styles.color, backgroundColor: 'black', opacity: 0.6, borderWidth: 0 }}/>
         return (
             <TouchableWithoutFeedback onPress={() => this.props.onColorPress(this.props.color)} >
                 <View style={styles.container}>
-                    <View style={{...styles.color, backgroundColor: this.props.color}}/>
+                    <View style={{...styles.color, backgroundColor: this.props.color}}>
+                        {shaded}
+                    </View>
                     <Text style={styles.hex}>{this.props.color}</Text> 
                 </View>
             </TouchableWithoutFeedback>

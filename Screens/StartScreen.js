@@ -54,7 +54,6 @@ class StartScreen extends Component  {
                 <TouchableOpacity style={styles.playButton} onPress={() => {this.props.navigation.navigate("Levels")}}>
                     <Image style={styles.playButtonImage} source={require('../Icons/play.png')}></Image>
                 </TouchableOpacity>
-
                 <TouchableOpacity style={styles.infoButton}>
                     <Image style={styles.playButtonImage} source={require('../Icons/info.png')}></Image>
                 </TouchableOpacity>

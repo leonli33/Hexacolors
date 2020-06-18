@@ -10,12 +10,20 @@ class LevelBox extends Component {
         const topHalfWidth = Math.round(dimensions.width * (1/4));
         const bottomHalfHeight = Math.round(dimensions.height * (1/7))
 
+        let color = Colors.buttonBackground;
+        if(this.props.level > 10 && this.props.level < 19){
+            color = Colors.tropicalBlue
+        } else if(this.props.level >= 19) {
+            color = Colors.tropicalRed
+        }
+
+
         const styles = StyleSheet.create({
             topHalf: {
                 width: topHalfWidth,
                 height: topHalfHeight,
                 borderColor: 'black',
-                backgroundColor: Colors.buttonBackground,
+                backgroundColor: color,
                 borderTopEndRadius: 10,
                 borderTopLeftRadius: 10,
                 marginLeft: '5%',
@@ -44,7 +52,7 @@ class LevelBox extends Component {
         })
 
         return (
-            <TouchableWithoutFeedback onPress={this.props.nagivateTo}>
+            <TouchableWithoutFeedback onPress={() => this.props.nagivateTo(this.props.level)}>
                 <View style={styles.shadowAround}>
                    <View style={styles.topHalf}>
                         <Text>{this.props.level}</Text>

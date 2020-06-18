@@ -4,10 +4,11 @@ import ColorBox from '../Components/ColorBox'
 import ColorChoice from '../Components/ColorChoice'
 import Colors from '../Constants/Colors'
 import {connect} from 'react-redux'
+import {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors} from '../Redux/Actions'
+import Hint from '../Components/Hint'
 
 
 class GameScreen extends Component {
-
     constructor(props) {
         super(props)
         this.state = {
@@ -16,6 +17,7 @@ class GameScreen extends Component {
         }
     }
 
+    // Thanks to https://github.com/GirkovArpa/hex-color-mixer for the color mixing algorithm!
     hex2dec = (hex) => {
         hex = "" + hex
         return hex.replace('#', '').match(/.{2}/g).map(n => parseInt(n, 16));
@@ -70,35 +72,40 @@ class GameScreen extends Component {
     }
 
     handleColorSelected = (color) => {
-        if(this.state.colors.length === 0) {
-            let newColors = this.state.colors
-            newColors.push(color);
-            this.setState({
-                color: color,
-                colors: newColors
-            })
+        if(this.props.currentColorsChosen.includes(color)) {
+            this.props.RemoveUserChosenColor(color);
+            if(this.props.colors.length === 0) {
+                this.props.ResetColors();
+            } else {
+                let newColor = this.mix_hexes(this.props.colors).toUpperCase();
+                this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: newColor, currentColorsChosen: this.props.colors})
+            }
+            
         } else {
-            let newColors = this.state.colors
-            newColors.push(color);
-            let newColor = this.mix_hexes(newColors).toUpperCase();
-            this.setState({
-                color: newColor,
-                colors: newColors
-            })
+            this.props.AddUserChosenColor(color)
+            if(this.props.colors.length === 0) {
+                this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: color, currentColorsChosen: this.props.colors})
+            } else {
+                let newColor = this.mix_hexes(this.props.colors).toUpperCase();
+                this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: newColor, currentColorsChosen: this.props.colors})
+            }
         }
     }
 
     render() {
         const {width, height} = Dimensions.get('window')
-        const colorWidth = Math.round(width / 5);
-
+        const level = this.props.route.params;
+        console.log(level)
         return(
             <View style={{backgroundColor: Colors.backgroundCol}}>
                 <View style={styles.colorboxes}>
-                    <ColorBox title={"Target Color"} color={'black'}></ColorBox>
-                    <ColorBox title={"Current Color"} color={this.state.color}></ColorBox>
+                    <ColorBox title={"Target Color"} color={this.props.levelColors[level.level]}></ColorBox>
+                    <ColorBox title={"Current Color"} color={this.props.color}></ColorBox>
                 </View>
-                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '25%', height:'65%',
+                <View style={{flexDirection: 'row', marginTop: '15%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                    <Hint></Hint>
+                </View>
+                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'65%',
                                 shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
                                 elevation: 5, justifyContent:'center',}}>
                     <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>Choose 3 Colors</Text>
@@ -110,7 +117,8 @@ class GameScreen extends Component {
                                 <View key={arrIndex + 12}>
                                     {elementArr.map((color, index) => {
                                         return (
-                                            <ColorChoice onColorPress={this.handleColorSelected} color={color} key={index + arrIndex}></ColorChoice>
+                                            <ColorChoice colorsChosen={this.props.currentColorsChosen} onColorPress={this.handleColorSelected} 
+                                                        color={color} index={index + (2 * arrIndex)} key={index + arrIndex}></ColorChoice>
                                         )
                                     })}
                                 </View>
@@ -118,7 +126,6 @@ class GameScreen extends Component {
                         })}
                     </ScrollView>
                 </View>
-                
             </View>
         )
     }
@@ -132,14 +139,18 @@ const styles = StyleSheet.create({
     scroll: {   
         marginLeft: '2.5%',
         marginTop: '4%',
-        paddingTop: 4
+        padding: 6
     }
 })
 
 function mapStateToProps(state) {
     return {
-        colorElements: state.levelColors
+        colorElements: state.levelColors,
+        color: state.currentLevelUserHexCode,
+        colors: state.colorsChosenSoFar,
+        currentColorsChosen: state.colorsChosenSoFar,
+        levelColors: state.levelAnswer
     }
 }
 
-export default connect(mapStateToProps)(GameScreen);
+export default connect(mapStateToProps, {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors})(GameScreen);
