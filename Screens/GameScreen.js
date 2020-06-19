@@ -113,7 +113,7 @@ class GameScreen extends Component {
         let hints = <View style={{flexDirection: 'row', marginTop:'30%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                     </View>
-        if(level > 10 && level < 18) {
+        if(level >= 10 && level < 18) {
             hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                         <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
@@ -144,8 +144,9 @@ class GameScreen extends Component {
                                 <View key={arrIndex + 12}>
                                     {elementArr.map((color, index) => {
                                         return (
-                                            <ColorChoice colorsChosen={this.props.currentColorsChosen} currentLevel={level} hint1={this.state.hint1} onColorPress={this.handleColorSelected} 
-                                                        color={color} index={index + (2 * arrIndex)} key={index + arrIndex}></ColorChoice>
+                                            <ColorChoice hint1Activated={this.state.hint1} hint2Activated={this.state.hint2} hint3Activated={this.state.hint3} hints1={this.props.hints1[level]} 
+                                                         colorsChosen={this.props.currentColorsChosen} currentLevel={level} hint1={this.state.hint1} onColorPress={this.handleColorSelected} 
+                                                         hints2={this.props.hints2[level]} color={color} index={index + (2 * arrIndex)} key={index + arrIndex}></ColorChoice>
                                         )
                                     })}
                                 </View>
@@ -179,7 +180,9 @@ function mapStateToProps(state) {
         color: state.currentLevelUserHexCode,
         colors: state.colorsChosenSoFar,
         currentColorsChosen: state.colorsChosenSoFar,
-        levelColors: state.levelAnswer
+        levelColors: state.levelAnswer,
+        hints1: state.levelHint1,
+        hints2: state.levelHint2
     }
 }
 

@@ -4,7 +4,6 @@ import Colors from '../Constants/Colors'
 
 class LevelBox extends Component {
 
-    
     render() {
         const dimensions = Dimensions.get('window');
         const topHalfHeight = Math.round(dimensions.height / 20);
@@ -12,7 +11,7 @@ class LevelBox extends Component {
         const bottomHalfHeight = Math.round(dimensions.height * (1/7))
 
         let color = Colors.buttonBackground;
-        if(this.props.level > 10 && this.props.level < 18){
+        if(this.props.level >= 10 && this.props.level < 18){
             color = Colors.tropicalBlue
         } else if(this.props.level >= 18) {
             color = Colors.tropicalRed
@@ -30,7 +29,8 @@ class LevelBox extends Component {
                 marginLeft: '5%',
                 marginTop: '10%',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                elevation: 5
             },
             bottomHalf: {
                 width: topHalfWidth,
@@ -40,14 +40,14 @@ class LevelBox extends Component {
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
                 justifyContent: 'center',
-                alignItems: "center"
+                alignItems: "center",
+                elevation: 5
             },
             shadowAround: {
                 shadowColor: 'black',
                 shadowOffset: {width:0, height:1},
                 shadowOpacity: 0.26,
                 shadowRadius: 5,
-                elevation: 5,
                 marginTop: '8%',
             }
         })
