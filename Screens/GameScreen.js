@@ -14,7 +14,7 @@ class GameScreen extends Component {
         this.state = {
             hint1: false,
             hint2: false,
-            hint3: false
+            hint3: false,
         }
     }
 
@@ -110,20 +110,31 @@ class GameScreen extends Component {
 
     render() {
         const {level} = this.props.route.params;
-        let hints = <View style={{flexDirection: 'row', marginTop:'30%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+        let hints = <View style={{flexDirection: 'row', marginTop:'35%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                     </View>
         if(level >= 10 && level < 18) {
-            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+            hints = <View style={{flexDirection: 'row', marginTop:'35%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                         <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
                     </View>
         } else if(level >= 18) {
-            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+            hints = <View style={{flexDirection: 'row', marginTop:'35%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                         <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
                         <Hint number={3} handlePress={this.onHintPress3} selected={this.state.hint3}></Hint>
                     </View>
+        }
+        // cant setState in render
+        let selectedText = ""
+        let numberOfColors = this.props.numColors[level];
+        if(numberOfColors === 1) {
+            selectedText= "Select 1 Color"
+        } else if(numberOfColors !== 5) {
+            selectedText =  "Select " + numberOfColors + " Color"
+        }
+        if(this.state.hint3) {
+            selectedText =  "Select " + numberOfColors + " Colors"
         }
         return(
             <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
@@ -132,10 +143,10 @@ class GameScreen extends Component {
                     <ColorBox title={"Current Color"} color={this.props.color}></ColorBox>
                 </View>
                 {hints}
-                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'45%',
+                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'100%',
                                 shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
                                 elevation: 5, justifyContent:'center',}}>
-                    <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>Choose 3 Colors</Text>
+                    <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>{selectedText}</Text>
                     <ScrollView showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={false} disableIntervalMomentum={true} 
                                 directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
                             >
@@ -170,7 +181,8 @@ const styles = StyleSheet.create({
         marginLeft: '2.5%',
         padding: 6,
         width:'100%',
-        height: '30%'
+        height: '30%',
+        marginTop:'3%'
     }
 })
 
@@ -182,7 +194,8 @@ function mapStateToProps(state) {
         currentColorsChosen: state.colorsChosenSoFar,
         levelColors: state.levelAnswer,
         hints1: state.levelHint1,
-        hints2: state.levelHint2
+        hints2: state.levelHint2,
+        numColors: state.numColors
     }
 }
 

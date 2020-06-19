@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
-import {View, StyleSheet, Dimensions, Text} from 'react-native'
+import {View, StyleSheet, Dimensions, Text, Animated} from 'react-native'
 
 class ColorBox extends Component {
+
+    componentWillMount() {
+        this.colorBoxAnimation = new Animated.Value(0)
+    }
+
+    componentDidMount() {
+        Animated.timing(this.colorBoxAnimation, {
+            toValue: 150,
+            duration: 1500
+        }).start();
+    }
 
     render() {
         const {width, height} = Dimensions.get('window');
@@ -9,12 +20,18 @@ class ColorBox extends Component {
         const sizeOfFont = Math.round(height / 33);
 
         let backColor = this.props.color === "" ? "lavender" : this.props.color;
+        /*
+        const interpolateColor = this.colorBoxAnimation.interpolate({
+            inputRange: [0, 150],
+            outputRange: ['#fff', this.props.color]
+        })
+        */
 
         const styles = StyleSheet.create({
             box: {
                 width: '45%',
                 height: '100%',
-                backgroundColor: '#000',
+                backgroundColor: "#000",
                 marginTop: '2%',
                 borderRadius: 10,
                 borderWidth: 1

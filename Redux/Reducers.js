@@ -36,6 +36,7 @@ const currentState = {
     levelHint2:[[], [], [], [], [], [], [], [], [], [], ["#34A853", "#00ECFA"], ["#FFC6E3", "#00ECFA"], 
                 ["#EA4335", "#F8712E"], ["#EA4335", "#181762"], ["#EA4335"], ["#00ECFA"], ["#181762"],
                 ["#FBBC05"], ["#696969"]],
+    numColors:[0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 5],
         
     // current level that the user is playing
     currentLevel: 0,

@@ -17,7 +17,6 @@ class LevelBox extends Component {
             color = Colors.tropicalRed
         }
 
-
         const styles = StyleSheet.create({
             topHalf: {
                 width: topHalfWidth,
