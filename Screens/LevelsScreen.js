@@ -18,7 +18,7 @@ class LevelsScreen extends Component {
     constructor() {
         super();
         const colors = [];
-        for(let i = 0; i < 7; i++) {
+        for(let i = 0; i < 6; i++) {
             let colorArr = [];
             for(let j = 0; j < 3; j++) {
                 colorArr.push(i)

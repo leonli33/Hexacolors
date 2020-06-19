@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Dimensions, TouchableWithoutFeedback, Image} fro
 import Colors from '../Constants/Colors'
 
 class LevelBox extends Component {
+
     
     render() {
         const dimensions = Dimensions.get('window');
@@ -11,9 +12,9 @@ class LevelBox extends Component {
         const bottomHalfHeight = Math.round(dimensions.height * (1/7))
 
         let color = Colors.buttonBackground;
-        if(this.props.level > 10 && this.props.level < 19){
+        if(this.props.level > 10 && this.props.level < 18){
             color = Colors.tropicalBlue
-        } else if(this.props.level >= 19) {
+        } else if(this.props.level >= 18) {
             color = Colors.tropicalRed
         }
 
@@ -47,7 +48,7 @@ class LevelBox extends Component {
                 shadowOpacity: 0.26,
                 shadowRadius: 5,
                 elevation: 5,
-                marginTop: '8%'
+                marginTop: '8%',
             }
         })
 

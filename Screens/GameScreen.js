@@ -12,9 +12,26 @@ class GameScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            colors: [],
-            color: ''
+            hint1: false,
+            hint2: false,
+            hint3: false
         }
+    }
+
+    onHintPress1 = () => {
+        this.setState({
+            hint1: !this.state.hint1
+        })
+    }
+    onHintPress2 =() => {
+        this.setState({
+            hint2: !this.state.hint2
+        })
+    }
+    onHintPress3 =() => {
+        this.setState({
+            hint3: !this.state.hint3
+        })
     }
 
     // Thanks to https://github.com/GirkovArpa/hex-color-mixer for the color mixing algorithm!
@@ -80,7 +97,6 @@ class GameScreen extends Component {
                 let newColor = this.mix_hexes(this.props.colors).toUpperCase();
                 this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: newColor, currentColorsChosen: this.props.colors})
             }
-            
         } else {
             this.props.AddUserChosenColor(color)
             if(this.props.colors.length === 0) {
@@ -93,31 +109,42 @@ class GameScreen extends Component {
     }
 
     render() {
-        const {width, height} = Dimensions.get('window')
-        const level = this.props.route.params;
-        console.log(level)
+        const {level} = this.props.route.params;
+        let hints = <View style={{flexDirection: 'row', marginTop:'30%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
+                    </View>
+        if(level > 10 && level < 18) {
+            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
+                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
+                    </View>
+        } else if(level >= 18) {
+            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
+                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
+                        <Hint number={3} handlePress={this.onHintPress3} selected={this.state.hint3}></Hint>
+                    </View>
+        }
         return(
-            <View style={{backgroundColor: Colors.backgroundCol}}>
+            <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
                 <View style={styles.colorboxes}>
-                    <ColorBox title={"Target Color"} color={this.props.levelColors[level.level]}></ColorBox>
+                    <ColorBox title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
                     <ColorBox title={"Current Color"} color={this.props.color}></ColorBox>
                 </View>
-                <View style={{flexDirection: 'row', marginTop: '15%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
-                    <Hint></Hint>
-                </View>
-                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'65%',
+                {hints}
+                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'45%',
                                 shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
                                 elevation: 5, justifyContent:'center',}}>
                     <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>Choose 3 Colors</Text>
                     <ScrollView showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={false} disableIntervalMomentum={true} 
                                 directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
-                                snapToInterval={width - 60}>
+                            >
                         {this.props.colorElements.map((elementArr, arrIndex) => {
                             return (
                                 <View key={arrIndex + 12}>
                                     {elementArr.map((color, index) => {
                                         return (
-                                            <ColorChoice colorsChosen={this.props.currentColorsChosen} onColorPress={this.handleColorSelected} 
+                                            <ColorChoice colorsChosen={this.props.currentColorsChosen} currentLevel={level} hint1={this.state.hint1} onColorPress={this.handleColorSelected} 
                                                         color={color} index={index + (2 * arrIndex)} key={index + arrIndex}></ColorChoice>
                                         )
                                     })}
@@ -135,11 +162,14 @@ const styles = StyleSheet.create({
     colorboxes: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+        width: '100%',
+        height: '30%'
     },
     scroll: {   
         marginLeft: '2.5%',
-        marginTop: '4%',
-        padding: 6
+        padding: 6,
+        width:'100%',
+        height: '30%'
     }
 })
 

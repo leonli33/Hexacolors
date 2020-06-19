@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, TouchableOpacity, Dimensions, StyleSheet, Image} from 'react-native'
 import Colors from '../Constants/Colors'
+import {connect} from 'react-redux'
 
 class StartScreen extends Component  {
     render() {
@@ -61,7 +62,5 @@ class StartScreen extends Component  {
         )
     }
 }
-
-//#001b1b
 
 export default StartScreen;

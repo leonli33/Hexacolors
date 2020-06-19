@@ -7,24 +7,25 @@ class ColorBox extends Component {
         const {width, height} = Dimensions.get('window');
         const boxSize = Math.round(width * (2/5));
         const sizeOfFont = Math.round(height / 33);
-        console.log(this.props.color)
-        let backColor = this.props.color === "" ? "lavender" : this.props.color;
 
+        let backColor = this.props.color === "" ? "lavender" : this.props.color;
 
         const styles = StyleSheet.create({
             box: {
-                width: boxSize,
-                height: boxSize,
+                width: '45%',
+                height: '100%',
                 backgroundColor: '#000',
-                marginTop: '5%',
+                marginTop: '2%',
                 borderRadius: 10,
                 borderWidth: 1
             },
             container:{
                 alignItems: 'center',
+                width: '100%',
+                height: '100%'
             },
             boxTitle: {
-                marginTop: '10%',
+                marginTop: '5%',
                 fontSize: sizeOfFont
             }
         })
@@ -32,7 +33,7 @@ class ColorBox extends Component {
             <View style={styles.container}>
                 <Text style={styles.boxTitle}>{this.props.title}</Text>
                 <View style={{...styles.box, backgroundColor: backColor}}/>
-                <Text style={{...styles.boxTitle, marginTop: '5%'}}>{this.props.color}</Text>
+                <Text style={{...styles.boxTitle, marginTop: '2%'}}>{this.props.color}</Text>
             </View>
             
         )
