@@ -30,6 +30,8 @@ class ColorChoice extends Component {
             }
         
         })
+
+        // Shaded determines if the box has already been pressed by the user
         let shaded = <View></View>;
         if(this.props.colorsChosen.includes(this.props.color)) shaded = <View style={{...styles.color, backgroundColor: 'black', opacity: 0.6, borderWidth: 0 }}/>;
 
@@ -39,6 +41,8 @@ class ColorChoice extends Component {
                                 </View>
                                 <Text style={styles.hex}>{this.props.color}</Text>
                             </View>;
+        
+        // If the current color is included in one of the hints, it should disappear
         let inHint = (this.props.hint1Activated && this.props.hints1.includes(this.props.color)) 
                       || (this.props.hint2Activated && this.props.hints2.includes(this.props.color));
         if(inHint) {
@@ -48,6 +52,7 @@ class ColorChoice extends Component {
                                 <Text style={{...styles.hex, color: Colors.buttonBackground}}>{this.props.color}</Text>
                             </View> 
         }
+        
         return (
             <TouchableWithoutFeedback pointerEvents={inHint ? 'none' : 'auto'} onPress={() => {if(!inHint) this.props.onColorPress(this.props.color)}} >
                 <View style={styles.container}>

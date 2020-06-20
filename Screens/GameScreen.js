@@ -18,6 +18,7 @@ class GameScreen extends Component {
         }
     }
 
+    // Determine which hints have been selected
     onHintPress1 = () => {
         this.setState({
             hint1: !this.state.hint1
@@ -88,20 +89,30 @@ class GameScreen extends Component {
         return mixture_hex;
     }
 
+    // This function handles the logic when a user presses a color
     handleColorSelected = (color) => {
+        // If the set of currently chosen colors includes the color that that
+        // user is pressing, then we know that they want to remove it
         if(this.props.currentColorsChosen.includes(color)) {
+            // Remove the color pressed
             this.props.RemoveUserChosenColor(color);
+            // If there are no more selected colors, reset all the colors
             if(this.props.colors.length === 0) {
                 this.props.ResetColors();
             } else {
+                // Get new colors that results from remaining selected colors
                 let newColor = this.mix_hexes(this.props.colors).toUpperCase();
                 this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: newColor, currentColorsChosen: this.props.colors})
             }
         } else {
+            // User wants to add a color to the mix
             this.props.AddUserChosenColor(color)
             if(this.props.colors.length === 0) {
+                // If there are currently no selected colors, then the color that the user selects is the
+                // color to be displayed
                 this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: color, currentColorsChosen: this.props.colors})
             } else {
+                // Otherwise, mix all of the currently selected colors together and form a new color
                 let newColor = this.mix_hexes(this.props.colors).toUpperCase();
                 this.props.SetCurrentColorAndColorsUsed({currentLevelUserHexCode: newColor, currentColorsChosen: this.props.colors})
             }
@@ -109,7 +120,10 @@ class GameScreen extends Component {
     }
 
     render() {
+        // Level represents the current level in the game we are in
         const {level} = this.props.route.params;
+        // Each level has a particular amont of hints. The following 2 if statements determine
+        // how many hints the user is allowed
         let hints = <View style={{flexDirection: 'row', marginTop:'35%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
                         <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
                     </View>
@@ -125,31 +139,34 @@ class GameScreen extends Component {
                         <Hint number={3} handlePress={this.onHintPress3} selected={this.state.hint3}></Hint>
                     </View>
         }
-        // cant setState in render
+
+        // selectedText tells the user how many colors they need to select in order to beat the level.
+        // This count is determined through the logic below
         let selectedText = ""
         let numberOfColors = this.props.numColors[level];
         if(numberOfColors === 1) {
             selectedText= "Select 1 Color"
         } else if(numberOfColors !== 5) {
-            selectedText =  "Select " + numberOfColors + " Color"
+            selectedText =  "Select " + numberOfColors + " Colors"
         }
         if(this.state.hint3) {
             selectedText =  "Select " + numberOfColors + " Colors"
         }
+
         return(
             <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
                 <View style={styles.colorboxes}>
-                    <ColorBox title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
-                    <ColorBox title={"Current Color"} color={this.props.color}></ColorBox>
+                    <ColorBox lastColor={this.props.previousHexcode} title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
+                    <ColorBox lastColor={this.props.previousHexcode} title={"Current Color"} color={this.props.color}></ColorBox>
                 </View>
                 {hints}
                 <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'100%',
-                                shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
-                                elevation: 5, justifyContent:'center',}}>
+                            shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
+                            elevation: 5, justifyContent:'center',}}>
                     <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>{selectedText}</Text>
                     <ScrollView showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={false} disableIntervalMomentum={true} 
-                                directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
-                            >
+                            directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
+                        >
                         {this.props.colorElements.map((elementArr, arrIndex) => {
                             return (
                                 <View key={arrIndex + 12}>
@@ -195,7 +212,8 @@ function mapStateToProps(state) {
         levelColors: state.levelAnswer,
         hints1: state.levelHint1,
         hints2: state.levelHint2,
-        numColors: state.numColors
+        numColors: state.numColors,
+        previousHexcode: state.lastColorHexcode
     }
 }
 

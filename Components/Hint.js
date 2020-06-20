@@ -12,6 +12,7 @@ class Hint extends Component {
             textColor = "lavender";
             backColor = 'black'
         }
+        
         return (
             <TouchableWithoutFeedback onPress={this.props.handlePress}>
                 <View style={{height: Math.round(width / 12), width: Math.round(width / 5), borderRadius: 10, 
