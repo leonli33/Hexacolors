@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import LevelsScreen from './Screens/LevelsScreen'
 import GameScreen from './Screens/GameScreen'
 import StartScreen from './Screens/StartScreen'
+import ColorMixerWonScreen from './Components/ColorMixerWonScreen'
 import {NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Reducers from './Redux/Reducers'
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name="Home" component={StartScreen}></Stack.Screen>
           <Stack.Screen name="Levels" component={LevelsScreen}></Stack.Screen>
           <Stack.Screen name="Game" component={GameScreen}></Stack.Screen>
+          <Stack.Screen name="ModalWinGame" component={ColorMixerWonScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
       </Provider>

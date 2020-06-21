@@ -12,16 +12,16 @@ const currentState = {
     // Contains an array that has the hexcodes of the colors needed
     levelAnswer: ["placeholder", "#FFC6E3", "#986393", "#9DA07E", "#89B736", "#5682DC", "#FA961A",
                   "#1567AE", "#C34C82", "#6C3C67", "#B88065", "#F47923", "#ADBD69", "#4A94A8",
-                  "#61C871", "#FBA65C", "#887EA7", "#2771C5", "#989E59"],
+                  "#61C871", "#FBA65C", "#887EA7", "#2271C5", "#989E59"],
     // Colors that make up an answer for a given level
     levelComponentsToAnswer: ["placeholer",["#FFC6E3"], ["#EA4335", "#4285F4"], ["#FBBC05", "#4285F4"],
                               ["#FBBC05", "#34A853"], ["#942EBE", "#00ECFA"], ["#FBBC05", "#F8712E"], 
                               ["#00ECFA", "#181762"], ["#942EBE", "#F8712E"], 
-                              ["#F8712E", "#181762"], ["#EA4335", "#FBBC05"," #4285F4"], 
+                              ["#F8712E", "#181762"], ["#EA4335", "#FBBC05","#4285F4"], 
                               ["#EA4335", "#FBBC05", "#F8712E"], ["#FBBC05", "#34A853", "#FFC6E3"], 
                               ["#942EBE", "#34A853", "#00ECFA"], ["#FBBC05","#00ECFA", "#34A853"], 
                               ["#FBBC05", "#F8712E", "#FFC6E3"], ["#F8712E", "#00ECFA", "#942EBE"], 
-                              ["#4285F4", "#00ECFA"," #181762"], 
+                              ["#4285F4", "#00ECFA","#181762"], 
                               ["#EA4335", "#FBBC05", "#34A853", "#F8712E", "#00ECFA"],
                               ],
     // Take out these colors
@@ -29,7 +29,7 @@ const currentState = {
                 ["#FFC6E3", "#F8712E", "#942EBE", "#00ECFA"], ["#EA4335", "#181762", "#942EBE", "#696969"],
                 ["#942EBE", "#00ECFA", "#FFC6E3"], ["#4285F4", "#F8712E", "#34A853", "#696969"],
                 ["#EA4335", "#00ECFA", "#34A853"],["#181762", "#FFC6E3", "#FBBC05"],
-                ["#4285F4", "#34A853", "#F8712E"],["#EA4335", "#34A853", "#181762", "#FFC6E3"],
+                ["#4285F4", "#34A853", "#F8712E"],["#EA4335", "#34A853", "#00ECFA", "#FFC6E3"],
                 ["#F8712E", "#696969", "#942EBE"], ["#4285F4", "#34A853"], ["#4285F4", "#00ECFA"],
                 ["#F8712E", "#4285F4"], ["#4285F4", "#942EBE", "#FFC6E3"], ["#34A853", "#942EBE"],
                 ["#EA4335", "#34A853"], ["#34A853", "#942EBE"], ["#942EBE"]],
@@ -58,8 +58,8 @@ const currentState = {
 export default (state = currentState, action) => {
     switch(action.type) {
         case SET_COLOR_AND_COLORS_USED: 
-            currentState.lastColorHexcode = currentState.currentLevelUserHexCode
-            currentState.currentLevelUserHexCode = action.payload.currentLevelUserHexCode
+            currentState.lastColorHexcode = currentState.currentLevelUserHexCode.trim()
+            currentState.currentLevelUserHexCode = action.payload.currentLevelUserHexCode.trim()
             currentState.colorsChosenSoFar = action.payload.currentColorsChosen
             return {...currentState}    
         case ADD_USER_CHOSEN_COLOR:

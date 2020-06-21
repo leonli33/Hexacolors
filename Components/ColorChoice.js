@@ -28,7 +28,6 @@ class ColorChoice extends Component {
                 marginLeft: Math.round(colorWidth / 10),
                 marginTop: 5
             }
-        
         })
 
         // Shaded determines if the box has already been pressed by the user

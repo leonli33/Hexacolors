@@ -29,6 +29,7 @@ class ColorBox extends Component {
       }
 
     render() {
+
         // Get the gdb version of the current resultant color and the last
         // resultant color
         let rgbVersion = this.hexToRgb(this.props.color)

@@ -6,7 +6,8 @@ import Colors from '../Constants/Colors'
 import {connect} from 'react-redux'
 import {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors} from '../Redux/Actions'
 import Hint from '../Components/Hint'
-
+import ConfettiCannon from 'react-native-confetti-cannon';
+import ColorMixerWonScreen from '../Components/ColorMixerWonScreen'
 
 class GameScreen extends Component {
     constructor(props) {
@@ -33,6 +34,31 @@ class GameScreen extends Component {
         this.setState({
             hint3: !this.state.hint3
         })
+    }
+
+    onBackPress = () => {
+        this.props.navigation.navigate("Levels")
+        this.setState({
+            hint1: false,
+            hint2: false,
+            hint3: false,
+        })
+    }
+
+    onForwardPress = (levelID) => {
+        if(levelID !== 19) {
+            this.props.navigation.navigate("Game", {
+                level: levelID
+            });
+        } else {
+            this.props.navigation.navigate("Home");
+        }
+        this.setState({
+            hint1: false,
+            hint2: false,
+            hint3: false,
+        })
+        this.props.ResetColors();
     }
 
     // Thanks to https://github.com/GirkovArpa/hex-color-mixer for the color mixing algorithm!
@@ -120,6 +146,7 @@ class GameScreen extends Component {
     }
 
     render() {
+        let gameWon = false;
         // Level represents the current level in the game we are in
         const {level} = this.props.route.params;
         // Each level has a particular amont of hints. The following 2 if statements determine
@@ -153,11 +180,20 @@ class GameScreen extends Component {
             selectedText =  "Select " + numberOfColors + " Colors"
         }
 
+        if(this.props.levelColors[level] === this.props.color) {
+                gameWon = true;
+                this.explosion && this.explosion.start();
+        }
+        //<ColorMixerWonScreen totalColorsNeeded={this.props.colorsNeeded[level].length} colorsNeeded={this.props.colorsNeeded[level]} targetColor={this.props.levelColors[level]} visibility={gameWon}></ColorMixerWonScreen>
+
+
         return(
             <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
+                <ColorMixerWonScreen level={level} handleNextPress={this.onForwardPress} handleBackPress={this.onBackPress} totalColorsNeeded={this.props.colorsNeeded[level].length} 
+                                    colorsNeeded={this.props.colorsNeeded[level]} targetColor={this.props.levelColors[level]} visibility={gameWon}/>
                 <View style={styles.colorboxes}>
-                    <ColorBox lastColor={this.props.previousHexcode} title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
-                    <ColorBox lastColor={this.props.previousHexcode} title={"Current Color"} color={this.props.color}></ColorBox>
+                    <ColorBox handleGameWon={this.handleGameWon} lastColor={this.props.previousHexcode} title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
+                    <ColorBox handleGameWon={this.handleGameWon} targetColor={this.props.levelColors[level]} lastColor={this.props.previousHexcode} title={"Current Color"} color={this.props.color}></ColorBox>
                 </View>
                 {hints}
                 <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'100%',
@@ -213,7 +249,8 @@ function mapStateToProps(state) {
         hints1: state.levelHint1,
         hints2: state.levelHint2,
         numColors: state.numColors,
-        previousHexcode: state.lastColorHexcode
+        previousHexcode: state.lastColorHexcode,
+        colorsNeeded: state.levelComponentsToAnswer,
     }
 }
 
