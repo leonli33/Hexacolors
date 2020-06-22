@@ -5,5 +5,5 @@ export default {
     tropicalBlue: '#4E78D7',
     buttonBackground: '#F6E5DF',
     backgroundCol: 'lavender',
-    font: 'Avenir-Black'
+    font: 'Avenir-Black',
 }

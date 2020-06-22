@@ -10,7 +10,7 @@ class LevelBox extends Component {
         const topHalfWidth = Math.round(dimensions.width * (1/4));
         const bottomHalfHeight = Math.round(dimensions.height * (1/7))
 
-        let color = Colors.buttonBackground;
+        let color = Colors.tropicalYellow;
         if(this.props.level >= 10 && this.props.level < 18){
             color = Colors.tropicalBlue
         } else if(this.props.level >= 18) {

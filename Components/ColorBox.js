@@ -11,7 +11,7 @@ class ColorBox extends Component {
         // Every time the componenet updates, set an animated for the new color
         Animated.timing(this.state.colorBoxAnimation, {
             toValue: 150,
-            duration: 500
+            duration: 200
         }).start(() => {
             // set the opacity back to zero after each animation
             this.state.colorBoxAnimation = new Animated.Value(0)

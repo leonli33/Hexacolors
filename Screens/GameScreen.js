@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, ScrollView, Dimensions, Text} from 'react-native'
+import {StyleSheet, View, ScrollView, Image, Text, TouchableOpacity, Dimensions} from 'react-native'
 import ColorBox from '../Components/ColorBox'
 import ColorChoice from '../Components/ColorChoice'
 import Colors from '../Constants/Colors'
@@ -17,6 +17,23 @@ class GameScreen extends Component {
             hint2: false,
             hint3: false,
         }
+    }
+
+    componentDidMount(){
+        let color = Colors.tropicalYellow;
+        const {level} = this.props.route.params;
+        this.props.navigation.setOptions({title: "Level " + level,
+                                           headerStyle: {backgroundColor: this.getBackgroundColorForLevel(level)}});
+    }
+
+    getBackgroundColorForLevel = (level) => {
+        let color = Colors.tropicalYellow;
+        if(level >= 10 && level < 18){
+            color = Colors.tropicalBlue
+        } else if(level >= 18) {
+            color = Colors.tropicalRed
+        }
+        return color;
     }
 
     // Determine which hints have been selected
@@ -50,6 +67,8 @@ class GameScreen extends Component {
             this.props.navigation.navigate("Game", {
                 level: levelID
             });
+            this.props.navigation.setOptions({title: "Level " + levelID,
+                                              headerStyle: {backgroundColor: this.getBackgroundColorForLevel(levelID)}});
         } else {
             this.props.navigation.navigate("Home");
         }
@@ -146,6 +165,7 @@ class GameScreen extends Component {
     }
 
     render() {
+        let {width} = Dimensions.get('window');
         let gameWon = false;
         // Level represents the current level in the game we are in
         const {level} = this.props.route.params;
@@ -182,10 +202,8 @@ class GameScreen extends Component {
 
         if(this.props.levelColors[level] === this.props.color) {
                 gameWon = true;
-                this.explosion && this.explosion.start();
         }
         //<ColorMixerWonScreen totalColorsNeeded={this.props.colorsNeeded[level].length} colorsNeeded={this.props.colorsNeeded[level]} targetColor={this.props.levelColors[level]} visibility={gameWon}></ColorMixerWonScreen>
-
 
         return(
             <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
@@ -199,9 +217,15 @@ class GameScreen extends Component {
                 <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'100%',
                             shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
                             elevation: 5, justifyContent:'center',}}>
-                    <Text style={{fontSize: 17, marginLeft: '2.5%', marginTop:'3%'}}>{selectedText}</Text>
+                                <View style={{marginLeft: '4%', marginTop:'3%', flexDirection: 'row', height: 35, width: '100%', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <Text style={{fontSize: 17}}>{selectedText}</Text>
+                                    <TouchableOpacity onPress={() => this.scroll.scrollToEnd({animated: true})}  style={{ justifyContent: 'center', alignItems: 'center'}}>
+                                        <Image style={{marginRight: 40}} source={require("../Icons/rightarrow.png")}/>
+                                    </TouchableOpacity>
+                                </View>
                     <ScrollView showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={false} disableIntervalMomentum={true} 
                             directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
+                            snapToInterval={width - 45} ref={(node)=> this.scroll = node}
                         >
                         {this.props.colorElements.map((elementArr, arrIndex) => {
                             return (

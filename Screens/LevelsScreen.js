@@ -56,12 +56,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        marginBottom: '5%',
-        backgroundColor: Colors.backgroundCol
+        backgroundColor: Colors.backgroundCol,
+        height: '100%'
     },  
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        marginBottom: '5%'
     }
 })
 
