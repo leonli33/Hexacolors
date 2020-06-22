@@ -74,7 +74,7 @@ class ColorMixerWonScreen extends Component {
                     </View>
     
                     <View style={{flexDirection:'row', justifyContent: 'space-evenly', width: '100%', marginTop:'30%'}}>
-                            <TouchableOpacity onPress={this.props.handleBackPress} style={styles.LevelsButton}>
+                            <TouchableOpacity onPress={() => this.props.handleBackPress(this.props.level)} style={styles.LevelsButton}>
                                 <Text>Back</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.props.handleNextPress(this.props.level + 1)} style={styles.LevelsButton}>

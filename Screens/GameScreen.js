@@ -4,7 +4,7 @@ import ColorBox from '../Components/ColorBox'
 import ColorChoice from '../Components/ColorChoice'
 import Colors from '../Constants/Colors'
 import {connect} from 'react-redux'
-import {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors} from '../Redux/Actions'
+import {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors, IncrementFurthestLevel} from '../Redux/Actions'
 import Hint from '../Components/Hint'
 import ConfettiCannon from 'react-native-confetti-cannon';
 import ColorMixerWonScreen from '../Components/ColorMixerWonScreen'
@@ -53,13 +53,14 @@ class GameScreen extends Component {
         })
     }
 
-    onBackPress = () => {
+    onBackPress = (level) => {
         this.props.navigation.navigate("Levels")
         this.setState({
             hint1: false,
             hint2: false,
             hint3: false,
         })
+        this.props.IncrementFurthestLevel(level);
     }
 
     onForwardPress = (levelID) => {
@@ -69,6 +70,7 @@ class GameScreen extends Component {
             });
             this.props.navigation.setOptions({title: "Level " + levelID,
                                               headerStyle: {backgroundColor: this.getBackgroundColorForLevel(levelID)}});
+            this.props.IncrementFurthestLevel(levelID - 1);
         } else {
             this.props.navigation.navigate("Home");
         }
@@ -278,4 +280,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors})(GameScreen);
+export default connect(mapStateToProps, {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors, IncrementFurthestLevel})(GameScreen);

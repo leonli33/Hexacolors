@@ -38,7 +38,7 @@ class LevelsScreen extends Component {
                            <View key={rowIndex + 21} style={styles.row}>
                                 {row.map((color, index) => {
                                     return (
-                                        <LevelBox hexColor={color} nagivateTo={this.navigateTo} 
+                                        <LevelBox hasUserCompleted={this.props.furthestLevel >= ((rowIndex * 3) + index + 1)} hexColor={color} nagivateTo={this.navigateTo} 
                                             targetColor={this.props.levelColorAnswer[(rowIndex * 3) + index + 1]} level={(rowIndex * 3) + index + 1} key={(rowIndex * 3) + index + 1}>
                                         </LevelBox>
                                     );
@@ -72,7 +72,8 @@ function mapStateToProps(state) {
         color: state.currentLevelUserHexCode,
         colors: state.colorsChosenSoFar,
         currentColorsChosen: state.colorsChosenSoFar,
-        levelColorAnswer: state.levelAnswer
+        levelColorAnswer: state.levelAnswer,
+        furthestLevel: state.furthestLevelCompleted
     }
 }
 

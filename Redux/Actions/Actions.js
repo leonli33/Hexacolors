@@ -24,3 +24,10 @@ export const ResetColors = () => {
         type: 'RESET_LEVEL_COLORS',
     }
 }
+
+export const IncrementFurthestLevel = (level) => {
+    return {
+        type: 'INCREMENT_FURTHEST_LEVEL',
+        payload: level
+    }
+}

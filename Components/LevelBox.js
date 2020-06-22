@@ -29,18 +29,18 @@ class LevelBox extends Component {
                 marginTop: '10%',
                 justifyContent: 'center',
                 alignItems: 'center',
-                elevation: 5
+                elevation: 5,
             },
             bottomHalf: {
                 width: topHalfWidth,
                 height: bottomHalfHeight,
-                backgroundColor: '#B3B3B3',
+                backgroundColor: this.props.targetColor,
                 marginLeft: '5%',
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
                 justifyContent: 'center',
                 alignItems: "center",
-                elevation: 5
+                elevation: 5,
             },
             shadowAround: {
                 shadowColor: 'black',
@@ -48,18 +48,27 @@ class LevelBox extends Component {
                 shadowOpacity: 0.26,
                 shadowRadius: 5,
                 marginTop: '8%',
+                elevation: 5,
+                backgroundColor: 'white'
             }
         })
 
+        let shadedBottom = <View >
+                            </View> 
+        if(!this.props.hasUserCompleted) {
+            shadedBottom = <View style={{...styles.bottomHalf, marginLeft: '0%', backgroundColor: 'black', opacity: 0.8, elevation: 0}}>
+                           </View>
+        }
+
         return (
-            <TouchableWithoutFeedback onPress={() => this.props.nagivateTo(this.props.level)}>
-                <View style={styles.shadowAround}>
-                   <View style={styles.topHalf}>
-                        <Text>{this.props.level}</Text>
+            <TouchableWithoutFeedback onPress={() => {this.props.hasUserCompleted ? this.props.nagivateTo(this.props.level) : ""}}>
+                <View style={this.props.hasCompleted ? styles.shadowAround: {}}>
+                    <View style={styles.topHalf}>
+                            <Text>{this.props.level}</Text>
                     </View>
                     <View style={styles.bottomHalf}>
-                        <Image source={require('../Icons/lock.png')}></Image>
-                    </View> 
+                        {shadedBottom}
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         )

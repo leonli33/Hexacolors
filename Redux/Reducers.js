@@ -4,6 +4,7 @@ const SET_COLOR_AND_COLORS_USED = "SET_COLOR_AND_COLORS_USED"
 const ADD_USER_CHOSEN_COLOR = 'ADD_USER_CHOSEN_COLOR'
 const REMOVE_USER_CHOSEN_COLOR = 'REMOVE_USER_CHOSEN_COLOR'
 const RESET_LEVEL_COLORS = 'RESET_LEVEL_COLORS'
+const INCREMENT_FURTHEST_LEVEL = 'INCREMENT_FURTHEST_LEVEL'
 
 const currentState = {
     // Color at index corresponds to the color of the level
@@ -44,7 +45,7 @@ const currentState = {
     // current level that the user is playing
     currentLevel: 0,
     // furthest level that the user has gotten to
-    furthestLevelCompleted: 0,
+    furthestLevelCompleted: 18,
     // colors that the user has picked to far
     colorsChosenSoFar: [],
     // the hexcode representing the color that 
@@ -68,10 +69,13 @@ export default (state = currentState, action) => {
         case REMOVE_USER_CHOSEN_COLOR:
             currentState.colorsChosenSoFar.splice(currentState.colorsChosenSoFar.indexOf(action.payload), 1);
             return {...currentState}
-        case RESET_LEVEL_COLORS :
+        case RESET_LEVEL_COLORS:
             currentState.colorsChosenSoFar = [];
             currentState.currentLevelUserHexCode = "";
             currentState.lastColorHexcode = "";
+            return {...currentState}
+        case INCREMENT_FURTHEST_LEVEL:
+            currentState.furthestLevelCompleted <= 17 && action.payload >= currentState.furthestLevelCompleted ? currentState.furthestLevelCompleted++ : "";
             return {...currentState}
         default:
             return state;
