@@ -1,12 +1,24 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, ScrollView, Image, Text, TouchableOpacity, Dimensions} from 'react-native'
+import {StyleSheet, 
+        View, 
+        ScrollView, 
+        Image, 
+        Text, 
+        TouchableOpacity, 
+        Dimensions
+    } from 'react-native'
 import ColorBox from '../Components/ColorBox'
 import ColorChoice from '../Components/ColorChoice'
 import Colors from '../Constants/Colors'
 import {connect} from 'react-redux'
-import {SetCurrentColorAndColorsUsed, AddUserChosenColor, RemoveUserChosenColor, ResetColors, IncrementFurthestLevel} from '../Redux/Actions'
+import {
+        SetCurrentColorAndColorsUsed, 
+        AddUserChosenColor, 
+        RemoveUserChosenColor, 
+        ResetColors, 
+        IncrementFurthestLevel
+    } from '../Redux/Actions'
 import Hint from '../Components/Hint'
-import ConfettiCannon from 'react-native-confetti-cannon';
 import ColorMixerWonScreen from '../Components/ColorMixerWonScreen'
 
 class GameScreen extends Component {
@@ -22,8 +34,10 @@ class GameScreen extends Component {
     componentDidMount(){
         let color = Colors.tropicalYellow;
         const {level} = this.props.route.params;
-        this.props.navigation.setOptions({title: "Level " + level,
-                                           headerStyle: {backgroundColor: this.getBackgroundColorForLevel(level)}});
+        this.props.navigation.setOptions({
+                                           title: "Level " + level,
+                                           headerStyle: {backgroundColor: this.getBackgroundColorForLevel(level)}
+                                        });
     }
 
     getBackgroundColorForLevel = (level) => {
@@ -42,6 +56,7 @@ class GameScreen extends Component {
             hint1: !this.state.hint1
         })
     }
+
     onHintPress2 =() => {
         this.setState({
             hint2: !this.state.hint2
@@ -173,19 +188,19 @@ class GameScreen extends Component {
         const {level} = this.props.route.params;
         // Each level has a particular amont of hints. The following 2 if statements determine
         // how many hints the user is allowed
-        let hints = <View style={{flexDirection: 'row', marginTop:'35%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
-                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
+        let hints = <View style={{flexDirection: 'row', marginTop:'30%',marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}/>
                     </View>
         if(level >= 10 && level < 18) {
-            hints = <View style={{flexDirection: 'row', marginTop:'35%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
-                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
-                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
+            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}/>
+                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}/>
                     </View>
         } else if(level >= 18) {
-            hints = <View style={{flexDirection: 'row', marginTop:'35%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
-                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}></Hint>
-                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}></Hint>
-                        <Hint number={3} handlePress={this.onHintPress3} selected={this.state.hint3}></Hint>
+            hints = <View style={{flexDirection: 'row', marginTop:'30%', marginLeft: '2.5%', justifyContent: 'flex-start'}}>
+                        <Hint number={1} handlePress={this.onHintPress1} selected={this.state.hint1}/>
+                        <Hint number={2} handlePress={this.onHintPress2} selected={this.state.hint2}/>
+                        <Hint number={3} handlePress={this.onHintPress3} selected={this.state.hint3}/>
                     </View>
         }
 
@@ -209,34 +224,77 @@ class GameScreen extends Component {
 
         return(
             <View style={{backgroundColor: Colors.backgroundCol, width: '100%', height: '100%'}}>
-                <ColorMixerWonScreen level={level} handleNextPress={this.onForwardPress} handleBackPress={this.onBackPress} totalColorsNeeded={this.props.colorsNeeded[level].length} 
-                                    colorsNeeded={this.props.colorsNeeded[level]} targetColor={this.props.levelColors[level]} visibility={gameWon}/>
+                <ColorMixerWonScreen level={level} 
+                                     handleNextPress={this.onForwardPress} 
+                                     handleBackPress={this.onBackPress} 
+                                     totalColorsNeeded={this.props.colorsNeeded[level].length} 
+                                     colorsNeeded={this.props.colorsNeeded[level]} 
+                                     targetColor={this.props.levelColors[level]} 
+                                     visibility={gameWon}/>
                 <View style={styles.colorboxes}>
-                    <ColorBox handleGameWon={this.handleGameWon} lastColor={this.props.previousHexcode} title={"Target Color"} color={this.props.levelColors[level]}></ColorBox>
-                    <ColorBox handleGameWon={this.handleGameWon} targetColor={this.props.levelColors[level]} lastColor={this.props.previousHexcode} title={"Current Color"} color={this.props.color}></ColorBox>
+                    <ColorBox  handleGameWon={this.handleGameWon} 
+                               lastColor={this.props.previousHexcode} 
+                               title={"Target Color"} 
+                               color={this.props.levelColors[level]}/>
+
+                    <ColorBox handleGameWon={this.handleGameWon} 
+                              targetColor={this.props.levelColors[level]} 
+                              lastColor={this.props.previousHexcode} 
+                              title={"Current Color"} 
+                              color={this.props.color}/>
                 </View>
                 {hints}
-                <View style={{ width: '100%', backgroundColor: Colors.buttonBackground, marginTop: '5%', height:'100%',
-                            shadowColor: 'black', shadowOffset: {width:0, height:2}, shadowOpacity: 0.26, shadowRadius: 15,
-                            elevation: 5, justifyContent:'center',}}>
-                                <View style={{marginLeft: '4%', marginTop:'3%', flexDirection: 'row', height: 35, width: '100%', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    <Text style={{fontSize: 17}}>{selectedText}</Text>
-                                    <TouchableOpacity onPress={() => this.scroll.scrollToEnd({animated: true})}  style={{ justifyContent: 'center', alignItems: 'center'}}>
-                                        <Image style={{marginRight: 40}} source={require("../Icons/rightarrow.png")}/>
-                                    </TouchableOpacity>
-                                </View>
-                    <ScrollView showsHorizontalScrollIndicator={false} automaticallyAdjustContentInsets={false} disableIntervalMomentum={true} 
-                            directionalLockEnabled={true} style={styles.scroll} decelerationRate={0} horizontal={true} snapToAlignment={"end"} 
-                            snapToInterval={width - 45} ref={(node)=> this.scroll = node}
+                <View style={{  width: '100%', 
+                                backgroundColor: Colors.buttonBackground, 
+                                marginTop: '5%', 
+                                height:'100%',
+                                shadowColor: 'black', 
+                                shadowOffset: {width:0, height:2}, 
+                                shadowOpacity: 0.26, 
+                                shadowRadius: 15,
+                                elevation: 5, 
+                                justifyContent:'center'
+                            }}>
+                    <View style={{marginLeft: '4%', 
+                                    marginTop:'3%', 
+                                    flexDirection: 'row', 
+                                    height: 35, 
+                                    width: '100%', 
+                                    justifyContent: 'space-between', 
+                                    alignItems: 'center'
+                        }}>
+                        <Text style={{fontSize: 17}}>{selectedText}</Text>
+                        <TouchableOpacity onPress={() => this.scroll.scrollToEnd({animated: true})}  style={{ justifyContent: 'center', alignItems: 'center'}}>
+                            <Image style={{marginRight: 40}} source={require("../Icons/rightarrow.png")}/>
+                        </TouchableOpacity>
+                    </View>
+                    <ScrollView showsHorizontalScrollIndicator={false} 
+                                automaticallyAdjustContentInsets={false} 
+                                disableIntervalMomentum={true} 
+                                directionalLockEnabled={true} 
+                                style={styles.scroll} 
+                                decelerationRate={0} 
+                                horizontal={true} 
+                                snapToAlignment={"end"} 
+                                snapToInterval={width - 45} 
+                                ref={(node)=> this.scroll = node}
                         >
                         {this.props.colorElements.map((elementArr, arrIndex) => {
                             return (
-                                <View key={arrIndex + 12}>
+                                <View key={arrIndex + 12} >
                                     {elementArr.map((color, index) => {
                                         return (
-                                            <ColorChoice hint1Activated={this.state.hint1} hint2Activated={this.state.hint2} hint3Activated={this.state.hint3} hints1={this.props.hints1[level]} 
-                                                         colorsChosen={this.props.currentColorsChosen} currentLevel={level} hint1={this.state.hint1} onColorPress={this.handleColorSelected} 
-                                                         hints2={this.props.hints2[level]} color={color} index={index + (2 * arrIndex)} key={index + arrIndex}></ColorChoice>
+                                            <ColorChoice hint1Activated={this.state.hint1} 
+                                                         hint2Activated={this.state.hint2} 
+                                                         hint3Activated={this.state.hint3} 
+                                                         hints1={this.props.hints1[level]} 
+                                                         colorsChosen={this.props.currentColorsChosen} 
+                                                         currentLevel={level} hint1={this.state.hint1} 
+                                                         onColorPress={this.handleColorSelected} 
+                                                         hints2={this.props.hints2[level]} 
+                                                         color={color} 
+                                                         index={index + (2 * arrIndex)} 
+                                                         key={index + arrIndex} />
                                         )
                                     })}
                                 </View>
@@ -254,14 +312,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        height: '30%'
+        height: '28%'
     },
     scroll: {   
         marginLeft: '2.5%',
         padding: 6,
         width:'100%',
         height: '30%',
-        marginTop:'3%'
+        marginTop: Math.round(Dimensions.get('window').height / 60)
     }
 })
 

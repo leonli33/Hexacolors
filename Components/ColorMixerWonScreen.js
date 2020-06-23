@@ -39,7 +39,12 @@ class ColorMixerWonScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontFamily: 'Avenir-Black',
-                fontSize: 20
+                fontSize: 20,
+                marginBottom: -5,
+                shadowColor: 'black',
+                shadowOffset: {width:0, height:1},
+                shadowOpacity: 0.4,
+                shadowRadius: 4,
             }
         })
     

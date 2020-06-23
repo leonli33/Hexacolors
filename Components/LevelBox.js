@@ -26,7 +26,7 @@ class LevelBox extends Component {
                 borderTopEndRadius: 10,
                 borderTopLeftRadius: 10,
                 marginLeft: '5%',
-                marginTop: '10%',
+                marginTop: '15%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 elevation: 5,
@@ -62,7 +62,12 @@ class LevelBox extends Component {
 
         return (
             <TouchableWithoutFeedback onPress={() => {this.props.hasUserCompleted ? this.props.nagivateTo(this.props.level) : ""}}>
-                <View style={this.props.hasCompleted ? styles.shadowAround: {}}>
+                <View style={this.props.hasCompleted ? styles.shadowAround: {marginBottom: -5,
+                                                                                shadowColor: 'black',
+                                                                                shadowOffset: {width:0, height:1},
+                                                                                shadowOpacity: 0.4,
+                                                                                shadowRadius: 4,}
+                }>
                     <View style={styles.topHalf}>
                             <Text>{this.props.level}</Text>
                     </View>
