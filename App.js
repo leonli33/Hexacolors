@@ -5,6 +5,7 @@ import GameScreen from './MixColorScreens/GameScreen'
 import StartScreen from './MixColorScreens/StartScreen'
 import GuessHexDifficultyChoice from './GuessHexColorScreens/GuessHexDifficultyChoice'
 import GuessColorScreen from './GuessHexColorScreens/GuessColorScreen'
+import GameModeScreen from './MixColorScreens/GameModeScreen'
 import {NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Reducers from './Redux/Reducers'
@@ -19,13 +20,21 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AllScreens.Navigator initialRouteName="GuessHexDifficultyScreen">
+        <AllScreens.Navigator initialRouteName="Home">
           <AllScreens.Screen name="Home" component={StartScreen} 
                         options={{title: 'HexaColors',
                                   headerTitleAlign: 'center',
                                   headerTitleStyle: {
                                     fontWeight: 'bold',
-                                  }}}></AllScreens.Screen>
+                                  }}}/>
+
+          <AllScreens.Screen name="GameMode" component={GameModeScreen} 
+                        options={{title: 'Game Modes',
+                                  headerTitleAlign: 'center',
+                                  headerTitleStyle: {
+                                    fontWeight: 'bold',
+                                  }}}/>
+                                  
           <AllScreens.Screen  name="Levels" 
                               component={LevelsScreen} 
                               options={{

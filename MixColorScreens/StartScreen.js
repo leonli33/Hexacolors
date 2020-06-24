@@ -52,7 +52,7 @@ class StartScreen extends Component  {
         })
         return (
             <View style={styles.container}>
-                <TouchableOpacity style={styles.playButton} onPress={() => {this.props.navigation.navigate("Levels")}}>
+                <TouchableOpacity style={styles.playButton} onPress={() => {this.props.navigation.navigate("GameMode")}}>
                     <Image style={styles.playButtonImage} source={require('../Icons/play.png')}></Image>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.infoButton}>

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         height: '100%'
     }, 
     option:{
-        height: 90,
+        height: 80,
         width: '100%',
         borderRadius: 15,
         elevation: 5,
