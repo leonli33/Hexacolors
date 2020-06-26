@@ -3,6 +3,12 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import Colors from "../Constants/Colors";
 
 class GuessHexDifficultyChoice extends Component {
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      headerStyle: { backgroundColor: Colors.buttonBackground },
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>

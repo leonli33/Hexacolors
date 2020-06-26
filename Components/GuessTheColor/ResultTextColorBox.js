@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 const ResultTextColorBox = (props) => {
-  return <View style={{ ...styles.box, backgroundColor: props.color }} />;
+  return (
+    <View
+      style={{
+        ...styles.box,
+        backgroundColor: props.color,
+      }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -10,7 +17,9 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 15,
-    borderWidth: 1,
+    alignSelf: "center",
+    marginLeft: "85%",
+    marginTop: Dimensions.get("window").height < 700 ? 22 : 30,
   },
 });
 

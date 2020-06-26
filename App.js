@@ -42,6 +42,10 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerStyle: {
+                backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: 'black'
             }}
           />
 
@@ -58,6 +62,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerTintColor: 'black'
             }}
           />
           <AllScreens.Screen
@@ -73,6 +78,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerTintColor: 'black'
             }}
           />
 
@@ -85,6 +91,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerTintColor: 'black'
             }}
           />
           <AllScreens.Screen
@@ -93,6 +100,7 @@ export default function App() {
             options={{
               title: "Guess the hex",
               headerTitleAlign: "center",
+              headerTintColor: 'black'
             }}
           />
         </AllScreens.Navigator>

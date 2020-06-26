@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import Colors from '../../Constants/Colors'
+import Colors from "../../Constants/Colors";
 
 const ColorOption = (props) => {
   const state = {
@@ -23,18 +23,34 @@ const ColorOption = (props) => {
   }
 
   if (props.lastGuessedColor === props.color) {
-    console.log("animated fading");
     fadeOut();
   }
 
   return (
     <AnimatedTouchable
-      onPress={() =>  props.hiddenColors.includes(props.color) ? "" : props.pressed(props.color)}
+      onPress={() =>
+        props.hiddenColors.includes(props.color)
+          ? ""
+          : props.pressed(props.color)
+      }
       style={{
         ...styles.colorBall,
-        backgroundColor: props.hiddenColors.includes(props.color) && props.lastGuessedColor != props.color ? Colors.buttonBackground : props.color,
+        backgroundColor:
+          props.hiddenColors.includes(props.color) &&
+          props.lastGuessedColor != props.color
+            ? Colors.buttonBackground
+            : props.color,
         opacity: state.colorCircleToFade,
-        shadowColor: props.hiddenColors.includes(props.color) && props.lastGuessedColor != props.color ? Colors.buttonBackground :'black'
+        shadowColor:
+          props.hiddenColors.includes(props.color) &&
+          props.lastGuessedColor != props.color
+            ? Colors.buttonBackground
+            : "black",
+        elevation:
+          props.hiddenColors.includes(props.color) &&
+          props.lastGuessedColor != props.color
+            ? 0
+            : 6,
       }}
     ></AnimatedTouchable>
   );
