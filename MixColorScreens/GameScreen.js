@@ -33,7 +33,6 @@ class GameScreen extends Component {
   }
 
   componentDidMount() {
-    let color = Colors.tropicalYellow;
     const { level } = this.props.route.params;
     this.props.navigation.setOptions({
       title: "Level " + level,
@@ -208,7 +207,7 @@ class GameScreen extends Component {
   };
 
   render() {
-    let { width } = Dimensions.get("window");
+    let { width, height } = Dimensions.get("window");
     let gameWon = false;
     // Level represents the current level in the game we are in
     const { level } = this.props.route.params;
@@ -218,7 +217,7 @@ class GameScreen extends Component {
       <View
         style={{
           flexDirection: "row",
-          marginTop: "30%",
+          marginTop: height > 700 ? Math.round(height / 5) : "30%",
           marginLeft: "2.5%",
           justifyContent: "flex-start",
         }}
@@ -235,7 +234,7 @@ class GameScreen extends Component {
         <View
           style={{
             flexDirection: "row",
-            marginTop: "30%",
+            marginTop: height > 700 ? Math.round(height / 5) : "30%",
             marginLeft: "2.5%",
             justifyContent: "flex-start",
           }}
@@ -257,7 +256,7 @@ class GameScreen extends Component {
         <View
           style={{
             flexDirection: "row",
-            marginTop: "30%",
+            marginTop: height >= 700 ? Math.round(height / 5) : "30%",
             marginLeft: "2.5%",
             justifyContent: "flex-start",
           }}
@@ -297,7 +296,6 @@ class GameScreen extends Component {
     if (this.props.levelColors[level] === this.props.color) {
       gameWon = true;
     }
-    //<ColorMixerWonScreen totalColorsNeeded={this.props.colorsNeeded[level].length} colorsNeeded={this.props.colorsNeeded[level]} targetColor={this.props.levelColors[level]} visibility={gameWon}></ColorMixerWonScreen>
 
     return (
       <View
@@ -424,7 +422,7 @@ const styles = StyleSheet.create({
     padding: 6,
     width: "100%",
     height: "30%",
-    marginTop: Math.round(Dimensions.get("window").height / 60),
+    marginTop: "1%",
   },
 });
 

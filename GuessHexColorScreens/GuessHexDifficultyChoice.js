@@ -10,18 +10,30 @@ class GuessHexDifficultyChoice extends Component {
           <TouchableOpacity
             style={{ ...styles.option, backgroundColor: Colors.tropicalYellow }}
             onPress={() => {
-              this.props.navigation.navigate("GuessHexGameScreen");
+              this.props.navigation.navigate("GuessHexGameScreen", {
+                difficulty: "Easy",
+              });
             }}
           >
             <Text style={styles.optionText}>Easy</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ ...styles.option, backgroundColor: Colors.tropicalBlue }}
+            onPress={() => {
+              this.props.navigation.navigate("GuessHexGameScreen", {
+                difficulty: "Medium",
+              });
+            }}
           >
             <Text style={styles.optionText}>Medium</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ ...styles.option, backgroundColor: Colors.tropicalRed }}
+            onPress={() => {
+              this.props.navigation.navigate("GuessHexGameScreen", {
+                difficulty: "Hard",
+              });
+            }}
           >
             <Text style={styles.optionText}>Hard</Text>
           </TouchableOpacity>

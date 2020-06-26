@@ -4,11 +4,40 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Text,
+  Animated,
 } from "react-native";
+import Colors from '../../Constants/Colors'
 
-const ColorOption = () => {
-  return <TouchableOpacity style={styles.colorBall}></TouchableOpacity>;
+const ColorOption = (props) => {
+  const state = {
+    colorCircleToFade: new Animated.Value(1),
+  };
+
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
+  function fadeOut() {
+    Animated.timing(state.colorCircleToFade, {
+      toValue: 0,
+      timing: 500,
+    }).start();
+  }
+
+  if (props.lastGuessedColor === props.color) {
+    console.log("animated fading");
+    fadeOut();
+  }
+
+  return (
+    <AnimatedTouchable
+      onPress={() =>  props.hiddenColors.includes(props.color) ? "" : props.pressed(props.color)}
+      style={{
+        ...styles.colorBall,
+        backgroundColor: props.hiddenColors.includes(props.color) && props.lastGuessedColor != props.color ? Colors.buttonBackground : props.color,
+        opacity: state.colorCircleToFade,
+        shadowColor: props.hiddenColors.includes(props.color) && props.lastGuessedColor != props.color ? Colors.buttonBackground :'black'
+      }}
+    ></AnimatedTouchable>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -17,11 +46,11 @@ const styles = StyleSheet.create({
     width: Math.round(Dimensions.get("window").height / 8),
     borderRadius: Math.round(Dimensions.get("window").height / 16),
     backgroundColor: "lightblue",
-    elevation: 5,
+    elevation: 6,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     marginTop: Math.round(Dimensions.get("window").height / 20),
   },
 });

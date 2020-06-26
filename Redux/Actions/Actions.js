@@ -31,3 +31,27 @@ export const IncrementFurthestLevel = (level) => {
     payload: level,
   };
 };
+
+export const CreateNewColorToGuess = () => {
+  return {
+    type: "CREATE_COLOR_TO_GUESS",
+  };
+};
+
+export const GenerateColorsToGuessEasy = () => {
+  return {
+    type: "GENERATE_EASY_GUESS_OPTIONS",
+  };
+};
+
+export const GenerateColorsToGuessMedium = () => {
+  return {
+    type: "GENERATE_MEDIUM_GUESS_OPTIONS",
+  };
+};
+
+export const GenerateColorsToGuessHard = () => {
+  return {
+    type: "GENERATE_HARD_GUESS_OPTIONS",
+  };
+};
