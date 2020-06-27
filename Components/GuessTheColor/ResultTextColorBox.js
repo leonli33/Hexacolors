@@ -6,7 +6,7 @@ const ResultTextColorBox = (props) => {
     <View
       style={{
         ...styles.box,
-        backgroundColor: props.color,
+        backgroundColor: props.color ? props.color : "white",
       }}
     />
   );
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignSelf: "center",
     marginLeft: "85%",
-    marginTop: Dimensions.get("window").height < 700 ? 22 : 30,
+    marginTop: Dimensions.get("window").height < 700 ? 20 : 40,
   },
 });
 

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
@@ -33,6 +34,7 @@ class GuessColorScreen extends Component {
       redValue: 0,
       greenValue: 0,
       blueValue: 0,
+      sliderMoving: false,
     };
   }
 
@@ -59,6 +61,7 @@ class GuessColorScreen extends Component {
       redValue: 0,
       greenValue: 0,
       hiddenColors: [],
+      sliderMoving: false,
     });
     this.props.CreateNewColorToGuess();
     this.createColorOptions(difficulty);
@@ -91,16 +94,19 @@ class GuessColorScreen extends Component {
       this.setState({
         redHex: hexString,
         redValue: number,
+        sliderMoving: true,
       });
     } else if (color === "green") {
       this.setState({
         greenHex: hexString,
         greenValue: number,
+        sliderMoving: true,
       });
     } else {
       this.setState({
         blueHex: hexString,
         blueValue: number,
+        sliderMoving: true,
       });
     }
   };
@@ -136,7 +142,7 @@ class GuessColorScreen extends Component {
     if (difficulty === "Easy") {
       return this.props.easyColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex + 20}>
+          <View style={{ marginRight: 20 }} key={arrIndex}>
             {colorArr.map((color, index) => {
               return (
                 <View key={index + arrIndex * 2}>
@@ -145,6 +151,7 @@ class GuessColorScreen extends Component {
                     pressed={this.handleColorPressed}
                     color={color}
                     lastGuessedColor={this.state.lastGuessedColor}
+                    sliderMoving={this.state.sliderMoving}
                   />
                 </View>
               );
@@ -155,7 +162,7 @@ class GuessColorScreen extends Component {
     } else if (difficulty === "Medium") {
       return this.props.mediumColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex + 20}>
+          <View style={{ marginRight: 20 }} key={arrIndex}>
             {colorArr.map((color, index) => {
               return (
                 <View key={index + arrIndex * 2}>
@@ -163,6 +170,8 @@ class GuessColorScreen extends Component {
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
                     color={color}
+                    lastGuessedColor={this.state.lastGuessedColor}
+                    sliderMoving={this.state.sliderMoving}
                   />
                 </View>
               );
@@ -173,7 +182,7 @@ class GuessColorScreen extends Component {
     } else {
       return this.props.hardColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex + 20}>
+          <View style={{ marginRight: 20 }} key={arrIndex}>
             {colorArr.map((color, index) => {
               return (
                 <View key={index + arrIndex * 2}>
@@ -181,6 +190,8 @@ class GuessColorScreen extends Component {
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
                     color={color}
+                    lastGuessedColor={this.state.lastGuessedColor}
+                    sliderMoving={this.state.sliderMoving}
                   />
                 </View>
               );
@@ -201,11 +212,30 @@ class GuessColorScreen extends Component {
           backPress={this.handleBackPressed}
           playAgainPress={this.handlePlayAgainPressed}
         />
-        <View style={{}}>
+        <View>
           <Text style={styles.hex}>{this.props.targetColor}</Text>
         </View>
-        <View style={{ width: "90%", height: "25%", flexDirection: "row" }}>
+        <View
+          style={{
+            width: "90%",
+            height: "25%",
+            flexDirection: "row",
+            marginTop: "7%",
+          }}
+        >
           <View style={styles.sliderColorContainer}>
+            <View style={{ flexDirection: "row", width: "100%" }}>
+              <Text style={{ alignSelf: "flex-start", fontSize: 18 }}>#00</Text>
+              <Text
+                style={{
+                  alignSelf: "flex-end",
+                  marginLeft: "70%",
+                  fontSize: 18,
+                }}
+              >
+                #FF
+              </Text>
+            </View>
             <Slider
               maximumValue={255}
               style={{ width: "100%" }}
@@ -214,6 +244,11 @@ class GuessColorScreen extends Component {
               value={this.state.redValue}
               onValueChange={(value) => {
                 this.handleSliderColorChange(Math.round(value), "red");
+              }}
+              onSlidingComplete={() => {
+                this.setState({
+                  sliderMoving: false,
+                });
               }}
             />
             <Slider
@@ -225,6 +260,11 @@ class GuessColorScreen extends Component {
               onValueChange={(value) => {
                 this.handleSliderColorChange(Math.round(value), "green");
               }}
+              onSlidingComplete={() => {
+                this.setState({
+                  sliderMoving: false,
+                });
+              }}
             />
             <Slider
               maximumValue={255}
@@ -234,6 +274,11 @@ class GuessColorScreen extends Component {
               value={this.state.blueValue}
               onValueChange={(value) => {
                 this.handleSliderColorChange(Math.round(value), "blue");
+              }}
+              onSlidingComplete={() => {
+                this.setState({
+                  sliderMoving: false,
+                });
               }}
             />
           </View>
@@ -249,10 +294,7 @@ class GuessColorScreen extends Component {
           <Text style={styles.resultGuessText}>
             {this.state.resultAfterGuess}
           </Text>
-          <ResultTextColorBox
-            onStart={this.state.resultAfterGuess === "Guess a Color!"}
-            color={this.state.lastGuessedColor}
-          />
+          <ResultTextColorBox color={this.state.lastGuessedColor} />
         </View>
 
         <View style={styles.colorContainer}>
@@ -266,7 +308,6 @@ class GuessColorScreen extends Component {
             showsHorizontalScrollIndicator={false}
             automaticallyAdjustContentInsets={false}
             directionalLockEnabled={true}
-            
           >
             {this.getColorOptions()}
           </ScrollView>
@@ -292,7 +333,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.buttonBackground,
     width: "100%",
     alignSelf: "center",
-    height: "45%",
+    height: "40%",
     marginTop: "5%",
   },
   scroll: {
@@ -303,7 +344,7 @@ const styles = StyleSheet.create({
   },
   colorView: {
     width: "35%",
-    height: "80%",
+    height: "90%",
     borderWidth: 1,
     margin: "5%",
     borderRadius: 10,
@@ -327,7 +368,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     borderRadius: 10,
-    marginTop: "10%",
+    marginTop: Dimensions.get("window").height > 700 ? "15%" : "9%",
     elevation: 3,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },

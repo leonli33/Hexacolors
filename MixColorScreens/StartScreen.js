@@ -5,6 +5,7 @@ import {
   Dimensions,
   StyleSheet,
   Image,
+  Text,
 } from "react-native";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
@@ -20,14 +21,13 @@ class StartScreen extends Component {
         backgroundColor: Colors.backgroundCol,
         height: "100%",
         width: "100%",
-        flex: 1,
       },
       playButton: {
         width: "85%",
-        height: "8%",
+        height: "15%",
         backgroundColor: Colors.tropicalRed,
-        borderRadius: 20,
-        marginTop: "100%",
+        borderRadius: 10,
+        marginTop: Dimensions.get("window").height / 2,
         shadowColor: "black",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.26,
@@ -43,9 +43,9 @@ class StartScreen extends Component {
       },
       infoButton: {
         width: "85%",
-        height: "8%",
+        height: "15%",
         backgroundColor: Colors.tropicalBlue,
-        borderRadius: 12,
+        borderRadius: 10,
         marginTop: "12%",
         shadowColor: "black",
         shadowOffset: { width: 0, height: 2 },
@@ -54,6 +54,11 @@ class StartScreen extends Component {
         elevation: 5,
         justifyContent: "center",
         alignItems: "center",
+      },
+      textOption: {
+        color: "white",
+        fontSize: 25,
+        position: "absolute",
       },
     });
     return (
@@ -64,16 +69,10 @@ class StartScreen extends Component {
             this.props.navigation.navigate("GameMode");
           }}
         >
-          <Image
-            style={styles.playButtonImage}
-            source={require("../Icons/play.png")}
-          ></Image>
+          <Text style={styles.textOption}>Begin</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.infoButton}>
-          <Image
-            style={styles.playButtonImage}
-            source={require("../Icons/info.png")}
-          ></Image>
+          <Text style={styles.textOption}>Account</Text>
         </TouchableOpacity>
       </View>
     );

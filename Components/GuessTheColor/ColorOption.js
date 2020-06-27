@@ -22,7 +22,7 @@ const ColorOption = (props) => {
     }).start();
   }
 
-  if (props.lastGuessedColor === props.color) {
+  if (props.lastGuessedColor === props.color && !props.sliderMoving) {
     fadeOut();
   }
 
@@ -36,11 +36,10 @@ const ColorOption = (props) => {
       style={{
         ...styles.colorBall,
         backgroundColor:
-          props.hiddenColors.includes(props.color) &&
-          props.lastGuessedColor != props.color
+          props.hiddenColors.includes(props.color)
             ? Colors.buttonBackground
             : props.color,
-        opacity: state.colorCircleToFade,
+        opacity: !props.hiddenColors.includes(props.color) ? state.colorCircleToFade : 0,
         shadowColor:
           props.hiddenColors.includes(props.color) &&
           props.lastGuessedColor != props.color
@@ -51,6 +50,7 @@ const ColorOption = (props) => {
           props.lastGuessedColor != props.color
             ? 0
             : 6,
+        borderWidth: props.hiddenColors.includes(props.color) ? 0 : 1,
       }}
     ></AnimatedTouchable>
   );
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    marginTop: Math.round(Dimensions.get("window").height / 20),
+    marginTop: Math.round(Dimensions.get("window").height / 30),
+    borderWidth: 1,
   },
 });
 
