@@ -6,15 +6,18 @@ import StartScreen from "./MixColorScreens/StartScreen";
 import GuessHexDifficultyChoice from "./GuessHexColorScreens/GuessHexDifficultyChoice";
 import GuessColorScreen from "./GuessHexColorScreens/GuessColorScreen";
 import GameModeScreen from "./MixColorScreens/GameModeScreen";
+import OptionScreen from "./AccountScreens/SignInScreen";
+import RegisterScreen from "./AccountScreens/RegisterScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Reducers from "./Redux/Reducers";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import ReduxThunk from 'redux-thunk'
 import Colors from "./Constants/Colors";
 
 const AllScreens = createStackNavigator();
-const store = createStore(Reducers);
+const store = createStore(Reducers, applyMiddleware(ReduxThunk));
 
 export default function App() {
   return (
@@ -34,6 +37,22 @@ export default function App() {
           />
 
           <AllScreens.Screen
+            component={OptionScreen}
+            name="AuthOptions"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <AllScreens.Screen
+            component={RegisterScreen}
+            name="RegisterScreen"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <AllScreens.Screen
             name="GameMode"
             component={GameModeScreen}
             options={{
@@ -45,7 +64,7 @@ export default function App() {
               headerStyle: {
                 backgroundColor: Colors.buttonBackground,
               },
-              headerTintColor: 'black'
+              headerTintColor: "black",
             }}
           />
 
@@ -62,7 +81,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
-              headerTintColor: 'black'
+              headerTintColor: "black",
             }}
           />
           <AllScreens.Screen
@@ -78,7 +97,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
-              headerTintColor: 'black'
+              headerTintColor: "black",
             }}
           />
 
@@ -91,7 +110,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
-              headerTintColor: 'black'
+              headerTintColor: "black",
             }}
           />
           <AllScreens.Screen
@@ -100,7 +119,7 @@ export default function App() {
             options={{
               title: "Guess the hex",
               headerTitleAlign: "center",
-              headerTintColor: 'black'
+              headerTintColor: "black",
             }}
           />
         </AllScreens.Navigator>
@@ -108,8 +127,6 @@ export default function App() {
     </Provider>
   );
 }
-
-//          <AllScreens.Screen name="ModalWinGame" component={ColorMixerWonScreen}/>
 
 const styles = StyleSheet.create({
   container: {

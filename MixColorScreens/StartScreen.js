@@ -71,7 +71,7 @@ class StartScreen extends Component {
         >
           <Text style={styles.textOption}>Begin</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.infoButton}>
+        <TouchableOpacity style={styles.infoButton} onPress={() => this.props.navigation.navigate("AuthOptions")}>
           <Text style={styles.textOption}>Account</Text>
         </TouchableOpacity>
       </View>
