@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import LevelBox from "../Components/LevelBox";
+import LevelBox from "../Components/MixColors/LevelBox";
 import { color } from "react-native-reanimated";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import GameWonColorBox from "./GameWonColorBox";
-import Colors from "../Constants/Colors";
+import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
 
 class ColorMixerWonScreen extends Component {
@@ -49,8 +49,6 @@ class ColorMixerWonScreen extends Component {
       }, 1200);
     }
 
-    //<Text style={{fontSize: 25}}>{props.totalColorsNeeded - 1 === index ? "" : " + "}</Text>
-    //style={{height: '100%', justifyContent: 'center', alignItems: 'center'}} transparent={true} visible={props.visibility} animationType={"slide"} backdropOpacity={0.5}
     return (
       <Modal
         style={{

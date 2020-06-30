@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import ColorBox from "../Components/ColorBox";
-import ColorChoice from "../Components/ColorChoice";
+import ColorBox from "../Components/MixColors/ColorBox";
+import ColorChoice from "../Components/MixColors/ColorChoice";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import {
@@ -19,8 +19,8 @@ import {
   ResetColors,
   IncrementFurthestLevel,
 } from "../Redux/Actions";
-import Hint from "../Components/Hint";
-import ColorMixerWonScreen from "../Components/ColorMixerWonScreen";
+import Hint from "../Components/MixColors/Hint";
+import ColorMixerWonScreen from "../Components/MixColors/ColorMixerWonScreen";
 
 class GameScreen extends Component {
   constructor(props) {

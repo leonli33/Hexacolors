@@ -6,7 +6,7 @@ import {
   Text,
   TouchableWithoutFeedback,
 } from "react-native";
-import Colors from "../Constants/Colors";
+import Colors from "../../Constants/Colors";
 
 class ColorChoice extends Component {
   render() {

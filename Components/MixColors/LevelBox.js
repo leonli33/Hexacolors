@@ -7,7 +7,7 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from "react-native";
-import Colors from "../Constants/Colors";
+import Colors from "../../Constants/Colors";
 
 class LevelBox extends Component {
   render() {

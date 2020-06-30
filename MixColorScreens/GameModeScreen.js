@@ -8,7 +8,7 @@ class GameModeScreen extends Component {
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <TouchableOpacity
-            style={{ ...styles.option}}
+            style={{ ...styles.option }}
             onPress={() => {
               this.props.navigation.navigate("Levels");
             }}
@@ -17,7 +17,7 @@ class GameModeScreen extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={{ ...styles.option}}
+            style={{ ...styles.option }}
             onPress={() => {
               this.props.navigation.navigate("GuessHexDifficultyScreen");
             }}
@@ -25,7 +25,12 @@ class GameModeScreen extends Component {
             <Text style={styles.optionText}>Hex Guesser</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ ...styles.option}}>
+          <TouchableOpacity
+            style={{ ...styles.option }}
+            onPress={() => {
+              this.props.navigation.navigate("Playground");
+            }}
+          >
             <Text style={styles.optionText}>Playground</Text>
           </TouchableOpacity>
         </View>
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 6,
-    borderColor: '#F6B09D',
+    borderColor: "#F6B09D",
   },
   optionText: {
     fontSize: 25,

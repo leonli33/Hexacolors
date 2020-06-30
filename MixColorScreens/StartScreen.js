@@ -69,7 +69,7 @@ class StartScreen extends Component {
             this.props.navigation.navigate("GameMode");
           }}
         >
-          <Text style={styles.textOption}>Begin</Text>
+          <Text style={styles.textOption}>Play</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.infoButton} onPress={() => this.props.navigation.navigate("AuthOptions")}>
           <Text style={styles.textOption}>Account</Text>

@@ -1,5 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import Colors from "../Constants/Colors";
+import { connect, useDispatch } from "react-redux";
+import { createNewUser } from "../Redux/Actions";
 import {
   View,
   StyleSheet,
@@ -9,39 +12,84 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
+  Alert
 } from "react-native";
 
-class RegisterScreen extends Component {
-  render() {
-    console.log(Dimensions.get("window").height);
-    return (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={{ alignSelf: "flex-start" }}
-            onPress={() => this.props.navigation.navigate("AuthOptions")}
-          >
-            <Ionicons
-              style={styles.backButton}
-              name="ios-arrow-round-back"
-              size={28}
-            />
-          </TouchableOpacity>
+const RegisterScreen = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
-          <Text style={styles.createAccountHeader}>Create Account</Text>
-          <View style={styles.registerInformation}>
-            <TextInput placeholder="First Name" style={styles.textInput} />
-            <TextInput placeholder="Last Name" style={styles.textInput} />
-            <TextInput placeholder="Username" style={styles.textInput} />
-            <TextInput placeholder="Pin Number" style={styles.textInput} />
-          </View>
-          <TouchableOpacity style={styles.createAccount}>
-            <Text style={styles.createAccountText}>Create New Account</Text>
-          </TouchableOpacity>
+  const dispatch = useDispatch();
+  const handleSignUp = async () => {
+    setError(null);
+    try {
+      await dispatch(() => props.createNewUser(email, password));
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error has occured!", "" + error, [{ text: "Okay" }]);
+    }
+  }, [error]);
+
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={{ alignSelf: "flex-start" }}
+          onPress={() => props.navigation.navigate("AuthOptions")}
+        >
+          <Ionicons
+            style={styles.backButton}
+            name="ios-arrow-round-back"
+            size={28}
+          />
+        </TouchableOpacity>
+
+        <Text style={styles.createAccountHeader}>Create Account</Text>
+        <View style={styles.registerInformation}>
+          <TextInput
+            placeholder="First Name"
+            style={styles.textInput}
+            onChangeText={(firstName) => {
+              console.log(firstName);
+            }}
+          />
+          <TextInput
+            placeholder="Last Name"
+            style={styles.textInput}
+            onChangeText={(lastName) => {
+              console.log(lastName);
+            }}
+          />
+          <TextInput
+            placeholder="Email"
+            style={styles.textInput}
+            onChangeText={(email) => {
+              setEmail(email);
+            }}
+          />
+          <TextInput
+            placeholder="Password"
+            style={styles.textInput}
+            onChangeText={(password) => setPassword(password)}
+          />
         </View>
-      </TouchableWithoutFeedback>
-    );
-  }
+        <TouchableOpacity style={styles.createAccount} onPress={handleSignUp}>
+          <Text style={styles.createAccountText}>Create New Account</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+function mapStateToProps(state) {
+  return {};
 }
 
 const styles = StyleSheet.create({
@@ -62,7 +110,7 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 55,
     borderRadius: 20,
-    backgroundColor: "lavender",
+    backgroundColor: Colors.tropicalBlue,
     elevation: 5,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
@@ -111,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default connect(mapStateToProps, { createNewUser })(RegisterScreen);

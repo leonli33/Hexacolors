@@ -170,6 +170,7 @@ export default (state = currentState, action) => {
     case GENERATE_HARD_GUESS_OPTIONS:
       currentState.guessHexHardColorOptions = genderateHardColorOptions();
       return { ...currentState };
+    case "CREATE_NEW_USER":
     default:
       return state;
   }

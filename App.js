@@ -8,12 +8,14 @@ import GuessColorScreen from "./GuessHexColorScreens/GuessColorScreen";
 import GameModeScreen from "./MixColorScreens/GameModeScreen";
 import OptionScreen from "./AccountScreens/SignInScreen";
 import RegisterScreen from "./AccountScreens/RegisterScreen";
+import AccountScreen from "./AccountScreens/AccountScreen";
+import PlaygroundScreen from "./PlayGroundScreens/PlaygroundScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Reducers from "./Redux/Reducers";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import ReduxThunk from 'redux-thunk'
+import ReduxThunk from "redux-thunk";
 import Colors from "./Constants/Colors";
 
 const AllScreens = createStackNavigator();
@@ -53,6 +55,14 @@ export default function App() {
           />
 
           <AllScreens.Screen
+            component={AccountScreen}
+            name="Profile"
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <AllScreens.Screen
             name="GameMode"
             component={GameModeScreen}
             options={{
@@ -63,6 +73,23 @@ export default function App() {
               },
               headerStyle: {
                 backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: "black",
+            }}
+          />
+
+          <AllScreens.Screen
+            name="Playground"
+            component={PlaygroundScreen}
+            options={{
+              title: "Playground",
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: "#000",
+              headerTitleStyle: {
+                fontWeight: "bold",
               },
               headerTintColor: "black",
             }}

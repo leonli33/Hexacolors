@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
-import Colors from "../Constants/Colors";
+import Colors from "../../Constants/Colors";
 
 class Hint extends Component {
   render() {
