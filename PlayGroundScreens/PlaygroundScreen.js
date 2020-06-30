@@ -9,6 +9,7 @@ import {
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
 import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
+import ColorOption from "../Components/PlaygroundComponents/ColorOption";
 
 const PlaygroundScreen = (props) => {
   const [redValue, setRedValue] = useState(0);
@@ -127,16 +128,39 @@ const PlaygroundScreen = (props) => {
           height: 50,
           alignItems: "center",
           marginTop: "3%",
-          alignSelf: 'center'
+          alignSelf: "center",
         }}
       >
         <TouchableOpacity style={styles.clearSelectedColors}>
           <Text>Clear Selected Colors</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.scrollViewColorMix}>
-        <ScrollView></ScrollView>
-      </View>
+      <ScrollView style={styles.scrollViewColorMix}>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+          <ColorOption color="#FF23A8" />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -168,6 +192,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
+    shadowColor: "black",
+    shadowRadius: 3,
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 1 },
   },
   scroll: {
     backgroundColor: "white",
@@ -182,7 +210,8 @@ const styles = StyleSheet.create({
     height: "45%",
     width: "100%",
     backgroundColor: "ivory",
-    marginTop: '5%'
+    marginTop: "5%",
+    paddingTop: 15,
   },
   clearSelectedColors: {
     width: 200,
@@ -192,6 +221,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 3,
+    shadowColor: "black",
+    shadowRadius: 3,
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 1 },
   },
 });
 
