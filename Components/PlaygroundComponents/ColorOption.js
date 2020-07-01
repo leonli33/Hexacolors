@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,11 +8,31 @@ import {
 } from "react-native";
 
 const ColorOptions = (props) => {
+  const [selected, setSelected] = useState(false);
+
+  const handleColorPressed = () => {
+    setSelected((selected) => !selected);
+    props.handleSelected(props.color);
+  };
+
+  let shaded = selected ? (
+    <View
+      style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
+    />
+  ) : (
+    <View />
+  );
+
   return (
-    <TouchableWithoutFeedback style={styles.container}>
+    <TouchableWithoutFeedback
+      style={styles.container}
+      onPress={handleColorPressed}
+    >
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <View style={{ ...styles.colorBox, backgroundColor: props.color }} />
-        <Text style={styles.hexText}>#FAB223</Text>
+        <View style={{ ...styles.colorBox, backgroundColor: props.color }}>
+          {shaded}
+        </View>
+        <Text style={styles.hexText}>{props.color}</Text>
       </View>
     </TouchableWithoutFeedback>
   );

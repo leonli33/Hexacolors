@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { ResetColors } from "../Redux/Actions";
 
 class LevelsScreen extends Component {
-  navigateTo = (levelID) => {
+navigateTo = (levelID) => {
     this.props.navigation.navigate("Game", {
       level: levelID,
     });

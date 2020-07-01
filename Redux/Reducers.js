@@ -129,6 +129,11 @@ const currentState = {
   guessHexMediumColorOptions: [],
 
   guessHexHardColorOptions: [],
+
+  playgroundModeColors: [
+    ["#EA4335", "#4285F4", "#FBBC05", "#34A853"],
+    ["#942EBE", "#00ECFA", "#F8712E", "#181762"],
+  ],
 };
 
 export default (state = currentState, action) => {

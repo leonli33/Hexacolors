@@ -12,6 +12,7 @@ import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
 import ColorOption from "../Components/PlaygroundComponents/ColorOption";
 import ColorValue from "../Components/PlaygroundComponents/ColorValue";
 import Convert from "color-convert";
+import { connect } from "react-redux";
 
 const PlaygroundScreen = (props) => {
   const [redValue, setRedValue] = useState(0);
@@ -22,11 +23,13 @@ const PlaygroundScreen = (props) => {
   const [greenHexValue, setGreenHexValue] = useState("00");
   const [blueHexValue, setBlueHexValue] = useState("00");
 
+  const [selectedColors, setSelectedColors] = useState([]);
+
   props.navigation.setOptions({
     gestureEnabled: false,
   });
 
-  handleSliderColorChange = (number, color) => {
+  const handleSliderColorChange = (number, color) => {
     let hexString = number.toString(16);
     if (hexString.length === 1) hexString = `0${hexString}`;
     if (color === "red") {
@@ -38,6 +41,14 @@ const PlaygroundScreen = (props) => {
     } else {
       setBlueHexValue(hexString);
       setBlueValue(number);
+    }
+  };
+
+  const handleColorOptionSelected = (color) => {
+    if (!selectedColors.includes(color)) {
+      setSelectedColors((selectedColors) => [...selectedColors, color]);
+    } else {
+      setSelectedColors(selectedColors.filter(currentColor => currentColor != color))
     }
   };
 
@@ -60,15 +71,15 @@ const PlaygroundScreen = (props) => {
           >
             <ColorValue
               borderColor={Colors.tropicalRed}
-              currentValue={redHexValue.toUpperCase()}
+              currentValue={redValue}
             />
             <ColorValue
               borderColor={Colors.tropicalGreen}
-              currentValue={greenHexValue.toUpperCase()}
+              currentValue={greenValue}
             />
             <ColorValue
               borderColor={Colors.tropicalBlue}
-              currentValue={blueHexValue.toUpperCase()}
+              currentValue={blueValue}
             />
           </View>
           <Slider
@@ -137,12 +148,11 @@ const PlaygroundScreen = (props) => {
       </View>
       <View style={{ height: "15%", width: "100%" }}>
         <ScrollView horizontal={true} style={styles.scroll}>
-          <ColorMixedBox color="#FF23A8" />
-          <ColorMixedBox color="#FF23A8" />
-          <ColorMixedBox color="#FF23A8" />
-          <ColorMixedBox color="#FF23A8" />
-          <ColorMixedBox color="#FF23A8" />
-          <ColorMixedBox color="#FF23A8" />
+            {selectedColors.map((color, index) => {
+              return (
+                <ColorMixedBox color={color} key={index} />
+              )
+            })}
         </ScrollView>
       </View>
       <View
@@ -160,34 +170,34 @@ const PlaygroundScreen = (props) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.scrollViewColorMix}>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-          <ColorOption color="#FF23A8" />
-        </View>
+        {props.palette.map((colors, rowindex) => {
+          return (
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              key={rowindex + 100}
+            >
+              {colors.map((color, index) => {
+                return (
+                  <ColorOption
+                    key={index + rowindex * 4}
+                    color={color}
+                    handleSelected={handleColorOptionSelected}
+                  />
+                );
+              })}
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    palette: state.playgroundModeColors,
+  };
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -252,4 +262,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaygroundScreen;
+export default connect(mapStateToProps)(PlaygroundScreen);
