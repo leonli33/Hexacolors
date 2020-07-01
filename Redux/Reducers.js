@@ -227,7 +227,7 @@ function generateMediumColorOptions() {
 function genderateHardColorOptions() {
   let options = [];
   let targetColor = currentState.targetColorToGuess;
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 8; i++) {
     let pair = [];
     for (let j = 0; j < 2; j++) {
       let newColor = createNewColor();

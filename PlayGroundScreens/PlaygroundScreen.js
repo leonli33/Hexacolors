@@ -10,6 +10,8 @@ import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
 import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
 import ColorOption from "../Components/PlaygroundComponents/ColorOption";
+import ColorValue from "../Components/PlaygroundComponents/ColorValue";
+import Convert from "color-convert";
 
 const PlaygroundScreen = (props) => {
   const [redValue, setRedValue] = useState(0);
@@ -19,6 +21,10 @@ const PlaygroundScreen = (props) => {
   const [redHexValue, setRedHexValue] = useState("00");
   const [greenHexValue, setGreenHexValue] = useState("00");
   const [blueHexValue, setBlueHexValue] = useState("00");
+
+  props.navigation.setOptions({
+    gestureEnabled: false,
+  });
 
   handleSliderColorChange = (number, color) => {
     let hexString = number.toString(16);
@@ -35,6 +41,9 @@ const PlaygroundScreen = (props) => {
     }
   };
 
+  let hexColor = `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`;
+  let color = Convert.hex.keyword(hexColor);
+
   return (
     <View style={styles.container}>
       <View
@@ -46,17 +55,21 @@ const PlaygroundScreen = (props) => {
         }}
       >
         <View style={styles.sliderColorContainer}>
-          <View style={{ flexDirection: "row", width: "100%" }}>
-            <Text style={{ alignSelf: "flex-start", fontSize: 18 }}>#00</Text>
-            <Text
-              style={{
-                alignSelf: "flex-end",
-                marginLeft: "70%",
-                fontSize: 18,
-              }}
-            >
-              #FF
-            </Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+          >
+            <ColorValue
+              borderColor={Colors.tropicalRed}
+              currentValue={redHexValue.toUpperCase()}
+            />
+            <ColorValue
+              borderColor={Colors.tropicalGreen}
+              currentValue={greenHexValue.toUpperCase()}
+            />
+            <ColorValue
+              borderColor={Colors.tropicalBlue}
+              currentValue={blueHexValue.toUpperCase()}
+            />
           </View>
           <Slider
             maximumValue={255}
@@ -80,7 +93,7 @@ const PlaygroundScreen = (props) => {
           />
           <Slider
             maximumValue={255}
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginBottom: -10 }}
             thumbTintColor={Colors.tropicalBlue}
             minimumTrackTintColor={Colors.tropicalBlue}
             value={blueValue}
@@ -88,6 +101,9 @@ const PlaygroundScreen = (props) => {
               handleSliderColorChange(Math.round(value), "blue");
             }}
           />
+          <TouchableOpacity style={styles.addButton}>
+            <Text>Add Color</Text>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -95,6 +111,7 @@ const PlaygroundScreen = (props) => {
             height: "100%",
             alignSelf: "center",
             margin: "3%",
+            marginLeft: "8%",
           }}
         >
           <Text
@@ -106,9 +123,16 @@ const PlaygroundScreen = (props) => {
               backgroundColor: `#${redHexValue}${greenHexValue}${blueHexValue}`,
             }}
           />
-          <TouchableOpacity style={styles.addButton}>
-            <Text>Add Color</Text>
-          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 17,
+              alignSelf: "center",
+              marginTop: 10,
+              textAlign: "center",
+            }}
+          >
+            {color}
+          </Text>
         </View>
       </View>
       <View style={{ height: "15%", width: "100%" }}>
@@ -174,12 +198,12 @@ const styles = StyleSheet.create({
   colorView: {
     width: "100%",
     height: "65%",
-    borderWidth: 1,
     borderRadius: 10,
+    borderWidth: 1,
   },
   sliderColorContainer: {
     alignSelf: "flex-start",
-    width: "60%",
+    width: "50%",
     justifyContent: "space-evenly",
     height: "100%",
   },
@@ -198,7 +222,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   scroll: {
-    backgroundColor: "white",
+    backgroundColor: "ivory",
     borderWidth: 1,
     borderRadius: 10,
     width: "90%",

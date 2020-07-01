@@ -8,7 +8,6 @@ import {
   Text,
 } from "react-native";
 import Colors from "../Constants/Colors";
-import { connect } from "react-redux";
 
 class StartScreen extends Component {
   render() {
