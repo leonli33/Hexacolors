@@ -7,6 +7,7 @@ const CREATE_COLOR_TO_GUESS = "CREATE_COLOR_TO_GUESS";
 const GENERATE_EASY_GUESS_OPTIONS = "GENERATE_EASY_GUESS_OPTIONS";
 const GENERATE_MEDIUM_GUESS_OPTIONS = "GENERATE_MEDIUM_GUESS_OPTIONS";
 const GENERATE_HARD_GUESS_OPTIONS = "GENERATE_HARD_GUESS_OPTIONS";
+const ADD_COLOR_TO_PLAYGROUND_LIST = "ADD_COLOR_TO_PLAYGROUND_LIST"
 
 const currentState = {
   // Color at index corresponds to the color of the level
@@ -175,7 +176,6 @@ export default (state = currentState, action) => {
     case GENERATE_HARD_GUESS_OPTIONS:
       currentState.guessHexHardColorOptions = genderateHardColorOptions();
       return { ...currentState };
-    case "CREATE_NEW_USER":
     default:
       return state;
   }

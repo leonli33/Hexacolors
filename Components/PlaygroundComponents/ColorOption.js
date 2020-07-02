@@ -6,22 +6,22 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import { connect } from "react-redux";
 
 const ColorOptions = (props) => {
-  const [selected, setSelected] = useState(false);
 
   const handleColorPressed = () => {
-    setSelected((selected) => !selected);
     props.handleSelected(props.color);
   };
 
-  let shaded = selected ? (
-    <View
-      style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
-    />
-  ) : (
-    <View />
-  );
+  let shaded =
+    props.currentColorsChosen.includes(props.color) ? (
+      <View
+        style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
+      />
+    ) : (
+      <View />
+    );
 
   return (
     <TouchableWithoutFeedback
@@ -60,4 +60,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ColorOptions;
+function mapStateToProps(state) {
+  return {
+    currentColorsChosen: state.colorsChosenSoFar,
+  };
+}
+
+export default connect(mapStateToProps)(ColorOptions);

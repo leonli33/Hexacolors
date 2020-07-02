@@ -70,6 +70,12 @@ export const GenerateColorsToGuessHard = () => {
   };
 };
 
+export const AddColorToPlaygroundList = () => {
+  return {
+    type: "ADD_COLOR_TO_PLAYGROUND_LIST"
+  }
+}
+
 export const createNewUser = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(

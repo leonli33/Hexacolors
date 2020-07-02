@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -11,10 +11,20 @@ import Slider from "react-native-slider";
 import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
 import ColorOption from "../Components/PlaygroundComponents/ColorOption";
 import ColorValue from "../Components/PlaygroundComponents/ColorValue";
+import MixColors from "../Functions/MixColor";
 import Convert from "color-convert";
 import { connect } from "react-redux";
+import {
+  AddUserChosenColor,
+  RemoveUserChosenColor,
+  ResetColors,
+} from "../Redux/Actions";
 
 const PlaygroundScreen = (props) => {
+  useEffect(() => {
+    props.ResetColors();
+  }, []);
+
   const [redValue, setRedValue] = useState(0);
   const [greenValue, setGreenValue] = useState(0);
   const [blueValue, setBlueValue] = useState(0);
@@ -23,13 +33,12 @@ const PlaygroundScreen = (props) => {
   const [greenHexValue, setGreenHexValue] = useState("00");
   const [blueHexValue, setBlueHexValue] = useState("00");
 
-  const [selectedColors, setSelectedColors] = useState([]);
-
   props.navigation.setOptions({
     gestureEnabled: false,
   });
 
   const handleSliderColorChange = (number, color) => {
+    props.ResetColors();
     let hexString = number.toString(16);
     if (hexString.length === 1) hexString = `0${hexString}`;
     if (color === "red") {
@@ -45,11 +54,63 @@ const PlaygroundScreen = (props) => {
   };
 
   const handleColorOptionSelected = (color) => {
-    if (!selectedColors.includes(color)) {
-      setSelectedColors((selectedColors) => [...selectedColors, color]);
+    if (props.currentColorsChosen.includes(color)) {
+      // Remove the color pressed
+      props.RemoveUserChosenColor(color);
+      // If there are no more selected colors, reset all the colors
+      if (props.colors.length === 0) {
+        props.ResetColors();
+
+        setRedHexValue("00");
+        setGreenHexValue("00");
+        setBlueHexValue("00");
+        setRedValue(0);
+        setGreenValue(0);
+        setBlueValue(0);
+      } else {
+        // Get new colors that results from remaining selected colors
+        let newColor = MixColors(props.colors).toUpperCase();
+        setHexValuesOnMixColors(newColor);
+      }
     } else {
-      setSelectedColors(selectedColors.filter(currentColor => currentColor != color))
+      // User wants to add a color to the mix
+      props.AddUserChosenColor(color);
+      if (props.colors.length === 0) {
+        // If there are currently no selected colors, then the color that the user selects is the
+        // color to be displayed
+        setHexValuesOnMixColors(color);
+      } else {
+        // Otherwise, mix all of the currently selected colors together and form a new color
+        let newColor = MixColors(props.colors).toUpperCase();
+        setHexValuesOnMixColors(newColor);
+      }
     }
+  };
+
+  const setHexValuesOnMixColors = (color) => {
+    let redHex = color.substring(1, 3);
+    let greenHex = color.substring(3, 5);
+    let blueHex = color.substring(5, 7);
+    setRedHexValue(redHex);
+    setGreenHexValue(greenHex);
+    setBlueHexValue(blueHex);
+
+    let decimalValueRed = parseInt(redHex, 16);
+    let decimalValueGreen = parseInt(greenHex, 16);
+    let decimalValueBlue = parseInt(blueHex, 16);
+    setRedValue(decimalValueRed);
+    setGreenValue(decimalValueGreen);
+    setBlueValue(decimalValueBlue);
+  };
+
+  const clearSelectedColors = () => {
+    props.ResetColors();
+    setRedHexValue("00");
+    setGreenHexValue("00");
+    setBlueHexValue("00");
+    setRedValue(0);
+    setGreenValue(0);
+    setBlueValue(0);
   };
 
   let hexColor = `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`;
@@ -148,11 +209,9 @@ const PlaygroundScreen = (props) => {
       </View>
       <View style={{ height: "15%", width: "100%" }}>
         <ScrollView horizontal={true} style={styles.scroll}>
-            {selectedColors.map((color, index) => {
-              return (
-                <ColorMixedBox color={color} key={index} />
-              )
-            })}
+          {props.colors.map((color, index) => {
+            return <ColorMixedBox color={color} key={index} />;
+          })}
         </ScrollView>
       </View>
       <View
@@ -165,7 +224,10 @@ const PlaygroundScreen = (props) => {
           alignSelf: "center",
         }}
       >
-        <TouchableOpacity style={styles.clearSelectedColors}>
+        <TouchableOpacity
+          style={styles.clearSelectedColors}
+          onPress={clearSelectedColors}
+        >
           <Text>Clear Selected Colors</Text>
         </TouchableOpacity>
       </View>
@@ -196,6 +258,16 @@ const PlaygroundScreen = (props) => {
 function mapStateToProps(state) {
   return {
     palette: state.playgroundModeColors,
+    colorElements: state.levelColors,
+    color: state.currentLevelUserHexCode,
+    colors: state.colorsChosenSoFar,
+    currentColorsChosen: state.colorsChosenSoFar,
+    levelColors: state.levelAnswer,
+    hints1: state.levelHint1,
+    hints2: state.levelHint2,
+    numColors: state.numColors,
+    previousHexcode: state.lastColorHexcode,
+    colorsNeeded: state.levelComponentsToAnswer,
   };
 }
 
@@ -262,4 +334,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(PlaygroundScreen);
+export default connect(mapStateToProps, {
+  AddUserChosenColor,
+  RemoveUserChosenColor,
+  ResetColors,
+})(PlaygroundScreen);
