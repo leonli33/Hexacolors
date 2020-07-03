@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
+  Animated,
   Text,
   ScrollView,
   Dimensions,
@@ -13,6 +13,8 @@ import ColorOption from "../Components/GuessTheColor/ColorOption";
 import { connect } from "react-redux";
 import ResultTextColorBox from "../Components/GuessTheColor/ResultTextColorBox";
 import GuessHexGameWon from "./GuessHexGameWon";
+import ColorValue from "../Components/PlaygroundComponents/ColorValue";
+import ColorSliderResult from "../Components/GuessTheColor/ColorSliderResult";
 import {
   CreateNewColorToGuess,
   GenerateColorsToGuessEasy,
@@ -35,12 +37,23 @@ class GuessColorScreen extends Component {
       greenValue: 0,
       blueValue: 0,
       sliderMoving: false,
+      textToFadeIn: new Animated.Value(0),
     };
   }
 
   componentDidMount() {
     this.renderAllColors();
+    this.fadeInText();
   }
+
+  fadeInText = () => {
+    setTimeout(() => {
+      Animated.timing(this.state.textToFadeIn, {
+        toValue: 1,
+        timing: 700,
+      }).start();
+    }, 400);
+  };
 
   renderAllColors = () => {
     const { difficulty } = this.props.route.params;
@@ -62,6 +75,7 @@ class GuessColorScreen extends Component {
       greenValue: 0,
       hiddenColors: [],
       sliderMoving: false,
+      textToFadeIn: new Animated.Value(0),
     });
     this.props.CreateNewColorToGuess();
     this.createColorOptions(difficulty);
@@ -135,6 +149,7 @@ class GuessColorScreen extends Component {
 
   handlePlayAgainPressed = () => {
     this.renderAllColors();
+    this.fadeInText();
   };
 
   getColorOptions = () => {
@@ -212,29 +227,30 @@ class GuessColorScreen extends Component {
           backPress={this.handleBackPressed}
           playAgainPress={this.handlePlayAgainPressed}
         />
-        <View>
-          <Text style={styles.hex}>{this.props.targetColor}</Text>
+        <View style={styles.hexContainer}>
+          <Animated.Text
+            style={{ ...styles.hex, opacity: this.state.textToFadeIn }}
+          >
+            {this.props.targetColor}
+          </Animated.Text>
         </View>
+
         <View
           style={{
             width: "90%",
-            height: "25%",
+            height: "30%",
             flexDirection: "row",
-            marginTop: "7%",
+            marginTop: "3%",
+            alignItems: "center",
           }}
         >
           <View style={styles.sliderColorContainer}>
-            <View style={{ flexDirection: "row", width: "100%" }}>
-              <Text style={{ alignSelf: "flex-start", fontSize: 18 }}>#00</Text>
-              <Text
-                style={{
-                  alignSelf: "flex-end",
-                  marginLeft: "70%",
-                  fontSize: 18,
-                }}
-              >
-                #FF
-              </Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <ColorValue borderColor={Colors.tropicalRed} currentValue={0} />
+              <ColorValue borderColor={Colors.tropicalGreen} currentValue={0} />
+              <ColorValue borderColor={Colors.tropicalBlue} currentValue={0} />
             </View>
             <Slider
               maximumValue={255}
@@ -284,10 +300,21 @@ class GuessColorScreen extends Component {
           </View>
           <View
             style={{
-              ...styles.colorView,
-              backgroundColor: `#${this.state.redHex}${this.state.greenHex}${this.state.blueHex}`,
+              justifyContent: "space-evenly",
+              height: "100%",
+              marginLeft: "2%",
+              marginTop: -15
             }}
-          ></View>
+          >
+            <View style={{ flexDirection: "row", width: "40%", height: "40%" }}>
+              <ColorSliderResult color={`#00${this.state.greenHex}00`} borderCol={Colors.tropicalGreen}/>
+              <ColorSliderResult color={`#0000${this.state.blueHex}`} borderCol={Colors.tropicalBlue}/>
+            </View>
+            <View style={{ flexDirection: "row", width: "40%", height: "40%" }}>
+              <ColorSliderResult color={`#${this.state.redHex}0000`} borderCol={Colors.tropicalRed}/>
+              <ColorSliderResult color={`#${this.state.redHex}${this.state.greenHex}${this.state.blueHex}`} borderCol={"black"}/>
+            </View>
+          </View>
         </View>
 
         <View style={styles.resultText}>
@@ -320,8 +347,19 @@ class GuessColorScreen extends Component {
 const styles = StyleSheet.create({
   hex: {
     fontSize: 45,
-    alignSelf: "center",
+    paddingHorizontal: 25,
+    paddingVertical: 5,
+  },
+  hexContainer: {
+    borderRadius: 10,
+    backgroundColor: "white",
     margin: "8%",
+    minHeight: 60,
+    elevation: 5,
+    shadowColor: "black",
+    shadowRadius: 2,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 1 },
   },
   container: {
     width: "100%",
@@ -344,7 +382,7 @@ const styles = StyleSheet.create({
   },
   colorView: {
     width: "35%",
-    height: "90%",
+    height: "75%",
     borderWidth: 1,
     margin: "5%",
     borderRadius: 10,
@@ -358,7 +396,7 @@ const styles = StyleSheet.create({
   },
   sliderColorContainer: {
     alignSelf: "flex-start",
-    width: "60%",
+    width: "50%",
     justifyContent: "space-evenly",
     height: "100%",
   },
@@ -368,7 +406,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     borderRadius: 10,
-    marginTop: Dimensions.get("window").height > 700 ? "15%" : "9%",
+    marginTop: Dimensions.get("window").height > 700 ? "10%" : "4%",
     elevation: 3,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },
