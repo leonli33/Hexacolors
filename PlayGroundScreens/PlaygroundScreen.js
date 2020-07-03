@@ -18,6 +18,8 @@ import {
   AddUserChosenColor,
   RemoveUserChosenColor,
   ResetColors,
+  AddColorToPlaygroundList,
+  RemoveColorFromPlaygroundList,
 } from "../Redux/Actions";
 
 const PlaygroundScreen = (props) => {
@@ -54,7 +56,7 @@ const PlaygroundScreen = (props) => {
   };
 
   const handleColorOptionSelected = (color) => {
-    if (props.currentColorsChosen.includes(color)) {
+    if (props.colors.includes(color)) {
       // Remove the color pressed
       props.RemoveUserChosenColor(color);
       // If there are no more selected colors, reset all the colors
@@ -113,6 +115,26 @@ const PlaygroundScreen = (props) => {
     setBlueValue(0);
   };
 
+  const handleAddColorPressed = () => {
+    if (
+      `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
+      "#000000"
+    ) {
+      props.AddColorToPlaygroundList(
+        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`
+      );
+      clearSelectedColors();
+      setTimeout(() => {
+        scrollRef.scrollToEnd({ animated: true });
+      }, 100);
+    }
+  };
+
+  const handleRemoveColorsPressed = () => {
+    props.RemoveColorFromPlaygroundList(props.colors);
+    clearSelectedColors();
+  };
+
   let hexColor = `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`;
   let color = Convert.hex.keyword(hexColor);
 
@@ -123,7 +145,7 @@ const PlaygroundScreen = (props) => {
           width: "90%",
           height: "35%",
           flexDirection: "row",
-          marginTop: "7%",
+          marginTop: "3%",
         }}
       >
         <View style={styles.sliderColorContainer}>
@@ -173,7 +195,10 @@ const PlaygroundScreen = (props) => {
               handleSliderColorChange(Math.round(value), "blue");
             }}
           />
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={handleAddColorPressed}
+          >
             <Text>Add Color</Text>
           </TouchableOpacity>
         </View>
@@ -207,8 +232,17 @@ const PlaygroundScreen = (props) => {
           </Text>
         </View>
       </View>
-      <View style={{ height: "15%", width: "100%" }}>
-        <ScrollView horizontal={true} style={styles.scroll}>
+      <View style={{ height: "15%", width: "100%", marginTop: -4 }}>
+        <ScrollView
+          horizontal={true}
+          style={styles.scroll}
+          showsHorizontalScrollIndicator={false}
+          directionalLockEnabled={true}
+          showsVerticalScrollIndicator={false}
+          automaticallyAdjustContentInsets={false}
+          disableIntervalMomentum={true}
+          decelerationRate={0}
+        >
           {props.colors.map((color, index) => {
             return <ColorMixedBox color={color} key={index} />;
           })}
@@ -222,6 +256,7 @@ const PlaygroundScreen = (props) => {
           alignItems: "center",
           marginTop: "3%",
           alignSelf: "center",
+          justifyContent: "space-between",
         }}
       >
         <TouchableOpacity
@@ -230,8 +265,18 @@ const PlaygroundScreen = (props) => {
         >
           <Text>Clear Selected Colors</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.removeSelectedColors}
+          onPress={handleRemoveColorsPressed}
+        >
+          <Text>Remove Colors</Text>
+        </TouchableOpacity>
       </View>
-      <ScrollView style={styles.scrollViewColorMix}>
+      <ScrollView
+        style={styles.scrollViewColorMix}
+        showsVerticalScrollIndicator={false}
+        ref={(node) => (scrollRef = node)}
+      >
         {props.palette.map((colors, rowindex) => {
           return (
             <View
@@ -257,17 +302,8 @@ const PlaygroundScreen = (props) => {
 
 function mapStateToProps(state) {
   return {
-    palette: state.playgroundModeColors,
-    colorElements: state.levelColors,
-    color: state.currentLevelUserHexCode,
+    palette: state.playgroundModePalette,
     colors: state.colorsChosenSoFar,
-    currentColorsChosen: state.colorsChosenSoFar,
-    levelColors: state.levelAnswer,
-    hints1: state.levelHint1,
-    hints2: state.levelHint2,
-    numColors: state.numColors,
-    previousHexcode: state.lastColorHexcode,
-    colorsNeeded: state.levelComponentsToAnswer,
   };
 }
 
@@ -275,6 +311,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+
     backgroundColor: "lavender",
   },
   colorView: {
@@ -313,14 +350,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   scrollViewColorMix: {
-    height: "45%",
     width: "100%",
     backgroundColor: "ivory",
-    marginTop: "5%",
+    marginTop: "3%",
     paddingTop: 15,
+    height: "55%",
   },
   clearSelectedColors: {
-    width: 200,
     height: 40,
     borderRadius: 15,
     backgroundColor: Colors.buttonBackground,
@@ -331,6 +367,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 1 },
+    paddingHorizontal: 17,
+  },
+  removeSelectedColors: {
+    height: 40,
+    borderRadius: 15,
+    backgroundColor: Colors.buttonBackground,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "black",
+    shadowRadius: 3,
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 1 },
+    paddingHorizontal: 17,
   },
 });
 
@@ -338,4 +388,6 @@ export default connect(mapStateToProps, {
   AddUserChosenColor,
   RemoveUserChosenColor,
   ResetColors,
+  AddColorToPlaygroundList,
+  RemoveColorFromPlaygroundList,
 })(PlaygroundScreen);

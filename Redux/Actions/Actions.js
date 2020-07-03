@@ -70,9 +70,17 @@ export const GenerateColorsToGuessHard = () => {
   };
 };
 
-export const AddColorToPlaygroundList = () => {
+export const AddColorToPlaygroundList = (color) => {
   return {
-    type: "ADD_COLOR_TO_PLAYGROUND_LIST"
+    type: "ADD_COLOR_TO_PLAYGROUND_LIST",
+    payload: color
+  }
+}
+
+export const RemoveColorFromPlaygroundList = (colors) => {
+  return {
+    type: "REMOVE_COLOR_FROM_PLAYGROUND_LIST",
+    payload: colors
   }
 }
 

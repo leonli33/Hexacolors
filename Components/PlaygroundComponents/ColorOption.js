@@ -9,27 +9,37 @@ import {
 import { connect } from "react-redux";
 
 const ColorOptions = (props) => {
-
   const handleColorPressed = () => {
     props.handleSelected(props.color);
   };
 
-  let shaded =
-    props.currentColorsChosen.includes(props.color) ? (
-      <View
-        style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
-      />
-    ) : (
-      <View />
-    );
+  let shaded = props.currentColorsChosen.includes(props.color) ? (
+    <View
+      style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
+    />
+  ) : (
+    <View />
+  );
 
   return (
     <TouchableWithoutFeedback
       style={styles.container}
-      onPress={handleColorPressed}
+      onPress={() => {
+        if (props.color) {
+          handleColorPressed();
+        }
+      }}
     >
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <View style={{ ...styles.colorBox, backgroundColor: props.color }}>
+        <View
+          style={{
+            ...styles.colorBox,
+            backgroundColor: props.color ? props.color : "Ivory",
+            borderWidth: props.color ? 1 : 0,
+            elevation: props.color ? 5 : 0,
+            opacity: props.color ? 1 : 0,
+          }}
+        >
           {shaded}
         </View>
         <Text style={styles.hexText}>{props.color}</Text>
@@ -42,9 +52,8 @@ const styles = StyleSheet.create({
   colorBox: {
     width: Dimensions.get("window").width / 5,
     height: Dimensions.get("window").width / 5,
-    borderWidth: 1,
     borderRadius: 10,
-    marginBottom: 5,
+    marginBottom: 3,
     elevation: 5,
     shadowColor: "black",
     shadowRadius: 5,
