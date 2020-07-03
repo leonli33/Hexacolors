@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   hexText: {
     alignSelf: "center",
-    marginBottom: 15,
+    marginBottom: 17,
   },
 });
 

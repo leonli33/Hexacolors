@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
@@ -281,7 +282,11 @@ const PlaygroundScreen = (props) => {
         {props.palette.map((colors, rowindex) => {
           return (
             <View
-              style={{ flexDirection: "row", justifyContent:'space-evenly' }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                height: Dimensions.get("window").width * (4 / 13),
+              }}
               key={rowindex + 1000}
             >
               {colors.map((color, index) => {
@@ -312,7 +317,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-
     backgroundColor: "lavender",
   },
   colorView: {
@@ -354,9 +358,8 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "ivory",
     marginTop: "3%",
-    paddingTop: 15,
+    paddingTop: 10,
     height: "55%",
-    borderWidth: 1
   },
   clearSelectedColors: {
     height: 40,
