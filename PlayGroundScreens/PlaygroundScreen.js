@@ -276,12 +276,13 @@ const PlaygroundScreen = (props) => {
         style={styles.scrollViewColorMix}
         showsVerticalScrollIndicator={false}
         ref={(node) => (scrollRef = node)}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "space-evenly" }}
       >
         {props.palette.map((colors, rowindex) => {
           return (
             <View
-              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
-              key={rowindex + 100}
+              style={{ flexDirection: "row", justifyContent:'space-evenly' }}
+              key={rowindex + 1000}
             >
               {colors.map((color, index) => {
                 return (
@@ -355,6 +356,7 @@ const styles = StyleSheet.create({
     marginTop: "3%",
     paddingTop: 15,
     height: "55%",
+    borderWidth: 1
   },
   clearSelectedColors: {
     height: 40,

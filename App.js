@@ -35,6 +35,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerBackTitleVisible: false
             }}
           />
 
@@ -43,6 +44,7 @@ export default function App() {
             name="AuthOptions"
             options={{
               headerShown: false,
+              headerBackTitleVisible: false
             }}
           />
 
@@ -51,6 +53,7 @@ export default function App() {
             name="RegisterScreen"
             options={{
               headerShown: false,
+              headerBackTitleVisible: false
             }}
           />
 
@@ -59,6 +62,7 @@ export default function App() {
             name="Profile"
             options={{
               headerShown: false,
+              headerBackTitleVisible: false
             }}
           />
 
@@ -75,6 +79,7 @@ export default function App() {
                 backgroundColor: Colors.buttonBackground,
               },
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
 
@@ -92,6 +97,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
 
@@ -109,6 +115,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
           <AllScreens.Screen
@@ -125,6 +132,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
 
@@ -138,6 +146,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
           <AllScreens.Screen
@@ -147,6 +156,7 @@ export default function App() {
               title: "Guess the hex",
               headerTitleAlign: "center",
               headerTintColor: "black",
+              headerBackTitleVisible: false
             }}
           />
         </AllScreens.Navigator>
