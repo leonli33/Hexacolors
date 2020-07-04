@@ -421,20 +421,20 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     backgroundColor: "lavender",
-    
+    justifyContent: 'space-evenly'
   },
   colorContainer: {
     backgroundColor: Colors.buttonBackground,
     width: "100%",
     alignSelf: "center",
     marginTop: "5%",
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    minHeight: '35%'
   },
   scroll: {
     width: "100%",
     paddingLeft: 10,
-    marginTop: -10,
-    height: "100%",
+    marginTop: -10
   },
   colorView: {
     width: "35%",
