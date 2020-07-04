@@ -115,7 +115,7 @@ const currentState = {
   // current level that the user is playing
   currentLevel: 0,
   // furthest level that the user has gotten to
-  furthestLevelCompleted: 1,
+  furthestLevelCompleted: 18,
   // colors that the user has picked to far
   colorsChosenSoFar: [],
   // the hexcode representing the color that

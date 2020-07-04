@@ -154,7 +154,6 @@ class GameScreen extends Component {
       <View
         style={{
           flexDirection: "row",
-          marginTop: height > 700 ? Math.round(height / 5) : "30%",
           marginLeft: "2.5%",
           justifyContent: "flex-start",
         }}
@@ -171,7 +170,6 @@ class GameScreen extends Component {
         <View
           style={{
             flexDirection: "row",
-            marginTop: height > 700 ? Math.round(height / 5) : "30%",
             marginLeft: "2.5%",
             justifyContent: "flex-start",
           }}
@@ -193,7 +191,6 @@ class GameScreen extends Component {
         <View
           style={{
             flexDirection: "row",
-            marginTop: height >= 700 ? Math.round(height / 5) : "30%",
             marginLeft: "2.5%",
             justifyContent: "flex-start",
           }}
@@ -235,13 +232,7 @@ class GameScreen extends Component {
     }
 
     return (
-      <View
-        style={{
-          backgroundColor: Colors.backgroundCol,
-          width: "100%",
-          height: "100%",
-        }}
-      >
+      <View style={styles.container}>
         <ColorMixerWonScreen
           level={level}
           handleNextPress={this.onForwardPress}
@@ -267,80 +258,59 @@ class GameScreen extends Component {
             color={this.props.color}
           />
         </View>
-        {hints}
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: Colors.buttonBackground,
-            marginTop: "5%",
-            height: "100%",
-            shadowColor: "black",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.26,
-            shadowRadius: 15,
-            elevation: 5,
-            justifyContent: "center",
-          }}
-        >
-          <View
-            style={{
-              marginLeft: "4%",
-              marginTop: "3%",
-              flexDirection: "row",
-              height: 35,
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 17 }}>{selectedText}</Text>
-            <TouchableOpacity
-              onPress={() => this.scroll.scrollToEnd({ animated: true })}
-              style={{ justifyContent: "center", alignItems: "center" }}
+        <View>
+          {hints}
+          <View style={styles.scrollContainer}>
+            <View style={styles.scrollHeader}>
+              <Text style={{ fontSize: 17 }}>{selectedText}</Text>
+              <TouchableOpacity
+                onPress={() => this.scroll.scrollToEnd({ animated: true })}
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <Image
+                  style={{ marginRight: 40 }}
+                  source={require("../Icons/rightarrow.png")}
+                />
+              </TouchableOpacity>
+            </View>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              automaticallyAdjustContentInsets={false}
+              disableIntervalMomentum={true}
+              directionalLockEnabled={true}
+              style={styles.scroll}
+              decelerationRate={0}
+              horizontal={true}
+              snapToAlignment={"end"}
+              snapToInterval={width - 45}
+              ref={(node) => (this.scroll = node)}
             >
-              <Image
-                style={{ marginRight: 40 }}
-                source={require("../Icons/rightarrow.png")}
-              />
-            </TouchableOpacity>
+              {this.props.colorElements.map((elementArr, arrIndex) => {
+                return (
+                  <View key={arrIndex + 12}>
+                    {elementArr.map((color, index) => {
+                      return (
+                        <ColorChoice
+                          hint1Activated={this.state.hint1}
+                          hint2Activated={this.state.hint2}
+                          hint3Activated={this.state.hint3}
+                          hints1={this.props.hints1[level]}
+                          colorsChosen={this.props.currentColorsChosen}
+                          currentLevel={level}
+                          hint1={this.state.hint1}
+                          onColorPress={this.handleColorSelected}
+                          hints2={this.props.hints2[level]}
+                          color={color}
+                          index={index + 2 * arrIndex}
+                          key={index + arrIndex}
+                        />
+                      );
+                    })}
+                  </View>
+                );
+              })}
+            </ScrollView>
           </View>
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            automaticallyAdjustContentInsets={false}
-            disableIntervalMomentum={true}
-            directionalLockEnabled={true}
-            style={styles.scroll}
-            decelerationRate={0}
-            horizontal={true}
-            snapToAlignment={"end"}
-            snapToInterval={width - 45}
-            ref={(node) => (this.scroll = node)}
-          >
-            {this.props.colorElements.map((elementArr, arrIndex) => {
-              return (
-                <View key={arrIndex + 12}>
-                  {elementArr.map((color, index) => {
-                    return (
-                      <ColorChoice
-                        hint1Activated={this.state.hint1}
-                        hint2Activated={this.state.hint2}
-                        hint3Activated={this.state.hint3}
-                        hints1={this.props.hints1[level]}
-                        colorsChosen={this.props.currentColorsChosen}
-                        currentLevel={level}
-                        hint1={this.state.hint1}
-                        onColorPress={this.handleColorSelected}
-                        hints2={this.props.hints2[level]}
-                        color={color}
-                        index={index + 2 * arrIndex}
-                        key={index + arrIndex}
-                      />
-                    );
-                  })}
-                </View>
-              );
-            })}
-          </ScrollView>
         </View>
       </View>
     );
@@ -358,8 +328,34 @@ const styles = StyleSheet.create({
     marginLeft: "2.5%",
     padding: 6,
     width: "100%",
-    height: "30%",
-    marginTop: "1%",
+    marginTop: "2%",
+    marginBottom: -10,
+  },
+  scrollHeader: {
+    marginLeft: "4%",
+    marginTop: "2%",
+    flexDirection: "row",
+    height: 35,
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  scrollContainer: {
+    width: "100%",
+    backgroundColor: Colors.buttonBackground,
+    marginTop: "3%",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.26,
+    shadowRadius: 15,
+    elevation: 5,
+    justifyContent: "center",
+  },
+  container: {
+    backgroundColor: Colors.backgroundCol,
+    width: "100%",
+    height: "100%",
+    justifyContent: "space-between",
   },
 });
 

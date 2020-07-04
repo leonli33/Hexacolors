@@ -362,38 +362,38 @@ class GuessColorScreen extends Component {
             </View>
           </View>
         </View>
-          <View style={styles.resultText}>
-            <Text style={styles.resultGuessText}>
-              {this.state.resultAfterGuess}
-            </Text>
-            <View
-              style={{
-                alignSelf: "center",
-                justifyContent: "center",
-                height: "100%",
-                width: "93%",
-                position: "absolute",
-              }}
-            >
-              <ResultTextColorBox color={this.state.lastGuessedColor} />
-            </View>
+        <View style={styles.resultText}>
+          <Text style={styles.resultGuessText}>
+            {this.state.resultAfterGuess}
+          </Text>
+          <View
+            style={{
+              alignSelf: "center",
+              justifyContent: "center",
+              height: "100%",
+              width: "93%",
+              position: "absolute",
+            }}
+          >
+            <ResultTextColorBox color={this.state.lastGuessedColor} />
           </View>
+        </View>
 
-          <View style={styles.colorContainer}>
-            <ScrollView
-              style={styles.scroll}
-              horizontal={true}
-              contentContainerStyle={{
-                justifyContent: "space-evenly",
-                flexGrow: 1,
-              }}
-              showsHorizontalScrollIndicator={false}
-              automaticallyAdjustContentInsets={false}
-              directionalLockEnabled={true}
-            >
-              {this.getColorOptions()}
-            </ScrollView>
-          </View>
+        <View style={styles.colorContainer}>
+          <ScrollView
+            style={styles.scroll}
+            horizontal={true}
+            contentContainerStyle={{
+              justifyContent: "space-evenly",
+              flexGrow: 1,
+            }}
+            showsHorizontalScrollIndicator={false}
+            automaticallyAdjustContentInsets={false}
+            directionalLockEnabled={true}
+          >
+            {this.getColorOptions()}
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -421,20 +421,20 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     backgroundColor: "lavender",
-    justifyContent: 'space-evenly'
+    justifyContent: "space-evenly",
   },
   colorContainer: {
     backgroundColor: Colors.buttonBackground,
     width: "100%",
     alignSelf: "center",
     marginTop: "5%",
-    alignSelf: 'flex-end',
-    minHeight: '35%'
+    alignSelf: "flex-end",
+    minHeight: "35%",
   },
   scroll: {
     width: "100%",
     paddingLeft: 10,
-    marginTop: -10
+    marginTop: -10,
   },
   colorView: {
     width: "35%",
