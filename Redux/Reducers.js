@@ -228,20 +228,26 @@ function addColorToPalette(color) {
     alert("This color is already present in your palette");
   } else {
     let len = currentState.playgroundModePalette.length;
-    let lastColorArray = currentState.playgroundModePalette[len - 1];
-    let spaceAvailable = false;
-    for (let i = 0; i < 4; i++) {
-      let colorArr = lastColorArray[i];
-      if (colorArr === "") {
-        spaceAvailable = true;
-        lastColorArray[i] = color;
-        break;
+    if (len === 0) {
+      let colorArr = [color, "", "", ""];
+      currentState.playgroundModePalette.push(colorArr);
+    } else {
+      let lastColorArray = currentState.playgroundModePalette[len - 1];
+      let spaceAvailable = false;
+      for (let i = 0; i < 4; i++) {
+        let colorArr = lastColorArray[i];
+        if (colorArr === "") {
+          spaceAvailable = true;
+          lastColorArray[i] = color;
+          break;
+        }
+      }
+      if (!spaceAvailable) {
+        let newColorRow = [color, "", "", ""];
+        currentState.playgroundModePalette.push(newColorRow);
       }
     }
-    if (!spaceAvailable) {
-      let newColorRow = [color, "", "", ""];
-      currentState.playgroundModePalette.push(newColorRow);
-    }
+
     currentState.paletteColorsSet.add(color);
   }
 }

@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 15,
-    alignSelf: "center",
-    marginLeft: "85%",
-    marginTop: Dimensions.get("window").height < 700 ? 20 : 40,
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    marginRight: 20
   },
 });
 

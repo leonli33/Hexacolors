@@ -3,7 +3,13 @@ import { View, Text, StyleSheet } from "react-native";
 
 const ColorValue = (props) => {
   return (
-    <View style={{...styles.container, borderColor: props.borderColor}}>
+    <View
+      style={{
+        ...styles.container,
+        borderColor: props.borderColor,
+        backgroundColor: props.currentValue === "" ? "dimgray" : "ivory",
+      }}
+    >
       <Text>{props.currentValue}</Text>
     </View>
   );
@@ -17,7 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
-    backgroundColor: 'ivory'
+    backgroundColor: "ivory",
   },
 });
 

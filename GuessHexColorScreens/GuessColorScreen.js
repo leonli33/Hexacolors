@@ -217,6 +217,31 @@ class GuessColorScreen extends Component {
     }
   };
 
+  returnCurrentColorValue = (color) => {
+    const { difficulty } = this.props.route.params;
+    let index = 0;
+    if (difficulty === "Medium") index = 1;
+    if (difficulty === "Hard") index = 2;
+    if (color === "red") {
+      let valueArr = [this.state.redHex.toUpperCase(), this.state.redValue, ""];
+      return valueArr[index];
+    } else if (color === "green") {
+      let valueArr = [
+        this.state.greenHex.toUpperCase(),
+        this.state.greenValue,
+        "",
+      ];
+      return valueArr[index];
+    } else {
+      let valueArr = [
+        this.state.blueHex.toUpperCase(),
+        this.state.blueValue,
+        "",
+      ];
+      return valueArr[index];
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -248,9 +273,18 @@ class GuessColorScreen extends Component {
             <View
               style={{ flexDirection: "row", justifyContent: "space-evenly" }}
             >
-              <ColorValue borderColor={Colors.tropicalRed} currentValue={0} />
-              <ColorValue borderColor={Colors.tropicalGreen} currentValue={0} />
-              <ColorValue borderColor={Colors.tropicalBlue} currentValue={0} />
+              <ColorValue
+                borderColor={Colors.tropicalRed}
+                currentValue={this.returnCurrentColorValue("red")}
+              />
+              <ColorValue
+                borderColor={Colors.tropicalGreen}
+                currentValue={this.returnCurrentColorValue("green")}
+              />
+              <ColorValue
+                borderColor={Colors.tropicalBlue}
+                currentValue={this.returnCurrentColorValue("blue")}
+              />
             </View>
             <Slider
               maximumValue={255}
@@ -303,42 +337,63 @@ class GuessColorScreen extends Component {
               justifyContent: "space-evenly",
               height: "100%",
               marginLeft: "2%",
-              marginTop: -15
+              marginTop: -15,
             }}
           >
             <View style={{ flexDirection: "row", width: "40%", height: "40%" }}>
-              <ColorSliderResult color={`#00${this.state.greenHex}00`} borderCol={Colors.tropicalGreen}/>
-              <ColorSliderResult color={`#0000${this.state.blueHex}`} borderCol={Colors.tropicalBlue}/>
+              <ColorSliderResult
+                color={`#00${this.state.greenHex}00`}
+                borderCol={Colors.tropicalGreen}
+              />
+              <ColorSliderResult
+                color={`#0000${this.state.blueHex}`}
+                borderCol={Colors.tropicalBlue}
+              />
             </View>
             <View style={{ flexDirection: "row", width: "40%", height: "40%" }}>
-              <ColorSliderResult color={`#${this.state.redHex}0000`} borderCol={Colors.tropicalRed}/>
-              <ColorSliderResult color={`#${this.state.redHex}${this.state.greenHex}${this.state.blueHex}`} borderCol={"black"}/>
+              <ColorSliderResult
+                color={`#${this.state.redHex}0000`}
+                borderCol={Colors.tropicalRed}
+              />
+              <ColorSliderResult
+                color={`#${this.state.redHex}${this.state.greenHex}${this.state.blueHex}`}
+                borderCol={"black"}
+              />
             </View>
           </View>
         </View>
+          <View style={styles.resultText}>
+            <Text style={styles.resultGuessText}>
+              {this.state.resultAfterGuess}
+            </Text>
+            <View
+              style={{
+                alignSelf: "center",
+                justifyContent: "center",
+                height: "100%",
+                width: "93%",
+                position: "absolute",
+              }}
+            >
+              <ResultTextColorBox color={this.state.lastGuessedColor} />
+            </View>
+          </View>
 
-        <View style={styles.resultText}>
-          <Text style={styles.resultGuessText}>
-            {this.state.resultAfterGuess}
-          </Text>
-          <ResultTextColorBox color={this.state.lastGuessedColor} />
-        </View>
-
-        <View style={styles.colorContainer}>
-          <ScrollView
-            style={styles.scroll}
-            horizontal={true}
-            contentContainerStyle={{
-              justifyContent: "space-evenly",
-              flexGrow: 1,
-            }}
-            showsHorizontalScrollIndicator={false}
-            automaticallyAdjustContentInsets={false}
-            directionalLockEnabled={true}
-          >
-            {this.getColorOptions()}
-          </ScrollView>
-        </View>
+          <View style={styles.colorContainer}>
+            <ScrollView
+              style={styles.scroll}
+              horizontal={true}
+              contentContainerStyle={{
+                justifyContent: "space-evenly",
+                flexGrow: 1,
+              }}
+              showsHorizontalScrollIndicator={false}
+              automaticallyAdjustContentInsets={false}
+              directionalLockEnabled={true}
+            >
+              {this.getColorOptions()}
+            </ScrollView>
+          </View>
       </View>
     );
   }
@@ -366,19 +421,20 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     backgroundColor: "lavender",
+    
   },
   colorContainer: {
     backgroundColor: Colors.buttonBackground,
     width: "100%",
     alignSelf: "center",
-    height: "40%",
     marginTop: "5%",
+    alignSelf: 'flex-end'
   },
   scroll: {
     width: "100%",
-    height: "100%",
     paddingLeft: 10,
     marginTop: -10,
+    height: "100%",
   },
   colorView: {
     width: "35%",
@@ -390,7 +446,6 @@ const styles = StyleSheet.create({
   },
   resultGuessText: {
     fontSize: 17,
-    marginTop: 15,
     alignSelf: "center",
     position: "absolute",
   },
@@ -404,17 +459,14 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     backgroundColor: "white",
-    alignItems: "center",
     borderRadius: 10,
-    marginTop: Dimensions.get("window").height > 700 ? "10%" : "4%",
+    marginTop: Dimensions.get("window").height / 18,
     elevation: 3,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     justifyContent: "center",
-    textAlignVertical: "center",
-    textAlign: "center",
   },
 });
 
