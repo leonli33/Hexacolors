@@ -35,7 +35,8 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
+              headerShown: false,
             }}
           />
 
@@ -44,7 +45,7 @@ export default function App() {
             name="AuthOptions"
             options={{
               headerShown: false,
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
@@ -53,7 +54,7 @@ export default function App() {
             name="RegisterScreen"
             options={{
               headerShown: false,
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
@@ -62,14 +63,14 @@ export default function App() {
             name="Profile"
             options={{
               headerShown: false,
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
           <AllScreens.Screen
             name="GameMode"
             component={GameModeScreen}
-            options={{
+            options={{  
               title: "Game Modes",
               headerTitleAlign: "center",
               headerTitleStyle: {
@@ -79,7 +80,7 @@ export default function App() {
                 backgroundColor: Colors.buttonBackground,
               },
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
@@ -97,7 +98,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
@@ -115,7 +116,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
           <AllScreens.Screen
@@ -132,7 +133,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
 
@@ -146,7 +147,7 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
           <AllScreens.Screen
@@ -156,7 +157,7 @@ export default function App() {
               title: "Guess the hex",
               headerTitleAlign: "center",
               headerTintColor: "black",
-              headerBackTitleVisible: false
+              headerBackTitleVisible: false,
             }}
           />
         </AllScreens.Navigator>

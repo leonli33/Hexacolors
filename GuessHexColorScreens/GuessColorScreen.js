@@ -157,10 +157,17 @@ class GuessColorScreen extends Component {
     if (difficulty === "Easy") {
       return this.props.easyColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex}>
+          <View
+            style={{
+              marginRight: 20,
+              justifyContent: "space-evenly",
+              marginRight: 25,
+            }}
+            key={arrIndex}
+          >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2}>
+                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -177,10 +184,17 @@ class GuessColorScreen extends Component {
     } else if (difficulty === "Medium") {
       return this.props.mediumColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex}>
+          <View
+            style={{
+              marginRight: 20,
+              justifyContent: "space-evenly",
+              marginRight: 25,
+            }}
+            key={arrIndex}
+          >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2}>
+                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -197,10 +211,17 @@ class GuessColorScreen extends Component {
     } else {
       return this.props.hardColorOptions.map((colorArr, arrIndex) => {
         return (
-          <View style={{ marginRight: 20 }} key={arrIndex}>
+          <View
+            style={{
+              marginRight: 20,
+              justifyContent: "space-evenly",
+              marginRight: 25,
+            }}
+            key={arrIndex}
+          >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2}>
+                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -379,21 +400,19 @@ class GuessColorScreen extends Component {
           </View>
         </View>
 
-        <View style={styles.colorContainer}>
-          <ScrollView
-            style={styles.scroll}
-            horizontal={true}
-            contentContainerStyle={{
-              justifyContent: "space-evenly",
-              flexGrow: 1,
-            }}
-            showsHorizontalScrollIndicator={false}
-            automaticallyAdjustContentInsets={false}
-            directionalLockEnabled={true}
-          >
-            {this.getColorOptions()}
-          </ScrollView>
-        </View>
+        <ScrollView
+          style={styles.scroll}
+          horizontal={true}
+          contentContainerStyle={{
+            justifyContent: "space-evenly",
+            flexGrow: 1,
+          }}
+          showsHorizontalScrollIndicator={false}
+          automaticallyAdjustContentInsets={false}
+          directionalLockEnabled={true}
+        >
+          {this.getColorOptions()}
+        </ScrollView>
       </View>
     );
   }
@@ -423,18 +442,11 @@ const styles = StyleSheet.create({
     backgroundColor: "lavender",
     justifyContent: "space-evenly",
   },
-  colorContainer: {
-    backgroundColor: Colors.buttonBackground,
-    width: "100%",
-    alignSelf: "center",
-    marginTop: "5%",
-    alignSelf: "flex-end",
-    minHeight: "35%",
-  },
   scroll: {
     width: "100%",
     paddingLeft: 10,
-    marginTop: -10,
+    marginTop: "5%",
+    backgroundColor: Colors.buttonBackground,
   },
   colorView: {
     width: "35%",
@@ -460,7 +472,6 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "white",
     borderRadius: 10,
-    marginTop: Dimensions.get("window").height / 18,
     elevation: 3,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },

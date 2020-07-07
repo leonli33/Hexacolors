@@ -1,38 +1,53 @@
 import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Colors from "../Constants/Colors";
+import GradientButton from "react-native-gradient-buttons";
 
 class GameModeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>
-          <TouchableOpacity
-            style={{ ...styles.option }}
-            onPress={() => {
-              this.props.navigation.navigate("Levels");
-            }}
-          >
-            <Text style={styles.optionText}>Color Mixer</Text>
-          </TouchableOpacity>
+          <GradientButton
+            style={styles.option}
+            text="Color Mixer"
+            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            blueViolet
+            height={90}
+            width={"100%"}
+            radius={15}
+            impact
+            impactStyle="Light"
+            onPressAction={() => this.props.navigation.navigate("Levels")}
+          />
 
-          <TouchableOpacity
-            style={{ ...styles.option }}
-            onPress={() => {
-              this.props.navigation.navigate("GuessHexDifficultyScreen");
-            }}
-          >
-            <Text style={styles.optionText}>Hex Guesser</Text>
-          </TouchableOpacity>
+          <GradientButton
+            style={styles.option}
+            text="Hex Guesser"
+            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            violetPink
+            height={90}
+            width={"100%"}
+            radius={15}
+            impact
+            impactStyle="Light"
+            onPressAction={() =>
+              this.props.navigation.navigate("GuessHexDifficultyScreen")
+            }
+          />
 
-          <TouchableOpacity
-            style={{ ...styles.option }}
-            onPress={() => {
-              this.props.navigation.navigate("Playground");
-            }}
-          >
-            <Text style={styles.optionText}>Playground</Text>
-          </TouchableOpacity>
+          <GradientButton
+            style={styles.option}
+            text="Playground"
+            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            pinkDarkGreen
+            height={90}
+            width={"100%"}
+            radius={15}
+            impact
+            impactStyle="Light"
+            onPressAction={() => this.props.navigation.navigate("Playground")}
+          />
         </View>
       </View>
     );
@@ -59,11 +74,17 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 6,
-    borderColor: "#F6B09D",
+    backgroundColor: "#F6B09D",
+    elevation: 3,
+    shadowColor: "black",
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
   },
   optionText: {
     fontSize: 25,
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

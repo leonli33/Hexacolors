@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    marginTop: Math.round(Dimensions.get("window").height / 30),
     borderWidth: 1,
   },
 });

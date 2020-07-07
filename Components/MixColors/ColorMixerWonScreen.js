@@ -120,10 +120,18 @@ class ColorMixerWonScreen extends Component {
               <Text>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.handleNextPress(this.props.level + 1)}
+              onPress={() => {
+                if (this.props.level === 18) {
+                  this.props.gameModePress()
+                } else {
+                  this.props.handleNextPress(this.props.level + 1);
+                }
+              }}
               style={styles.LevelsButton}
             >
-              <Text>Next Level</Text>
+              <Text>
+                {this.props.level === 18 ? "Game Modes" : "Next Level"}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -143,6 +143,10 @@ class GameScreen extends Component {
     }
   };
 
+  onGameModePress= () => {
+    this.props.navigation.navigate("GameMode");
+  }
+
   render() {
     let { width, height } = Dimensions.get("window");
     let gameWon = false;
@@ -241,6 +245,7 @@ class GameScreen extends Component {
           colorsNeeded={this.props.colorsNeeded[level]}
           targetColor={this.props.levelColors[level]}
           visibility={gameWon}
+          gameModePress={this.onGameModePress}
         />
         <View style={styles.colorboxes}>
           <ColorBox

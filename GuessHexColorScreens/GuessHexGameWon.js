@@ -23,8 +23,6 @@ const GuessHexGameWon = (props) => {
       backdropOpacity={0.8}
       animationInTiming={1500}
       backdropTransitionInTiming={1500}
-      snapToAlignment={"end"}
-      snapToInterval={Dimensions.get('window').width - 45}
     >
       <View style={styles.container}>
         <Text style={{ fontSize: 30, marginTop: "5%" }}>Nice Job!</Text>
@@ -72,7 +70,7 @@ const GuessHexGameWon = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "55%",
+    height: "60%",
     width: "95%",
     backgroundColor: "whitesmoke",
     alignSelf: "center",
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     height: "20%",
-    marginTop: "60%",
+    marginTop: "70%",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
