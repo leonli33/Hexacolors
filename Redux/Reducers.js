@@ -44,7 +44,7 @@ const currentState = {
 
   // Colors that make up an answer for a given level
   levelComponentsToAnswer: [
-    "placeholer",
+    "placeholder",
     ["#FFC6E3"],
     ["#EA4335", "#4285F4"],
     ["#FBBC05", "#4285F4"],

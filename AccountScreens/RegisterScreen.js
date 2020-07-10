@@ -12,19 +12,25 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
-  Alert
+  Alert,
+  Image,
 } from "react-native";
 
 const RegisterScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState();
 
   const dispatch = useDispatch();
   const handleSignUp = async () => {
     setError(null);
     try {
-      await dispatch(() => props.createNewUser(email, password));
+      await dispatch(() =>
+        props.createNewUser(email, password, firstName, lastName)
+      );
+      props.navigation.navigate("Profile");
     } catch (error) {
       console.log(error);
       setError(error);
@@ -41,47 +47,60 @@ const RegisterScreen = (props) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <TouchableOpacity
-          style={{ alignSelf: "flex-start" }}
+          style={{ alignSelf: "flex-start", marginTop: 25 }}
           onPress={() => props.navigation.navigate("AuthOptions")}
         >
           <Ionicons
             style={styles.backButton}
             name="ios-arrow-round-back"
-            size={28}
+            size={30}
           />
         </TouchableOpacity>
+        <Image
+          source={require("../Icons/hexacolorslight.png")}
+          style={{
+            transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
+            resizeMode: "contain",
+            marginTop: "2%",
+          }}
+        />
+        <TextInput
+          placeholder="First Name"
+          style={{ ...styles.textInput, marginTop: "5%" }}
+          onChangeText={(firstName) => {
+            setFirstName(firstName);
+          }}
+        />
+        <TextInput
+          placeholder="Last Name"
+          style={{ ...styles.textInput, marginTop: "5%" }}
+          onChangeText={(lastName) => {
+            setLastName(lastName);
+          }}
+        />
 
-        <Text style={styles.createAccountHeader}>Create Account</Text>
-        <View style={styles.registerInformation}>
-          <TextInput
-            placeholder="First Name"
-            style={styles.textInput}
-            onChangeText={(firstName) => {
-              console.log(firstName);
-            }}
-          />
-          <TextInput
-            placeholder="Last Name"
-            style={styles.textInput}
-            onChangeText={(lastName) => {
-              console.log(lastName);
-            }}
-          />
-          <TextInput
-            placeholder="Email"
-            style={styles.textInput}
-            onChangeText={(email) => {
-              setEmail(email);
-            }}
-          />
-          <TextInput
-            placeholder="Password"
-            style={styles.textInput}
-            onChangeText={(password) => setPassword(password)}
-          />
-        </View>
-        <TouchableOpacity style={styles.createAccount} onPress={handleSignUp}>
-          <Text style={styles.createAccountText}>Create New Account</Text>
+        <TextInput
+          placeholder="Email"
+          style={{ ...styles.textInput, marginTop: "12%" }}
+          onChangeText={(email) => {
+            setEmail(email);
+          }}
+        />
+        <TouchableOpacity style={{ width: "90%" }}>
+          <Text
+            style={{ color: "silver", marginTop: "5%", alignSelf: "flex-end" }}
+          >
+            show password
+          </Text>
+        </TouchableOpacity>
+
+        <TextInput
+          placeholder="Password"
+          style={{ ...styles.textInput, marginTop: "3.5%" }}
+          onChangeText={(password) => setPassword(password)}
+        />
+        <TouchableOpacity onPress={handleSignUp}>
+          <Text style={styles.createAccountText}>Create Account</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
@@ -96,7 +115,7 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "black",
     alignItems: "center",
   },
   createAccountHeader: {
@@ -108,21 +127,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "80%",
-    height: 55,
     borderRadius: 20,
     backgroundColor: Colors.tropicalBlue,
-    elevation: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 5,
     marginTop: "15%",
   },
   createAccountText: {
     fontSize: 20,
     color: "white",
-    fontWeight: "bold",
-    position: "absolute",
+    backgroundColor: Colors.tropicalBlue,
+    paddingVertical: 5,
+    paddingHorizontal: 35,
+    borderRadius: 15,
+    marginTop: "20%",
   },
   registerInformation: {
     width: "80%",
@@ -142,18 +158,18 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   textInput: {
-    height: "15%",
+    height: 40,
     width: "90%",
-    borderBottomWidth: 1,
+    borderWidth: 1,
     borderColor: "silver",
-    fontSize: 20,
+    fontSize: 18,
     padding: 5,
-    marginVertical: "4%",
-    color: "black",
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingLeft: 10,
   },
   backButton: {
-    color: "black",
-    paddingTop: Dimensions.get("window").height > 700 ? 50 : 30,
+    color: "gray",
     alignSelf: "flex-start",
     paddingLeft: 30,
   },

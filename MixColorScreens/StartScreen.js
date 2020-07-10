@@ -9,8 +9,25 @@ import {
 } from "react-native";
 import Colors from "../Constants/Colors";
 import Spinner from "../Components/GeneralUI/Spinner";
+import "firebase/auth";
+import "firebase/firestore";
+import * as firebase from "firebase";
 
 class StartScreen extends Component {
+
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection("users")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((documentSnap) => {
+          const {first_name} = documentSnap.data()
+          console.log(first_name)
+        })
+      });
+  }
+
   render() {
     const { width, height } = Dimensions.get("window");
     const iconSize = Math.round(width / 10);

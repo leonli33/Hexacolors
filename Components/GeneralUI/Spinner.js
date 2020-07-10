@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Colors from "../../Constants/Colors";
 
-const Spinner = (props) => {
+const Spinner = () => {
   let topColors = [
     Colors.tropicalRed,
     "#003B46",
@@ -480,9 +480,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.23,
     shadowRadius: 5,
-    elevation: 3,
+    elevation: 3.5,
   },
   text: {
     fontSize: 15,

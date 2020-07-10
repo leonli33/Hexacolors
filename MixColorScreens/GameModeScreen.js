@@ -12,7 +12,9 @@ class GameModeScreen extends Component {
             style={styles.option}
             text="Color Mixer"
             textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            blueViolet
+            gradientBegin="#5bc8ac"
+            gradientEnd="#e6d72a"
+            gradientDirection="diagonal"
             height={90}
             width={"100%"}
             radius={15}
@@ -25,7 +27,9 @@ class GameModeScreen extends Component {
             style={styles.option}
             text="Hex Guesser"
             textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            violetPink
+            gradientBegin="#e6d72a"
+            gradientEnd="#f18d9e"
+            gradientDirection="diagonal"
             height={90}
             width={"100%"}
             radius={15}
@@ -40,7 +44,9 @@ class GameModeScreen extends Component {
             style={styles.option}
             text="Playground"
             textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            pinkDarkGreen
+            gradientBegin="#f18d9e"
+            gradientEnd="#1995ad"
+            gradientDirection="diagonal"
             height={90}
             width={"100%"}
             radius={15}

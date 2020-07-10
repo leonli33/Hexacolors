@@ -17,9 +17,14 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
 import Colors from "./Constants/Colors";
+import * as firebase from "firebase";
+import { firebaseConfig } from "./Constants/FirebaseApi";
 
 const AllScreens = createStackNavigator();
 const store = createStore(Reducers, applyMiddleware(ReduxThunk));
+
+// Initialize Firebase
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : {};
 
 export default function App() {
   return (
@@ -64,13 +69,14 @@ export default function App() {
             options={{
               headerShown: false,
               headerBackTitleVisible: false,
+              gestureEnabled: false
             }}
           />
 
           <AllScreens.Screen
             name="GameMode"
             component={GameModeScreen}
-            options={{  
+            options={{
               title: "Game Modes",
               headerTitleAlign: "center",
               headerTitleStyle: {
@@ -165,10 +171,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

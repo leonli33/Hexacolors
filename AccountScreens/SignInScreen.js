@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Alert,
+  Image,
 } from "react-native";
 import Colors from "../Constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -68,27 +69,36 @@ const OptionScreen = (props) => {
             height: "100%",
           }}
         >
-          <Text style={styles.welcomeText}>Welcome</Text>
-          <View style={styles.loginInformation}>
-            <TextInput
-              placeholder="Email"
-              style={styles.textInput}
-              onChangeText={(email) => setEmail(email)}
-            />
-            <TextInput
-              placeholder="Password"
-              style={{ ...styles.textInput, marginTop: "2%" }}
-              onChangeText={(password) => setPassword(password)}
-            />
-          </View>
+          <Image
+            source={require("../Icons/hexacolorslight.png")}
+            style={{
+              transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
+              resizeMode: "contain",
+              marginTop: "10%",
+            }}
+          />
+          <TextInput
+            placeholder="Email"
+            style={{ ...styles.textInput, marginTop: "12%" }}
+            onChangeText={(email) => setEmail(email)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            returnKeyType="next"
+          />
+          <TextInput
+            placeholder="Password"
+            style={{ ...styles.textInput, marginTop: "7%" }}
+            onChangeText={(password) => setPassword(password)}
+            autoCapitalize="none"
+          />
           {loading ? (
             <ActivityIndicator
               size="large"
               color={Colors.tropicalBlue}
-              style={{ marginTop: "8%", height: 55 }}
+              style={{ marginTop: "15%", height: 55 }}
             />
           ) : (
-            <TouchableOpacity style={styles.logIn} onPress={handleLogIn}>
+            <TouchableOpacity onPress={handleLogIn}>
               <Text style={styles.loginText}>Sign In</Text>
             </TouchableOpacity>
           )}
@@ -124,53 +134,49 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
   welcomeText: {
     fontSize: 45,
-    color: "silver",
+    color: "white",
     marginTop: Dimensions.get("window").height > 700 ? "10%" : "5%",
     marginBottom: "7%",
   },
   logIn: {
     marginTop: "8%",
-    height: 55,
-    width: "80%",
-    borderRadius: 20,
     backgroundColor: Colors.tropicalBlue,
-    elevation: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 5,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   loginText: {
     fontSize: 20,
     color: "white",
-    fontWeight: "bold",
-    position: "absolute",
+    backgroundColor: Colors.tropicalBlue,
+    paddingVertical: 5,
+    paddingHorizontal: 35,
+    borderRadius: 15,
+    marginTop: "15%",
   },
   loginInformation: {
-    width: "80%",
-    height: "23%",
     borderWidth: 1,
-    borderRadius: 15,
     borderColor: "silver",
     elevation: 3,
     backgroundColor: "white",
     marginTop: "10%",
     alignItems: "center",
+    width: "90%",
   },
   textInput: {
-    height: "30%",
+    height: 40,
     width: "90%",
-    borderBottomWidth: 1,
+    borderWidth: 1,
     borderColor: "silver",
-    fontSize: 20,
+    fontSize: 18,
     padding: 5,
-    marginVertical: "6%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingLeft: 10,
   },
   makeAccountContainer: {
     height: "90%",
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   backButton: {
-    color: "black",
+    color: "gray",
     alignSelf: "flex-start",
   },
 });

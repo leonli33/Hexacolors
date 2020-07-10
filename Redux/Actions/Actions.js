@@ -1,3 +1,7 @@
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
+
 export const SetCurrentColorAndColorsUsed = (task) => {
   return {
     type: "SET_COLOR_AND_COLORS_USED",
@@ -73,18 +77,24 @@ export const GenerateColorsToGuessHard = () => {
 export const AddColorToPlaygroundList = (color) => {
   return {
     type: "ADD_COLOR_TO_PLAYGROUND_LIST",
-    payload: color
-  }
-}
+    payload: color,
+  };
+};
 
 export const RemoveColorFromPlaygroundList = (colors) => {
   return {
     type: "REMOVE_COLOR_FROM_PLAYGROUND_LIST",
-    payload: colors
-  }
-}
+    payload: colors,
+  };
+};
 
-export const createNewUser = (email, password) => {
+export const loginSuccess = () => {
+  return {
+    type: "LOGIN",
+  };
+};
+
+export const createNewUser = (email, password, firstName, lastName) => {
   return async (dispatch) => {
     const response = await fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBNhvMO_n8O8TzCEFLC24KRGev9kH8Rh3k",
@@ -100,7 +110,6 @@ export const createNewUser = (email, password) => {
         }),
       }
     );
-
     if (!response.ok) {
       const error = await response.json();
       const errorMessage = error.error.message;
@@ -109,16 +118,68 @@ export const createNewUser = (email, password) => {
         message = "This email has already been used.";
       }
       throw new Error(message);
+    } else {
+      const resData = await response.json();
+      const userID = resData.localId;
+
+      let jsonObject = {
+        email: email,
+        first_name: firstName,
+        last_name: lastName,
+        mix_colors_answers_correct: 0,
+        mix_colors_total_presses: 0,
+        mix_furthest_level: 1,
+        playground_palette: [
+          "#EA4335",
+          "#4285F4",
+          "#FFED1C",
+          "#34A853",
+          "#942EBE",
+          "#00ECFA",
+          "#F8712E",
+          "#181762",
+        ],
+        guess_hex_easy_total_right: 0, 
+        guess_hex_easy_total_tries: 0,
+        guess_hex_medium_total_right: 0, 
+        guess_hex_medium_total_tries: 0,
+        guess_hex_hard_total_right: 0, 
+        guess_hex_hard_total_tries: 0,
+      };
+      const ref = firebase.firestore().collection("users");
+      ref.doc(userID).set(jsonObject);
+      dispatch({ type: "CREATE_NEW_USER" });
     }
-
-    const resData = await response.json();
-    console.log(resData);
-
-    dispatch({ type: "CREATE_NEW_USER" });
   };
 };
 
 export const login = (email, password) => {
+  console.log(email, "email");
+  return async (dispatch) => {
+    try {
+      const response = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      console.log(response, "response");
+      const userRef = firebase
+        .firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid);
+
+      console.log(firebase.auth().currentUser.uid, "user id");
+      console.log("login success");
+      dispatch(loginSuccess());
+      // dispatch(loginSuccess(userRef));
+    } catch (error) {
+      console.log("Login Request Error");
+      console.log(error);
+      throw new Error(error.toString());
+    }
+  };
+};
+
+/*
+  export const login = (email, password) => {
   return async (dispatch) => {
     const response = await fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBNhvMO_n8O8TzCEFLC24KRGev9kH8Rh3k",
@@ -149,7 +210,8 @@ export const login = (email, password) => {
 
     const resData = await response.json();
     console.log(resData);
-
-    dispatch({ type: "LOGIN" });
+    dispatch(loginSuccess());
   };
 };
+
+*/
