@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    currentColorsChosen: state.colorsChosenSoFar,
+    currentColorsChosen: state.playground.currentColorsChosen,
   };
 }
 

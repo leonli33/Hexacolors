@@ -16,16 +16,16 @@ import MixColors from "../Functions/MixColor";
 import Convert from "color-convert";
 import { connect } from "react-redux";
 import {
-  AddUserChosenColor,
-  RemoveUserChosenColor,
-  ResetColors,
   AddColorToPlaygroundList,
   RemoveColorFromPlaygroundList,
+  ResetPlaygroundColors,
+  AddUserChosenColorPlayground,
+  RemoveUserChosenColorPlayground,
 } from "../Redux/Actions";
 
 const PlaygroundScreen = (props) => {
   useEffect(() => {
-    props.ResetColors();
+    props.ResetPlaygroundColors();
   }, []);
 
   const [redValue, setRedValue] = useState(0);
@@ -41,7 +41,7 @@ const PlaygroundScreen = (props) => {
   });
 
   const handleSliderColorChange = (number, color) => {
-    props.ResetColors();
+    props.ResetPlaygroundColors();
     let hexString = number.toString(16);
     if (hexString.length === 1) hexString = `0${hexString}`;
     if (color === "red") {
@@ -59,10 +59,10 @@ const PlaygroundScreen = (props) => {
   const handleColorOptionSelected = (color) => {
     if (props.colors.includes(color)) {
       // Remove the color pressed
-      props.RemoveUserChosenColor(color);
+      props.RemoveUserChosenColorPlayground(color);
       // If there are no more selected colors, reset all the colors
       if (props.colors.length === 0) {
-        props.ResetColors();
+        props.ResetPlaygroundColors();
 
         setRedHexValue("00");
         setGreenHexValue("00");
@@ -77,7 +77,7 @@ const PlaygroundScreen = (props) => {
       }
     } else {
       // User wants to add a color to the mix
-      props.AddUserChosenColor(color);
+      props.AddUserChosenColorPlayground(color);
       if (props.colors.length === 0) {
         // If there are currently no selected colors, then the color that the user selects is the
         // color to be displayed
@@ -107,7 +107,7 @@ const PlaygroundScreen = (props) => {
   };
 
   const clearSelectedColors = () => {
-    props.ResetColors();
+    props.ResetPlaygroundColors();
     setRedHexValue("00");
     setGreenHexValue("00");
     setBlueHexValue("00");
@@ -308,8 +308,8 @@ const PlaygroundScreen = (props) => {
 
 function mapStateToProps(state) {
   return {
-    palette: state.playgroundModePalette,
-    colors: state.colorsChosenSoFar,
+    palette: state.playground.playgroundModePalette,
+    colors: state.playground.currentColorsChosen,
   };
 }
 
@@ -390,9 +390,9 @@ const styles = StyleSheet.create({
 });
 
 export default connect(mapStateToProps, {
-  AddUserChosenColor,
-  RemoveUserChosenColor,
-  ResetColors,
+  AddUserChosenColorPlayground,
+  RemoveUserChosenColorPlayground,
+  ResetPlaygroundColors,
   AddColorToPlaygroundList,
   RemoveColorFromPlaygroundList,
 })(PlaygroundScreen);

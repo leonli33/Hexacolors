@@ -483,10 +483,10 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    targetColor: state.targetColorToGuess,
-    easyColorOptions: state.guessHexEasyColorOptions,
-    mediumColorOptions: state.guessHexMediumColorOptions,
-    hardColorOptions: state.guessHexHardColorOptions,
+    targetColor: state.hexGuesser.targetColorToGuess,
+    easyColorOptions: state.hexGuesser.guessHexEasyColorOptions,
+    mediumColorOptions: state.hexGuesser.guessHexMediumColorOptions,
+    hardColorOptions: state.hexGuesser.guessHexHardColorOptions,
   };
 }
 

@@ -366,16 +366,16 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    colorElements: state.levelColors,
-    color: state.currentLevelUserHexCode,
-    colors: state.colorsChosenSoFar,
-    currentColorsChosen: state.colorsChosenSoFar,
-    levelColors: state.levelAnswer,
-    hints1: state.levelHint1,
-    hints2: state.levelHint2,
-    numColors: state.numColors,
-    previousHexcode: state.lastColorHexcode,
-    colorsNeeded: state.levelComponentsToAnswer,
+    colorElements: state.mixColors.levelColors,
+    color: state.mixColors.currentLevelUserHexCode,
+    colors: state.mixColors.colorsChosenSoFar,
+    currentColorsChosen: state.mixColors.colorsChosenSoFar,
+    levelColors: state.mixColors.levelAnswer,
+    hints1: state.mixColors.levelHint1,
+    hints2: state.mixColors.levelHint2,
+    numColors: state.mixColors.numColors,
+    previousHexcode: state.mixColors.lastColorHexcode,
+    colorsNeeded: state.mixColors.levelComponentsToAnswer,
   };
 }
 

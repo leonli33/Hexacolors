@@ -75,12 +75,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    colorElements: state.levelColors,
-    color: state.currentLevelUserHexCode,
-    colors: state.colorsChosenSoFar,
-    currentColorsChosen: state.colorsChosenSoFar,
-    levelColorAnswer: state.levelAnswer,
-    furthestLevel: state.furthestLevelCompleted,
+    colorElements: state.mixColors.levelColors,
+    color: state.mixColors.currentLevelUserHexCode,
+    colors: state.mixColors.colorsChosenSoFar,
+    currentColorsChosen: state.mixColors.colorsChosenSoFar,
+    levelColorAnswer: state.mixColors.levelAnswer,
+    furthestLevel: state.mixColors.furthestLevelCompleted,
   };
 }
 

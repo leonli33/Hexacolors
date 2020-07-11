@@ -29,25 +29,37 @@ export const ResetColors = () => {
   };
 };
 
-export const IncrementFurthestLevel = (level) => {
-  /*
-  return async (dispatch) => {
-    const response = await fetch(
-      "https://color-app-8e9c2.firebaseio.com/users.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "applications/json",
-        },
-        body: JSON.stringify({}),
-      }
-    );
-      */
+export const ResetPlaygroundColors = () => {
+  return {
+    type: "RESET_PLAYGROUND_COLORS"
+  }
+}
+
+export const AddUserChosenColorPlayground = (color) => {
+  return {
+    type: "ADD_USER_CHOSEN_COLOR_PLAYGROUND",
+    payload: color,
+  };
+};
+
+export const RemoveUserChosenColorPlayground = (color) => {
+  return {
+    type: "REMOVE_USER_CHOSEN_COLOR_PLAYGROUND",
+    payload: color,
+  };
+};
+
+export const IncrementFurthestLevelHexMix = (level) => {
   return {
     type: "INCREMENT_FURTHEST_LEVEL",
     payload: level,
   };
-  // };
+};
+
+export const IncrementFurthestLevel = (level) => {
+  return async (dispatch) => {
+    dispatch(IncrementFurthestLevelHexMix(level));
+  };
 };
 
 export const CreateNewColorToGuess = () => {
@@ -90,7 +102,7 @@ export const RemoveColorFromPlaygroundList = (colors) => {
 
 export const loginSuccess = () => {
   return {
-    type: "LOGIN",
+    type: "LOGIN_SUCCESS",
   };
 };
 
@@ -139,12 +151,13 @@ export const createNewUser = (email, password, firstName, lastName) => {
           "#F8712E",
           "#181762",
         ],
-        guess_hex_easy_total_right: 0, 
+        guess_hex_easy_total_right: 0,
         guess_hex_easy_total_tries: 0,
-        guess_hex_medium_total_right: 0, 
+        guess_hex_medium_total_right: 0,
         guess_hex_medium_total_tries: 0,
-        guess_hex_hard_total_right: 0, 
+        guess_hex_hard_total_right: 0,
         guess_hex_hard_total_tries: 0,
+        guess_hex_colors_guessed: [],
       };
       const ref = firebase.firestore().collection("users");
       ref.doc(userID).set(jsonObject);

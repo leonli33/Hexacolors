@@ -12,16 +12,27 @@ import AccountScreen from "./AccountScreens/AccountScreen";
 import PlaygroundScreen from "./PlayGroundScreens/PlaygroundScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Reducers from "./Redux/Reducers";
+import MixColorReducer from "./Redux/reducers/mixColorReducer";
+import HexGuesserReducer from "./Redux/reducers/hexGuesserReducer";
+import PlaygroundReducer from "./Redux/reducers/playgroundReducer";
+import AuthReducer from "./Redux/reducers/authReducer";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import ReduxThunk from "redux-thunk";
 import Colors from "./Constants/Colors";
 import * as firebase from "firebase";
 import { firebaseConfig } from "./Constants/FirebaseApi";
 
 const AllScreens = createStackNavigator();
-const store = createStore(Reducers, applyMiddleware(ReduxThunk));
+
+const rootReducer = combineReducers({
+  mixColors: MixColorReducer,
+  hexGuesser: HexGuesserReducer,
+  playground: PlaygroundReducer,
+  auth: AuthReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 // Initialize Firebase
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : {};
@@ -69,7 +80,7 @@ export default function App() {
             options={{
               headerShown: false,
               headerBackTitleVisible: false,
-              gestureEnabled: false
+              gestureEnabled: false,
             }}
           />
 
