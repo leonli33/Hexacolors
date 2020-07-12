@@ -12,9 +12,9 @@ import Spinner from "../Components/GeneralUI/Spinner";
 import "firebase/auth";
 import "firebase/firestore";
 import * as firebase from "firebase";
+import { connect } from "react-redux";
 
 class StartScreen extends Component {
-
   componentDidMount() {
     firebase
       .firestore()
@@ -22,9 +22,8 @@ class StartScreen extends Component {
       .get()
       .then((snapshot) => {
         snapshot.forEach((documentSnap) => {
-          const {first_name} = documentSnap.data()
-          console.log(first_name)
-        })
+          const { first_name } = documentSnap.data();
+        });
       });
   }
 
@@ -108,7 +107,11 @@ class StartScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.infoButton}
-            onPress={() => this.props.navigation.navigate("AuthOptions")}
+            onPress={() =>
+              this.props.navigation.navigate(
+                this.props.loggedIn ? "Profile" : "AuthOptions"
+              )
+            }
           >
             <Text style={styles.textOption}>Account</Text>
           </TouchableOpacity>
@@ -118,4 +121,10 @@ class StartScreen extends Component {
   }
 }
 
-export default StartScreen;
+function mapStateToProps(state) {
+  return {
+    loggedIn: state.auth.signedIn,
+  };
+}
+
+export default connect(mapStateToProps)(StartScreen);

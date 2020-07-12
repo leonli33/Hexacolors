@@ -2,6 +2,7 @@ const CREATE_COLOR_TO_GUESS = "CREATE_COLOR_TO_GUESS";
 const GENERATE_EASY_GUESS_OPTIONS = "GENERATE_EASY_GUESS_OPTIONS";
 const GENERATE_MEDIUM_GUESS_OPTIONS = "GENERATE_MEDIUM_GUESS_OPTIONS";
 const GENERATE_HARD_GUESS_OPTIONS = "GENERATE_HARD_GUESS_OPTIONS";
+const LOGIN_SUCCESS_GUESS_HEX = "LOGIN_SUCCESS_GUESS_HEX";
 
 const currentState = {
   // Target color that is to be guessed
@@ -29,6 +30,9 @@ export default (state = currentState, action) => {
       return { ...currentState };
     case GENERATE_HARD_GUESS_OPTIONS:
       currentState.guessHexHardColorOptions = genderateHardColorOptions();
+      return { ...currentState };
+    case LOGIN_SUCCESS_GUESS_HEX:
+      currentState.allColorsGuessed = action.payload.guessHexTotalColors;
       return { ...currentState };
     default:
       return state;

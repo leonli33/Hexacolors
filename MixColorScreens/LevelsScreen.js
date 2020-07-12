@@ -39,7 +39,7 @@ navigateTo = (levelID) => {
                 return (
                   <LevelBox
                     hasUserCompleted={
-                      this.props.furthestLevel >= rowIndex * 3 + index + 1
+                      this.props.furthestLevel >= rowIndex * 3 + index
                     }
                     hexColor={color}
                     nagivateTo={this.navigateTo}

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../Constants/Colors";
+import { connect } from "react-redux";
 
 const AccountScreen = (props) => {
   return (
@@ -27,7 +28,9 @@ const AccountScreen = (props) => {
           <Ionicons name="md-close-circle" size={28} color="gray" />
         </TouchableOpacity>
         <View style={styles.informationContainer}>
-          <Text style={styles.nameText}>Leon Li</Text>
+          <Text
+            style={styles.nameText}
+          >{`${props.firstName} ${props.lastName}`}</Text>
           <View
             style={{
               width: "100%",
@@ -35,27 +38,20 @@ const AccountScreen = (props) => {
               backgroundColor: "white",
               borderWidth: 1,
               marginTop: 5,
-              backgroundColor: Colors.tropicalRed
+              backgroundColor: Colors.tropicalRed,
             }}
           />
           <Text style={styles.gameHeader}>Color Mixer</Text>
           <View style={styles.mixColors}>
             <View style={styles.informationTextRow}>
               <Text style={styles.informationText}>Furthest Level:</Text>
+              <Text style={styles.informationText}>{props.hexMixFurthestLevel}</Text>
+            </View>
+            <View style={styles.informationTextRow}>
+              <Text style={styles.informationText}>Total Level Completed:</Text>
               <Text style={styles.informationText}>1</Text>
             </View>
-            <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Total Answers Correct:</Text>
-              <Text style={styles.informationText}>1</Text>
-            </View>
-            <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Total Colors Selected:</Text>
-              <Text style={styles.informationText}>100</Text>
-            </View>
-            <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Correct %:</Text>
-              <Text style={styles.informationText}>20%</Text>
-            </View>
+
             <View style={styles.informationTextRow}>
               <Text style={styles.informationText}>Colors Mixed:</Text>
               <ScrollView style={styles.mixColorScrollView}></ScrollView>
@@ -155,6 +151,14 @@ const AccountScreen = (props) => {
   );
 };
 
+function mapStateToProps(state) {
+  return {
+    firstName: state.auth.firstName,
+    lastName: state.auth.lastName,
+    hexMixFurthestLevel: state.mixColors.furthestLevelCompleted
+  };
+}
+
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -247,4 +251,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountScreen;
+export default connect(mapStateToProps)(AccountScreen);

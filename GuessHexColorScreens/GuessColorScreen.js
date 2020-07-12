@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
 import {
   View,
   StyleSheet,
@@ -21,6 +24,7 @@ import {
   GenerateColorsToGuessMedium,
   GenerateColorsToGuessHard,
 } from "../Redux/Actions";
+import { diff } from "react-native-reanimated";
 
 class GuessColorScreen extends Component {
   constructor() {
@@ -129,6 +133,10 @@ class GuessColorScreen extends Component {
     let arr = this.state.hiddenColors;
     arr.push(color);
     if (color === this.props.targetColor) {
+      if (this.props.signedIn) {
+        this.updateColorsCompletedFirebase(this.props.targetColor);
+      }
+
       this.setState({
         lastGuessedColor: "",
         gameWon: true,
@@ -140,6 +148,96 @@ class GuessColorScreen extends Component {
         lastGuessedColor: color,
         hiddenColors: arr,
       });
+    }
+    if (this.props.signedIn) {
+      this.updatedColorsClicked();
+    }
+  };
+
+  updateColorsCompletedFirebase = async (color) => {
+    const { difficulty } = this.props.route.params;
+    if (difficulty === "Easy") {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_easy_total_right: firebase.firestore.FieldValue.increment(
+              1
+            ),
+            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(color),
+          });
+      } catch (error) {}
+    } else if (difficulty === "Medium") {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_medium_total_right: firebase.firestore.FieldValue.increment(
+              1
+            ),
+            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(color),
+          });
+      } catch (error) {}
+    } else {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_hard_total_right: firebase.firestore.FieldValue.increment(
+              1
+            ),
+            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(
+              color
+            ),
+          });
+      } catch (error) {}
+    }
+  };
+
+  updatedColorsClicked = async () => {
+    const { difficulty } = this.props.route.params;
+    if (difficulty === "Easy") {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_easy_total_tries: firebase.firestore.FieldValue.increment(
+              1
+            ),
+          });
+      } catch (error) {}
+    } else if (difficulty === "Medium") {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_medium_total_tries: firebase.firestore.FieldValue.increment(
+              1
+            ),
+          });
+      } catch (error) {}
+    } else {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userId)
+          .update({
+            guess_hex_hard_total_tries: firebase.firestore.FieldValue.increment(
+              1
+            ),
+          });
+      } catch (error) {}
     }
   };
 
@@ -487,6 +585,8 @@ function mapStateToProps(state) {
     easyColorOptions: state.hexGuesser.guessHexEasyColorOptions,
     mediumColorOptions: state.hexGuesser.guessHexMediumColorOptions,
     hardColorOptions: state.hexGuesser.guessHexHardColorOptions,
+    signedIn: state.auth.signedIn,
+    userId: state.auth.userID,
   };
 }
 

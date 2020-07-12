@@ -31,9 +31,9 @@ export const ResetColors = () => {
 
 export const ResetPlaygroundColors = () => {
   return {
-    type: "RESET_PLAYGROUND_COLORS"
-  }
-}
+    type: "RESET_PLAYGROUND_COLORS",
+  };
+};
 
 export const AddUserChosenColorPlayground = (color) => {
   return {
@@ -93,6 +93,12 @@ export const AddColorToPlaygroundList = (color) => {
   };
 };
 
+export const IncrementTotalLevelsCompleted = () => {
+  return {
+    type: "INCREMENT_TOTAL_LEVELS_COMPLETED",
+  };
+};
+
 export const RemoveColorFromPlaygroundList = (colors) => {
   return {
     type: "REMOVE_COLOR_FROM_PLAYGROUND_LIST",
@@ -100,9 +106,31 @@ export const RemoveColorFromPlaygroundList = (colors) => {
   };
 };
 
-export const loginSuccess = () => {
+export const loginSuccessDataAuth = (data) => {
   return {
-    type: "LOGIN_SUCCESS",
+    type: "LOGIN_SUCCESS_AUTH",
+    payload: data,
+  };
+};
+
+export const loginSuccessDataMixColors = (data) => {
+  return {
+    type: "LOGIN_SUCCESS_MIX_COLORS",
+    payload: data,
+  };
+};
+
+export const loginSuccessDataPlayground = (data) => {
+  return {
+    type: "LOGIN_SUCCESS_PLAYGROUND",
+    payload: data,
+  };
+};
+
+export const loginSuccessDataGuessHex = (data) => {
+  return {
+    type: "LOGIN_SUCCESS_GUESS_HEX",
+    payload: data,
   };
 };
 
@@ -139,8 +167,7 @@ export const createNewUser = (email, password, firstName, lastName) => {
         first_name: firstName,
         last_name: lastName,
         mix_colors_answers_correct: 0,
-        mix_colors_total_presses: 0,
-        mix_furthest_level: 1,
+        mix_furthest_level: 0,
         playground_palette: [
           "#EA4335",
           "#4285F4",
@@ -167,22 +194,39 @@ export const createNewUser = (email, password, firstName, lastName) => {
 };
 
 export const login = (email, password) => {
-  console.log(email, "email");
   return async (dispatch) => {
     try {
-      const response = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password);
-      console.log(response, "response");
-      const userRef = firebase
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      let userID = firebase.auth().currentUser.uid;
+      let userData = await firebase
         .firestore()
         .collection("users")
-        .doc(firebase.auth().currentUser.uid);
-
-      console.log(firebase.auth().currentUser.uid, "user id");
-      console.log("login success");
-      dispatch(loginSuccess());
-      // dispatch(loginSuccess(userRef));
+        .doc(userID)
+        .get()
+        .then((snapshot) => {
+          let data = snapshot.data();
+          let authData = { ...data, userid: userID };
+          let mixColorData = {
+            furthestLevel: data.mix_furthest_level,
+            totalLevels: data.mix_colors_answers_correct,
+          };
+          let playgroundData = {
+            palette: data.playground_palette,
+          };
+          let guessHexData = {
+            guessHexTotalColors: data.guess_hex_colors_guessed,
+            guessHexEasyTotalRight: data.guess_hex_easy_total_right,
+            guessHexEasyTotalTries: data.guess_hex_easy_total_tries,
+            guessHexMediumTotalRight: data.guess_hex_medium_total_right,
+            guessHexMediumTotalTries: data.guess_hex_medium_total_tries,
+            guessHexHardTotalRight: data.guess_hex_hard_total_right,
+            guessHexHardTotalTries: data.guess_hex_hard_total_tries,
+          };
+          dispatch(loginSuccessDataAuth(authData));
+          dispatch(loginSuccessDataMixColors(mixColorData));
+          dispatch(loginSuccessDataPlayground(playgroundData));
+          dispatch(loginSuccessDataGuessHex(guessHexData));
+        });
     } catch (error) {
       console.log("Login Request Error");
       console.log(error);

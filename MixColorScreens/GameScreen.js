@@ -13,12 +13,16 @@ import ColorChoice from "../Components/MixColors/ColorChoice";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import MixColors from "../Functions/MixColor";
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
 import {
   SetCurrentColorAndColorsUsed,
   AddUserChosenColor,
   RemoveUserChosenColor,
   ResetColors,
   IncrementFurthestLevel,
+  IncrementTotalLevelsCompleted,
 } from "../Redux/Actions";
 import Hint from "../Components/MixColors/Hint";
 import ColorMixerWonScreen from "../Components/MixColors/ColorMixerWonScreen";
@@ -77,6 +81,8 @@ class GameScreen extends Component {
       hint3: false,
     });
     this.props.IncrementFurthestLevel(level);
+    this.props.IncrementTotalLevelsCompleted();
+    if (this.props.signedIn) this.incrementLevelFirebase(level);
   };
 
   onForwardPress = (levelID) => {
@@ -91,6 +97,8 @@ class GameScreen extends Component {
         },
       });
       this.props.IncrementFurthestLevel(levelID - 1);
+      this.props.IncrementTotalLevelsCompleted();
+      if (this.props.signedIn) this.incrementLevelFirebase(levelID - 1);
     } else {
       this.props.navigation.navigate("Home");
     }
@@ -100,6 +108,34 @@ class GameScreen extends Component {
       hint3: false,
     });
     this.props.ResetColors();
+  };
+
+  incrementLevelFirebase = async (level) => {
+    if (level >= this.props.furthestLevelCompleted && level <= 18) {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(this.props.userID)
+          .update({
+            mix_furthest_level: level,
+          });
+      } catch (error) {
+        alert(error.toString());
+      }
+    }
+    try {
+      console.log(this.props.totalLevels);
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(this.props.userID)
+        .update({
+          mix_colors_answers_correct: this.props.totalLevels + 1,
+        });
+    } catch (error) {
+      alert(error.toString());
+    }
   };
 
   // This function handles the logic when a user presses a color
@@ -143,9 +179,9 @@ class GameScreen extends Component {
     }
   };
 
-  onGameModePress= () => {
+  onGameModePress = () => {
     this.props.navigation.navigate("GameMode");
-  }
+  };
 
   render() {
     let { width, height } = Dimensions.get("window");
@@ -376,6 +412,10 @@ function mapStateToProps(state) {
     numColors: state.mixColors.numColors,
     previousHexcode: state.mixColors.lastColorHexcode,
     colorsNeeded: state.mixColors.levelComponentsToAnswer,
+    signedIn: state.auth.signedIn,
+    userID: state.auth.userID,
+    furthestLevelCompleted: state.mixColors.furthestLevelCompleted,
+    totalLevels: state.mixColors.totalLevelsComplete,
   };
 }
 
@@ -385,4 +425,5 @@ export default connect(mapStateToProps, {
   RemoveUserChosenColor,
   ResetColors,
   IncrementFurthestLevel,
+  IncrementTotalLevelsCompleted,
 })(GameScreen);

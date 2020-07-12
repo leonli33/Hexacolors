@@ -3,6 +3,8 @@ const ADD_USER_CHOSEN_COLOR = "ADD_USER_CHOSEN_COLOR";
 const REMOVE_USER_CHOSEN_COLOR = "REMOVE_USER_CHOSEN_COLOR";
 const RESET_LEVEL_COLORS = "RESET_LEVEL_COLORS";
 const INCREMENT_FURTHEST_LEVEL = "INCREMENT_FURTHEST_LEVEL";
+const LOGIN_SUCCESS_MIX_COLORS = "LOGIN_SUCCESS_MIX_COLORS";
+const INCREMENT_TOTAL_LEVELS_COMPLETED = "INCREMENT_TOTAL_LEVELS_COMPLETED";
 
 const currentState = {
   // Color at index corresponds to the color of the level
@@ -109,7 +111,7 @@ const currentState = {
   // current level that the user is playing
   currentLevel: 0,
   // furthest level that the user has gotten to
-  furthestLevelCompleted: 1,
+  furthestLevelCompleted: 0,
   // colors that the user has picked to far
   colorsChosenSoFar: [],
   // the hexcode representing the color that
@@ -117,10 +119,16 @@ const currentState = {
   currentLevelUserHexCode: "",
   // the last resultant color (used for animation)
   lastColorHexcode: "",
+
+  totalLevelsComplete: 0,
 };
 
 export default (state = currentState, action) => {
   switch (action.type) {
+    case LOGIN_SUCCESS_MIX_COLORS:
+      currentState.furthestLevelCompleted = action.payload.furthestLevel;
+      currentState.totalLevelsComplete = action.payload.totalLevels;
+      return { ...currentState };
     case SET_COLOR_AND_COLORS_USED:
       currentState.lastColorHexcode = currentState.currentLevelUserHexCode.trim();
       currentState.currentLevelUserHexCode = action.payload.currentLevelUserHexCode.trim();
@@ -145,6 +153,9 @@ export default (state = currentState, action) => {
       action.payload >= currentState.furthestLevelCompleted
         ? currentState.furthestLevelCompleted++
         : "";
+      return { ...currentState };
+    case INCREMENT_TOTAL_LEVELS_COMPLETED:
+      currentState.totalLevelsComplete++;
       return { ...currentState };
     default:
       return state;

@@ -15,6 +15,9 @@ import ColorValue from "../Components/PlaygroundComponents/ColorValue";
 import MixColors from "../Functions/MixColor";
 import Convert from "color-convert";
 import { connect } from "react-redux";
+import * as firebase from "firebase";
+import "firebase/auth";
+import "firebase/firestore";
 import {
   AddColorToPlaygroundList,
   RemoveColorFromPlaygroundList,
@@ -119,20 +122,68 @@ const PlaygroundScreen = (props) => {
   const handleAddColorPressed = () => {
     if (
       `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
-      "#000000"
+        "#000000" &&
+      !props.playgroundColors.has(
+        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`
+      )
     ) {
       props.AddColorToPlaygroundList(
         `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`
       );
+      if (props.signedIn) {
+        setPaletteFirebase();
+      }
+
       clearSelectedColors();
       setTimeout(() => {
         scrollRef.scrollToEnd({ animated: true });
-      }, 100);
+      }, 200);
+    } else {
+      alert("This color is already present in your palette");
     }
+  };
+
+  const setPaletteFirebase = () => {
+    try {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(props.userID)
+        .update({
+          playground_palette: convertToNonNestedArray(props.palette),
+        });
+    } catch (error) {
+      alert(error.toString());
+    }
+  };
+
+  const convertToNonNestedArray = (arr) => {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        let color = arr[i][j];
+        if (color != "") newArr.push(color);
+      }
+    }
+    return newArr;
   };
 
   const handleRemoveColorsPressed = () => {
     props.RemoveColorFromPlaygroundList(props.colors);
+    if (props.signedIn && props.colors.length != 0) {
+      try {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(props.userID)
+          .update({
+            playground_palette: Array.from(props.playgroundColors),
+          });
+      } catch (error) {
+        alert(error.toString());
+      }
+    }
+
     clearSelectedColors();
   };
 
@@ -279,7 +330,7 @@ const PlaygroundScreen = (props) => {
         ref={(node) => (scrollRef = node)}
         contentContainerStyle={{ flexGrow: 1, justifyContent: "space-evenly" }}
       >
-        {props.palette.map((colors, rowindex) => {
+        {props.palette.map((playColors, rowindex) => {
           return (
             <View
               style={{
@@ -289,7 +340,7 @@ const PlaygroundScreen = (props) => {
               }}
               key={rowindex + 1000}
             >
-              {colors.map((color, index) => {
+              {playColors.map((color, index) => {
                 return (
                   <ColorOption
                     key={index + rowindex * 4}
@@ -310,6 +361,9 @@ function mapStateToProps(state) {
   return {
     palette: state.playground.playgroundModePalette,
     colors: state.playground.currentColorsChosen,
+    userID: state.auth.userID,
+    signedIn: state.auth.signedIn,
+    playgroundColors: state.playground.paletteColorsSet,
   };
 }
 
