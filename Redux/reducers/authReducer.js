@@ -3,19 +3,23 @@ const LOGIN_SUCCESS_AUTH = "LOGIN_SUCCESS_AUTH";
 const currentState = {
   signedIn: false,
   userID: "empty",
+  token: null,
 
   firstName: "",
   lastName: "",
   mixColorsTotalCorrect: null,
-  mixColorsTotalPresses: null,
   mixColorsCorrectPercentage: null,
+
   guessHexTotalColors: undefined,
+
   guessHexEasyTotalRight: null,
   guessHexEasyTotalTries: null,
   guessHexEasyPercentCorrect: null,
+
   guessHexMediumTotalRight: null,
   guessHexMediumTotalTries: null,
   guessHexMediumPercentCorrect: null,
+
   guessHexHardTotalRight: null,
   guessHexHardTotalTries: null,
   guessHexHardPercentCorrect: null,
@@ -29,7 +33,6 @@ export default (state = currentState, action) => {
       currentState.firstName = action.payload.first_name;
       currentState.lastName = action.payload.last_name;
       currentState.mixColorsTotalCorrect = action.payload.mix_colors_answers_correct;
-      currentState.mixColorsTotalPresses = action.payload.mix_colors_total_presses;
       currentState.mixColorsCorrectPercentage = 0;
       currentState.guessHexTotalColors = action.payload.guess_hex_colors_guessed;
       currentState.guessHexEasyTotalRight = action.payload.guess_hex_easy_total_right;

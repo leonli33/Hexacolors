@@ -12,6 +12,12 @@ import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 
 const AccountScreen = (props) => {
+  const calcPercentage = (totalRight, totalTries) => {
+    if (totalRight === 0 || totalTries === 0) return "0%"
+    let num = totalRight / totalTries;
+    return `${num.toFixed(2)}%`
+  };
+
   return (
     <ScrollView bounces={false}>
       <View style={styles.container}>
@@ -45,11 +51,15 @@ const AccountScreen = (props) => {
           <View style={styles.mixColors}>
             <View style={styles.informationTextRow}>
               <Text style={styles.informationText}>Furthest Level:</Text>
-              <Text style={styles.informationText}>{props.hexMixFurthestLevel}</Text>
+              <Text style={styles.informationText}>
+                {props.hexMixFurthestLevel}
+              </Text>
             </View>
             <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Total Level Completed:</Text>
-              <Text style={styles.informationText}>1</Text>
+              <Text style={styles.informationText}>Total Levels Completed:</Text>
+              <Text style={styles.informationText}>
+                {props.totalLevelsCompleted}
+              </Text>
             </View>
 
             <View style={styles.informationTextRow}>
@@ -69,15 +79,24 @@ const AccountScreen = (props) => {
             >
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Colors Correct:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexEasyTotalRight}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Total Guesses:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexEasyTotalTries}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Correct %:</Text>
-                <Text style={styles.informationText}>20%</Text>
+                <Text style={styles.informationText}>
+                  {calcPercentage(
+                    props.guessHexEasyTotalRight,
+                    props.guessHexEasyTotalTries
+                  )}
+                </Text>
               </View>
             </View>
             <View
@@ -90,15 +109,24 @@ const AccountScreen = (props) => {
             >
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Colors Correct:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexMediumTotalRight}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Total Guesses:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexMediumTotalTries}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Correct %:</Text>
-                <Text style={styles.informationText}>20%</Text>
+                <Text style={styles.informationText}>
+                  {calcPercentage(
+                    props.guessHexMediumTotalRight,
+                    props.guessHexMediumTotalTries
+                  )}
+                </Text>
               </View>
             </View>
             <View
@@ -111,15 +139,24 @@ const AccountScreen = (props) => {
             >
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Colors Correct:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexHardTotalRight}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Total Guesses:</Text>
-                <Text style={styles.informationText}>1</Text>
+                <Text style={styles.informationText}>
+                  {props.guessHexHardTotalTries}
+                </Text>
               </View>
               <View style={styles.informationTextRow}>
                 <Text style={styles.informationText}>Correct %:</Text>
-                <Text style={styles.informationText}>20%</Text>
+                <Text style={styles.informationText}>
+                  {calcPercentage(
+                    props.guessHexHardTotalRight,
+                    props.guessHexHardTotalTries
+                  )}
+                </Text>
               </View>
             </View>
             <View
@@ -152,10 +189,19 @@ const AccountScreen = (props) => {
 };
 
 function mapStateToProps(state) {
+  console.log(state.mixColors, "mix colors")
   return {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
-    hexMixFurthestLevel: state.mixColors.furthestLevelCompleted
+    hexMixFurthestLevel: state.mixColors.furthestLevelCompleted,
+    totalLevelsCompleted: state.auth.mixColorsTotalCorrect,
+    guessHexTotalColors: state.auth.guessHexTotalColors,
+    guessHexEasyTotalRight: state.auth.guessHexEasyTotalRight,
+    guessHexEasyTotalTries: state.auth.guessHexEasyTotalTries,
+    guessHexMediumTotalRight: state.auth.guessHexMediumTotalRight,
+    guessHexMediumTotalTries: state.auth.guessHexMediumTotalTries,
+    guessHexHardTotalRight: state.auth.guessHexHardTotalRight,
+    guessHexHardTotalTries: state.auth.guessHexHardTotalTries,
   };
 }
 

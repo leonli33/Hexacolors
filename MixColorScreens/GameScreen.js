@@ -125,7 +125,6 @@ class GameScreen extends Component {
       }
     }
     try {
-      console.log(this.props.totalLevels);
       await firebase
         .firestore()
         .collection("users")

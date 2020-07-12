@@ -100,6 +100,11 @@ class StartScreen extends Component {
           <TouchableOpacity
             style={styles.playButton}
             onPress={() => {
+              if (!this.props.loggedIn) {
+                alert(
+                  "Warning: Your data will be lost once you exit the app if you do not make an account."
+                );
+              }
               this.props.navigation.navigate("GameMode");
             }}
           >
