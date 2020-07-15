@@ -7,15 +7,15 @@ const GameWonColorBox = (props) => {
       borderWidth: 1,
       borderColor: "black",
       backgroundColor: props.color.trim(),
-      width: 50,
-      height: 50,
+      width: 40,
+      height: 40,
+      borderRadius: 5
     },
   });
 
   return (
     <View style={{ alignItems: "center" }}>
       <View style={styles.box} />
-      <Text>{props.color}</Text>
     </View>
   );
 };

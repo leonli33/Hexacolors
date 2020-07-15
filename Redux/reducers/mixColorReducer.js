@@ -5,6 +5,7 @@ const RESET_LEVEL_COLORS = "RESET_LEVEL_COLORS";
 const INCREMENT_FURTHEST_LEVEL = "INCREMENT_FURTHEST_LEVEL";
 const LOGIN_SUCCESS_MIX_COLORS = "LOGIN_SUCCESS_MIX_COLORS";
 const INCREMENT_TOTAL_LEVELS_COMPLETED = "INCREMENT_TOTAL_LEVELS_COMPLETED";
+const SIGN_OUT = "SIGN_OUT";
 
 const currentState = {
   // Color at index corresponds to the color of the level
@@ -156,6 +157,14 @@ export default (state = currentState, action) => {
       return { ...currentState };
     case INCREMENT_TOTAL_LEVELS_COMPLETED:
       currentState.totalLevelsComplete++;
+      return { ...currentState };
+    case SIGN_OUT:
+      currentState.currentLevel = 0;
+      currentState.furthestLevelCompleted = 0;
+      currentState.totalLevelsComplete = 0;
+      currentState.colorsChosenSoFar = [];
+      currentState.lastColorHexcode = "";
+      currentState.currentLevelUserHexCode = "";
       return { ...currentState };
     default:
       return state;

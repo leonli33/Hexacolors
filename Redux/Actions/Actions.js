@@ -113,6 +113,13 @@ export const loginSuccessDataAuth = (data) => {
   };
 };
 
+export const updateAuthData = (data) => {
+  return {
+    type: "UPDATE_AUTH_DATA",
+    payload: data,
+  };
+};
+
 export const loginSuccessDataMixColors = (data) => {
   return {
     type: "LOGIN_SUCCESS_MIX_COLORS",
@@ -127,13 +134,24 @@ export const loginSuccessDataPlayground = (data) => {
   };
 };
 
-export const loginSuccessDataGuessHex = (data) => {
+export const SetWarningShownFalse = () => {
   return {
-    type: "LOGIN_SUCCESS_GUESS_HEX",
+    type: "SET_WARNING_SHOWN_FALSE",
+  };
+};
+
+export const loginAuto = (data) => {
+  return {
+    type: "AUTO_LOGIN_SUCCESS",
     payload: data,
   };
 };
 
+export const signUserOut = () => {
+  return {
+    type: "SIGN_OUT",
+  };
+};
 export const createNewUser = (email, password, firstName, lastName) => {
   return async (dispatch) => {
     const response = await fetch(
@@ -198,7 +216,8 @@ export const login = (email, password) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
       let userID = firebase.auth().currentUser.uid;
-      let userData = await firebase
+
+      await firebase
         .firestore()
         .collection("users")
         .doc(userID)
@@ -213,19 +232,9 @@ export const login = (email, password) => {
           let playgroundData = {
             palette: data.playground_palette,
           };
-          let guessHexData = {
-            guessHexTotalColors: data.guess_hex_colors_guessed,
-            guessHexEasyTotalRight: data.guess_hex_easy_total_right,
-            guessHexEasyTotalTries: data.guess_hex_easy_total_tries,
-            guessHexMediumTotalRight: data.guess_hex_medium_total_right,
-            guessHexMediumTotalTries: data.guess_hex_medium_total_tries,
-            guessHexHardTotalRight: data.guess_hex_hard_total_right,
-            guessHexHardTotalTries: data.guess_hex_hard_total_tries,
-          };
           dispatch(loginSuccessDataAuth(authData));
           dispatch(loginSuccessDataMixColors(mixColorData));
           dispatch(loginSuccessDataPlayground(playgroundData));
-          dispatch(loginSuccessDataGuessHex(guessHexData));
         });
     } catch (error) {
       console.log("Login Request Error");
@@ -235,40 +244,39 @@ export const login = (email, password) => {
   };
 };
 
-/*
-  export const login = (email, password) => {
-  return async (dispatch) => {
-    const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBNhvMO_n8O8TzCEFLC24KRGev9kH8Rh3k",
-      {
-        method: "Post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      const error = await response.json();
-      const errorMessage = error.error.message;
-      let message = "Something went wrong.";
-      if (errorMessage === "INVALID_EMAIL") {
-        message = "This email could not be found";
-      } else if (errorMessage === "INVALID_PASSWORD") {
-        message = "This password is not valid";
-      }
-      throw new Error(message);
+export const autoLogin = (userId) => {
+  return async function autoLoginFunc(dispatch) {
+    try {
+      let unpackedData = await firebase
+        .firestore()
+        .collection("users")
+        .doc(userId);
+      let getData = await unpackedData.get();
+      let data = await getData.data();
+      let mixColorData = {
+        furthestLevel: data.mix_furthest_level,
+        totalLevels: data.mix_colors_answers_correct,
+      };
+      let playgroundData = {
+        palette: data.playground_palette,
+      };
+      console.log(data);
+      dispatch(loginAuto({ ...data, userid: userId }));
+      dispatch(loginSuccessDataMixColors(mixColorData));
+      dispatch(loginSuccessDataPlayground(playgroundData));
+    } catch (error) {
+      console.log(error);
     }
-
-    const resData = await response.json();
-    console.log(resData);
-    dispatch(loginSuccess());
   };
 };
 
-*/
+export const logout = () => {
+  return async function signout(dispatch) {
+    try {
+      await firebase.auth().signOut();
+      dispatch(signUserOut())
+    } catch (error) {
+      console.log("error with sign out: ", error);
+    }
+  };
+};

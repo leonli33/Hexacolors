@@ -139,7 +139,12 @@ const PlaygroundScreen = (props) => {
         scrollRef.scrollToEnd({ animated: true });
       }, 200);
     } else {
-      alert("This color is already present in your palette");
+      if (
+        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
+        "#000000"
+      ) {
+        alert("This color is already present in your palette");
+      }
     }
   };
 

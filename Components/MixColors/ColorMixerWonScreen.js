@@ -65,27 +65,34 @@ class ColorMixerWonScreen extends Component {
       >
         <View style={styles.background}>
           <Text style={{ marginTop: "5%", fontSize: 25 }}>Nice Job!</Text>
-
           <View
             style={{
               width: "90%",
-              height: "40%",
               flexDirection: "row",
               justifyContent: "flex-start",
               marginTop: "7%",
             }}
           >
-            <View style={{ width: "30%", marginRight: "-3%" }}>
-              <GameWonColorBox color={this.props.targetColor} />
-            </View>
-            <Text style={{ fontSize: 25 }}> =</Text>
             <View
               style={{
-                height: "100%",
-                width: "80%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <GameWonColorBox color={this.props.targetColor} />
+              <View style={{ height: 52, justifyContent: "center" }}>
+                <Text style={{ fontSize: 25, marginLeft: 10 }}>=</Text>
+              </View>
+            </View>
+
+            <View
+              style={{
                 flexDirection: "row",
                 flexWrap: "wrap",
                 justifyContent: "flex-start",
+                padding: 5,
+                width: "80%",
               }}
             >
               {this.props.colorsNeeded.map((color, index) => {
@@ -94,8 +101,8 @@ class ColorMixerWonScreen extends Component {
                     key={index}
                     style={{
                       flexDirection: "row",
-                      marginHorizontal: "6%",
-                      marginBottom: "6%",
+                      marginHorizontal: "4%",
+                      marginBottom: "4%",
                     }}
                   >
                     <GameWonColorBox color={color} />
@@ -104,13 +111,16 @@ class ColorMixerWonScreen extends Component {
               })}
             </View>
           </View>
-
+          <View style={{ width: "100%", borderWidth: 1, height: 100 }}>
+            <Text>Hello</Text>
+          </View>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-evenly",
               width: "100%",
-              marginTop: "30%",
+              marginTop: "110%",
+              position: "absolute",
             }}
           >
             <TouchableOpacity
@@ -122,7 +132,7 @@ class ColorMixerWonScreen extends Component {
             <TouchableOpacity
               onPress={() => {
                 if (this.props.level === 18) {
-                  this.props.gameModePress()
+                  this.props.gameModePress();
                 } else {
                   this.props.handleNextPress(this.props.level + 1);
                 }

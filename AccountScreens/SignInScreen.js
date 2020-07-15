@@ -23,6 +23,8 @@ const OptionScreen = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
+  const [iconName, setIconName] = useState("ios-eye");
+
   const dispatch = useDispatch();
   const handleLogIn = async () => {
     setLoading(true);
@@ -74,22 +76,36 @@ const OptionScreen = (props) => {
             style={{
               transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
               resizeMode: "contain",
-              marginTop: "10%",
+              marginTop: "5%",
             }}
           />
           <TextInput
             placeholder="Email"
-            style={{ ...styles.textInput, marginTop: "12%" }}
+            style={{ ...styles.textInput, marginTop: "10%" }}
             onChangeText={(email) => setEmail(email)}
             keyboardType="email-address"
             autoCapitalize="none"
             returnKeyType="next"
           />
+          <View style={{ width: "90%", marginTop: "1%" }}>
+            <TouchableOpacity
+              onPress={() => {
+                let name = "ios-eye-off";
+                if (iconName === "ios-eye-off") name = "ios-eye";
+                setIconName(name);
+              }}
+              style={{ alignSelf: "flex-end" }}
+            >
+              <Ionicons color="gray" size={30} name={iconName} style={{}} />
+            </TouchableOpacity>
+          </View>
+
           <TextInput
             placeholder="Password"
-            style={{ ...styles.textInput, marginTop: "7%" }}
+            style={{ ...styles.textInput, marginTop: 5 }}
             onChangeText={(password) => setPassword(password)}
             autoCapitalize="none"
+            secureTextEntry={iconName === "ios-eye"}
           />
           {loading ? (
             <ActivityIndicator

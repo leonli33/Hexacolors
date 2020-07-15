@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,16 +6,47 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  FlatList,
 } from "react-native";
+import ColorCircle from "../Components/AccountComponents/ColorCircle";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
+import { logout } from "../Redux/Actions";
 
 const AccountScreen = (props) => {
+  const [guessHexColors, setGuessHexColor] = useState([]);
+
   const calcPercentage = (totalRight, totalTries) => {
-    if (totalRight === 0 || totalTries === 0) return "0%"
-    let num = totalRight / totalTries;
-    return `${num.toFixed(2)}%`
+    if (totalRight === 0 || totalTries === 0) return "0%";
+    let num = (totalRight / totalTries) * 100;
+    return `${num.toFixed(2)}%`;
+  };
+
+  useEffect(() => {
+    let colorsArr = props.guessHexTotalColors;
+    let newArr = [];
+    let row = ["", "", ""];
+    let index = 0;
+    for (let i = 0; i < colorsArr.length; i++) {
+      let currentColor = colorsArr[i];
+      if (index === 2) {
+        row[index] = currentColor;
+        newArr.push(row);
+        row = ["", "", ""];
+        index = 0;
+      } else {
+        row[index] = currentColor;
+        index++;
+      }
+    }
+    if (row[0] != "") newArr.push(row);
+    setGuessHexColor(newArr);
+  }, []);
+
+  const handleSignout = () => {
+    props.logout();
+    props.navigation.navigate("Home");
   };
 
   return (
@@ -56,7 +87,9 @@ const AccountScreen = (props) => {
               </Text>
             </View>
             <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Total Levels Completed:</Text>
+              <Text style={styles.informationText}>
+                Total Levels Completed:
+              </Text>
               <Text style={styles.informationText}>
                 {props.totalLevelsCompleted}
               </Text>
@@ -64,7 +97,20 @@ const AccountScreen = (props) => {
 
             <View style={styles.informationTextRow}>
               <Text style={styles.informationText}>Colors Mixed:</Text>
-              <ScrollView style={styles.mixColorScrollView}></ScrollView>
+              <ScrollView
+                horizontal={true}
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  alignItems: "center",
+                }}
+                style={styles.mixColorScrollView}
+              >
+                {props.mixColorLevelAnswers
+                  .slice(1, props.hexMixFurthestLevel + 1)
+                  .map((color, index) => {
+                    return <ColorCircle key={index} color={color} />;
+                  })}
+              </ScrollView>
             </View>
           </View>
           <Text style={styles.gameHeader}>Hex Guesser</Text>
@@ -174,12 +220,23 @@ const AccountScreen = (props) => {
               >
                 Colors Guessed:
               </Text>
-              <ScrollView style={styles.hexGuesserScroll}></ScrollView>
+              <FlatList
+                data={guessHexColors}
+                style={styles.hexGuesserScroll}
+                horizontal={true}
+                renderItem={({ item }) => (
+                  <View>
+                    {item.map((color, index) => {
+                      return <ColorCircle color={color} />;
+                    })}
+                  </View>
+                )}
+              ></FlatList>
             </View>
           </View>
           <Text style={styles.gameHeader}>Playground Palette</Text>
           <ScrollView style={styles.colorPaletteScroll}></ScrollView>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleSignout}>
             <Text style={styles.logoutText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
@@ -189,11 +246,10 @@ const AccountScreen = (props) => {
 };
 
 function mapStateToProps(state) {
-  console.log(state.mixColors, "mix colors")
   return {
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,
-    hexMixFurthestLevel: state.mixColors.furthestLevelCompleted,
+    hexMixFurthestLevel: state.auth.mixColorsFurthestLevel,
     totalLevelsCompleted: state.auth.mixColorsTotalCorrect,
     guessHexTotalColors: state.auth.guessHexTotalColors,
     guessHexEasyTotalRight: state.auth.guessHexEasyTotalRight,
@@ -202,6 +258,13 @@ function mapStateToProps(state) {
     guessHexMediumTotalTries: state.auth.guessHexMediumTotalTries,
     guessHexHardTotalRight: state.auth.guessHexHardTotalRight,
     guessHexHardTotalTries: state.auth.guessHexHardTotalTries,
+    mixColorLevelAnswers: state.mixColors.levelAnswer,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(logout()),
   };
 }
 
@@ -249,6 +312,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: Colors.tropicalBlue,
     backgroundColor: "ivory",
+    padding: 5,
+    paddingRight: 10,
   },
   sectionHeader: {
     fontSize: 22,
@@ -285,16 +350,16 @@ const styles = StyleSheet.create({
   },
   hexGuesserScroll: {
     width: "90%",
-    height: 100,
     borderRadius: 10,
     borderWidth: 3,
     borderRadius: 5,
     borderColor: Colors.tropicalBlue,
     backgroundColor: "ivory",
+    padding: 5,
   },
   hexGuesser: {
     width: "100%",
   },
 });
 
-export default connect(mapStateToProps)(AccountScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountScreen);

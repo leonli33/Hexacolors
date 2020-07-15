@@ -5,7 +5,6 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Animated,
-  Text,
   Easing,
 } from "react-native";
 import Colors from "../../Constants/Colors";
@@ -118,7 +117,7 @@ const Spinner = () => {
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  }, []);
+  });
 
   const startSpin = spinSquare.interpolate({
     inputRange: [0, 1],

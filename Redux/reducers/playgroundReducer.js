@@ -3,6 +3,7 @@ const REMOVE_COLOR_FROM_PLAYGROUND_LIST = "REMOVE_COLOR_FROM_PLAYGROUND_LIST";
 const RESET_PLAYGROUND_COLORS = "RESET_PLAYGROUND_COLORS";
 const ADD_USER_CHOSEN_COLOR_PLAYGROUND = "ADD_USER_CHOSEN_COLOR_PLAYGROUND";
 const LOGIN_SUCCESS_PLAYGROUND = "LOGIN_SUCCESS_PLAYGROUND";
+const SIGN_OUT = "SIGN_OUT";
 const REMOVE_USER_CHOSEN_COLOR_PLAYGROUND =
   "REMOVE_USER_CHOSEN_COLOR_PLAYGROUND";
 
@@ -48,6 +49,23 @@ export default (state = currentState, action) => {
         currentState.currentColorsChosen.indexOf(action.payload),
         1
       );
+      return { ...currentState };
+    case SIGN_OUT:
+      currentState.currentColorsChosen = [];
+      (currentState.paletteColorsSet = new Set([
+        "#EA4335",
+        "#4285F4",
+        "#FFED1C",
+        "#34A853",
+        "#942EBE",
+        "#00ECFA",
+        "#F8712E",
+        "#181762",
+      ])),
+        (currentState.playgroundModePalette = [
+          ["#EA4335", "#4285F4", "#FFED1C", "#34A853"],
+          ["#942EBE", "#00ECFA", "#F8712E", "#181762"],
+        ]);
       return { ...currentState };
     default:
       return state;

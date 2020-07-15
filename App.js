@@ -10,6 +10,7 @@ import OptionScreen from "./AccountScreens/SignInScreen";
 import RegisterScreen from "./AccountScreens/RegisterScreen";
 import AccountScreen from "./AccountScreens/AccountScreen";
 import PlaygroundScreen from "./PlayGroundScreens/PlaygroundScreen";
+import StartupScreen from "./GeneralScreens/StartupScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MixColorReducer from "./Redux/reducers/mixColorReducer";
@@ -41,18 +42,25 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <AllScreens.Navigator initialRouteName="Home">
+        <AllScreens.Navigator initialRouteName="Startup">
+          <AllScreens.Screen
+            component={StartupScreen}
+            name="Startup"
+            options={{
+              headerShown: false,
+              headerBackTitleVisible: false,
+              gestureEnabled: false,
+            }}
+          />
+
           <AllScreens.Screen
             name="Home"
             component={StartScreen}
             options={{
               title: "HexaColors",
-              headerTitleAlign: "center",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
               headerBackTitleVisible: false,
               headerShown: false,
+              gestureEnabled: false,
             }}
           />
 

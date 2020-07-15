@@ -12,20 +12,28 @@ import Spinner from "../Components/GeneralUI/Spinner";
 import "firebase/auth";
 import "firebase/firestore";
 import * as firebase from "firebase";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { SetWarningShownFalse, updateAuthData } from "../Redux/Actions";
 
 class StartScreen extends Component {
-  componentDidMount() {
-    firebase
-      .firestore()
-      .collection("users")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((documentSnap) => {
-          const { first_name } = documentSnap.data();
+  updateUserAccountInformation = async () => {
+    try {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(this.props.userId)
+        .get()
+        .then((snapshot) => {
+          let data = snapshot.data();
+          this.props.updateAuthData(data);
         });
-      });
-  }
+    } catch (error) {
+      console.log(
+        "there was an error when attempting to fetch updated user information"
+      );
+      console.log(error, "err");
+    }
+  };
 
   render() {
     const { width, height } = Dimensions.get("window");
@@ -100,7 +108,8 @@ class StartScreen extends Component {
           <TouchableOpacity
             style={styles.playButton}
             onPress={() => {
-              if (!this.props.loggedIn) {
+              if (!this.props.loggedIn && !this.props.warningShown) {
+                this.props.SetWarningShownFalse();
                 alert(
                   "Warning: Your data will be lost once you exit the app if you do not make an account."
                 );
@@ -112,11 +121,14 @@ class StartScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.infoButton}
-            onPress={() =>
+            onPress={() => {
+              if (this.props.loggedIn) {
+                this.updateUserAccountInformation();
+              }
               this.props.navigation.navigate(
                 this.props.loggedIn ? "Profile" : "AuthOptions"
-              )
-            }
+              );
+            }}
           >
             <Text style={styles.textOption}>Account</Text>
           </TouchableOpacity>
@@ -129,7 +141,12 @@ class StartScreen extends Component {
 function mapStateToProps(state) {
   return {
     loggedIn: state.auth.signedIn,
+    warningShown: state.auth.warningShown,
+    userId: state.auth.userID,
   };
 }
 
-export default connect(mapStateToProps)(StartScreen);
+export default connect(mapStateToProps, {
+  SetWarningShownFalse,
+  updateAuthData,
+})(StartScreen);
