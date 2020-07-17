@@ -276,7 +276,6 @@ class GameScreen extends Component {
           level={level}
           handleNextPress={this.onForwardPress}
           handleBackPress={this.onBackPress}
-          totalColorsNeeded={this.props.colorsNeeded[level].length}
           colorsNeeded={this.props.colorsNeeded[level]}
           targetColor={this.props.levelColors[level]}
           visibility={gameWon}

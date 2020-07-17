@@ -1,64 +1,44 @@
-import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-import Colors from "../Constants/Colors";
+import React from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 
-class GameModeScreen extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <GradientButton
-            style={styles.option}
-            text="Color Mixer"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            gradientBegin="#5bc8ac"
-            gradientEnd="#e6d72a"
-            gradientDirection="diagonal"
-            height={90}
-            width={"100%"}
-            radius={15}
-            impact
-            impactStyle="Light"
-            onPressAction={() => this.props.navigation.navigate("Levels")}
-          />
+const GameModeColorMix = (props) => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
+        <GradientButton
+          style={styles.option}
+          text="Fixed Palette"
+          textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+          gradientBegin="#5bc8ac"
+          gradientEnd="#e6d72a"
+          gradientDirection="diagonal"
+          height={90}
+          width={"100%"}
+          radius={15}
+          impact
+          impactStyle="Light"
+          onPressAction={() => props.navigation.navigate("Levels")}
+        />
 
-          <GradientButton
-            style={styles.option}
-            text="Hex Guesser"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            gradientBegin="#e6d72a"
-            gradientEnd="#f18d9e"
-            gradientDirection="diagonal"
-            height={90}
-            width={"100%"}
-            radius={15}
-            impact
-            impactStyle="Light"
-            onPressAction={() =>
-              this.props.navigation.navigate("GuessHexDifficultyScreen")
-            }
-          />
-
-          <GradientButton
-            style={styles.option}
-            text="Playground"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-            gradientBegin="#f18d9e"
-            gradientEnd="#1995ad"
-            gradientDirection="diagonal"
-            height={90}
-            width={"100%"}
-            radius={15}
-            impact
-            impactStyle="Light"
-            onPressAction={() => this.props.navigation.navigate("Playground")}
-          />
-        </View>
+        <GradientButton
+          style={styles.option}
+          text="Dynamic Palette"
+          textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+          gradientBegin="#f18d9e"
+          gradientEnd="#1995ad"
+          gradientDirection="diagonal"
+          height={90}
+          width={"100%"}
+          radius={15}
+          impact
+          impactStyle="Light"
+          onPressAction={() => props.navigation.navigate("MixHexDynamicDifficulty")}
+        />
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -94,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameModeScreen;
+export default GameModeColorMix;

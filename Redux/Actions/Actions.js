@@ -9,6 +9,13 @@ export const SetCurrentColorAndColorsUsed = (task) => {
   };
 };
 
+export const SetCurrentColorAndColorsUsedDynamicMix = (task) => {
+  return {
+    type: "SET_COLOR_AND_COLORS_USED_MIX_DYNAMIC",
+    payload: task,
+  };
+};
+
 export const AddUserChosenColor = (color) => {
   return {
     type: "ADD_USER_CHOSEN_COLOR",
@@ -16,9 +23,23 @@ export const AddUserChosenColor = (color) => {
   };
 };
 
+export const AddUserChosenColorDynamicMix = (color) => {
+  return {
+    type: "ADD_USER_CHOSEN_COLOR_DYNAMIC_MIX",
+    payload: color,
+  };
+};
+
 export const RemoveUserChosenColor = (color) => {
   return {
     type: "REMOVE_USER_CHOSEN_COLOR",
+    payload: color,
+  };
+};
+
+export const RemoveUserChosenColorDynamixMix = (color) => {
+  return {
+    type: "REMOVE_USER_CHOSEN_COLOR_DYNAMIC_MIX",
     payload: color,
   };
 };
@@ -32,6 +53,12 @@ export const ResetColors = () => {
 export const ResetPlaygroundColors = () => {
   return {
     type: "RESET_PLAYGROUND_COLORS",
+  };
+};
+
+export const ResetColorsDynamixMix = () => {
+  return {
+    type: "RESET_LEVEL_COLORS_DYNAMIC_MIX",
   };
 };
 
@@ -61,6 +88,24 @@ export const IncrementFurthestLevel = (level) => {
     dispatch(IncrementFurthestLevelHexMix(level));
   };
 };
+
+export const Generate8ColorPaletteAndMix = () => {
+  return {
+    type: "GENERATE_8_COLOR_PALETTE_AND_MIX"
+  }
+}
+
+export const Generate10ColorPaletteAndMix = () => {
+  return {
+    type: "GENERATE_10_COLOR_PALETTE_AND_MIX"
+  }
+}
+
+export const Generate12ColorPaletteAndMix = () => {
+  return {
+    type: "GENERATE_12_COLOR_PALETTE_AND_MIX"
+  }
+}
 
 export const CreateNewColorToGuess = () => {
   return {
@@ -274,7 +319,7 @@ export const logout = () => {
   return async function signout(dispatch) {
     try {
       await firebase.auth().signOut();
-      dispatch(signUserOut())
+      dispatch(signUserOut());
     } catch (error) {
       console.log("error with sign out: ", error);
     }

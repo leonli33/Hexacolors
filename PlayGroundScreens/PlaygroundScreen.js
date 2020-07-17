@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -30,6 +30,8 @@ const PlaygroundScreen = (props) => {
   useEffect(() => {
     props.ResetPlaygroundColors();
   }, []);
+
+  const scrollRef = useRef();
 
   const [redValue, setRedValue] = useState(0);
   const [greenValue, setGreenValue] = useState(0);
@@ -135,9 +137,7 @@ const PlaygroundScreen = (props) => {
       }
 
       clearSelectedColors();
-      setTimeout(() => {
-        scrollRef.scrollToEnd({ animated: true });
-      }, 200);
+      scrollRef.current.scrollToEnd({ animated: true });
     } else {
       if (
         `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
@@ -332,7 +332,7 @@ const PlaygroundScreen = (props) => {
       <ScrollView
         style={styles.scrollViewColorMix}
         showsVerticalScrollIndicator={false}
-        ref={(node) => (scrollRef = node)}
+        ref={scrollRef}
         contentContainerStyle={{ flexGrow: 1, justifyContent: "space-evenly" }}
       >
         {props.palette.map((playColors, rowindex) => {

@@ -4,10 +4,9 @@ import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
 
-class ColorMixerWonScreen extends Component {
+class MixHexDynamicGameWon extends Component {
   constructor() {
     super();
-    this.state = {};
   }
 
   render() {
@@ -21,8 +20,9 @@ class ColorMixerWonScreen extends Component {
         alignItems: "center",
         borderWidth: 5,
         borderColor: this.props.targetColor,
-        minHeight: 250,
-        justifyContent: "space-evenly",
+        minHeight: 200,
+        justifyContent: 'space-evenly',
+
       },
       LevelsButton: {
         backgroundColor: Colors.buttonBackground,
@@ -36,6 +36,7 @@ class ColorMixerWonScreen extends Component {
         shadowOpacity: 0.4,
         shadowRadius: 4,
         width: "40%",
+        justifyContent: 'space-evenly'
       },
       text: {
         fontSize: 15,
@@ -57,7 +58,7 @@ class ColorMixerWonScreen extends Component {
         backdropTransitionInTiming={1500}
       >
         <View style={styles.background}>
-          <Text style={{ fontSize: 25 }}>Nice Job!</Text>
+          <Text style={{fontSize: 25 }}>Nice Job!</Text>
           <View
             style={{
               width: "90%",
@@ -84,8 +85,8 @@ class ColorMixerWonScreen extends Component {
                 flexWrap: "wrap",
                 justifyContent: "flex-start",
                 width: "80%",
-                alignSelf: "center",
-                alignItems: "center",
+                alignSelf: 'center',
+                alignItems: 'center'
               }}
             >
               {this.props.colorsNeeded.map((color, index) => {
@@ -112,23 +113,17 @@ class ColorMixerWonScreen extends Component {
             }}
           >
             <TouchableOpacity
-              onPress={() => this.props.handleBackPress(this.props.level)}
+              onPress={this.props.handleBackPress}
               style={styles.LevelsButton}
             >
               <Text style={styles.text}>Back</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                if (this.props.level === 18) {
-                  this.props.gameModePress();
-                } else {
-                  this.props.handleNextPress(this.props.level + 1);
-                }
-              }}
+              onPress={this.props.playAgainPress}
               style={styles.LevelsButton}
             >
               <Text style={styles.text}>
-                {this.props.level === 18 ? "Game Modes" : "Next Level"}
+                Play Again
               </Text>
             </TouchableOpacity>
           </View>
@@ -138,4 +133,4 @@ class ColorMixerWonScreen extends Component {
   }
 }
 
-export default ColorMixerWonScreen;
+export default MixHexDynamicGameWon;

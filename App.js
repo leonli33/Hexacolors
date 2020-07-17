@@ -2,20 +2,24 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import LevelsScreen from "./MixColorScreens/LevelsScreen";
 import GameScreen from "./MixColorScreens/GameScreen";
-import StartScreen from "./MixColorScreens/StartScreen";
+import StartScreen from "./GeneralScreens/StartScreen";
 import GuessHexDifficultyChoice from "./GuessHexColorScreens/GuessHexDifficultyChoice";
 import GuessColorScreen from "./GuessHexColorScreens/GuessColorScreen";
-import GameModeScreen from "./MixColorScreens/GameModeScreen";
+import GameModeScreen from "./GeneralScreens/GameModeScreen";
 import OptionScreen from "./AccountScreens/SignInScreen";
 import RegisterScreen from "./AccountScreens/RegisterScreen";
 import AccountScreen from "./AccountScreens/AccountScreen";
 import PlaygroundScreen from "./PlayGroundScreens/PlaygroundScreen";
 import StartupScreen from "./GeneralScreens/StartupScreen";
+import MixColorDynamicDifficulty from "./MixColorScreens/MixColorDynamicDifficulty";
+import MixColorsDynamicScreen from "./MixColorScreens/MixColorsDynamicScreen";
+import GameModeColorMix from "./MixColorScreens/GameModeScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MixColorReducer from "./Redux/reducers/mixColorReducer";
 import HexGuesserReducer from "./Redux/reducers/hexGuesserReducer";
 import PlaygroundReducer from "./Redux/reducers/playgroundReducer";
+import MixColorDynamicReducer from "./Redux/reducers/mixColorsDynamicReducer";
 import AuthReducer from "./Redux/reducers/authReducer";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, combineReducers } from "redux";
@@ -28,6 +32,7 @@ const AllScreens = createStackNavigator();
 
 const rootReducer = combineReducers({
   mixColors: MixColorReducer,
+  mixColorsDynamic: MixColorDynamicReducer,
   hexGuesser: HexGuesserReducer,
   playground: PlaygroundReducer,
   auth: AuthReducer,
@@ -57,7 +62,6 @@ export default function App() {
             name="Home"
             component={StartScreen}
             options={{
-              title: "HexaColors",
               headerBackTitleVisible: false,
               headerShown: false,
               gestureEnabled: false,
@@ -96,7 +100,7 @@ export default function App() {
             name="GameMode"
             component={GameModeScreen}
             options={{
-              title: "Game Modes",
+              title: "Game Options",
               headerTitleAlign: "center",
               headerTitleStyle: {
                 fontWeight: "bold",
@@ -128,6 +132,57 @@ export default function App() {
           />
 
           <AllScreens.Screen
+            name="MixHexGameMode"
+            component={GameModeColorMix}
+            options={{
+              title: "Game Mode",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerStyle: {
+                backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: "black",
+              headerBackTitleVisible: false,
+            }}
+          />
+
+          <AllScreens.Screen
+            name="MixHexDynamicDifficulty"
+            component={MixColorDynamicDifficulty}
+            options={{
+              title: "Game Difficulty",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerStyle: {
+                backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: "black",
+              headerBackTitleVisible: false,
+            }}
+          />
+
+          <AllScreens.Screen
+            name="MixHexDynamicGameMode"
+            component={MixColorsDynamicScreen}
+            options={{
+              title: "Mix The Colors",
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerStyle: {
+                backgroundColor: Colors.buttonBackground,
+              },
+              headerTintColor: "black",
+              headerBackTitleVisible: false,
+            }}
+          />
+
+          <AllScreens.Screen
             name="Levels"
             component={LevelsScreen}
             options={{
@@ -144,11 +199,12 @@ export default function App() {
               headerBackTitleVisible: false,
             }}
           />
+
           <AllScreens.Screen
             name="Game"
             component={GameScreen}
             options={{
-              title: "Level",
+              title: "Choose Difficulty",
               headerTitleAlign: "center",
               headerStyle: {
                 backgroundColor: "#f4511e",

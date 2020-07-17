@@ -15,6 +15,13 @@ class ColorBox extends Component {
       // set the opacity back to zero after each animation
       this.state.colorBoxAnimation = new Animated.Value(0);
     });
+    if (
+      this.props.title === "Current Color" &&
+      this.props.color === this.props.targetColor &&
+      this.props.type === "Dynamic"
+    ) {
+      this.props.handleGameWon();
+    }
   }
 
   // convert from hex to rgb
