@@ -23,6 +23,7 @@ const currentState = {
   previousColor: "",
   currentColorGuessed: "",
   numColors: 0,
+  answer: [],
 };
 
 export default (state = currentState, action) => {
@@ -88,7 +89,7 @@ function createPalette(num) {
 
 function generateTargetColor(arr) {
   let numColorsToMix = generateRandomNumber(2, 3);
-  currentState.numColors = numColorsToMix
+  currentState.numColors = numColorsToMix;
   let placeInArray = [];
   let alreadyChosen = [];
   for (let i = 0; i < numColorsToMix; i++) {
@@ -107,7 +108,7 @@ function generateTargetColor(arr) {
   for (let i = 0; i < placeInArray.length; i++) {
     colorsToMix[i] = arr[placeInArray[i][0]][placeInArray[i][1]];
   }
-  console.log(colorsToMix);
+  currentState.answer = colorsToMix;
   let targetColor = MixColors(colorsToMix);
   currentState.colorToMix = targetColor.toUpperCase();
 }

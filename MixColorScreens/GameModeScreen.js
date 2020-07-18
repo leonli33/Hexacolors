@@ -10,8 +10,8 @@ const GameModeColorMix = (props) => {
           style={styles.option}
           text="Fixed Palette"
           textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-          gradientBegin="#5bc8ac"
-          gradientEnd="#e6d72a"
+          gradientBegin="#003b46"
+          gradientEnd="#66a5ad"
           gradientDirection="diagonal"
           height={90}
           width={"100%"}
@@ -25,15 +25,17 @@ const GameModeColorMix = (props) => {
           style={styles.option}
           text="Dynamic Palette"
           textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
-          gradientBegin="#f18d9e"
-          gradientEnd="#1995ad"
+          gradientBegin="#1995ad"
+          gradientEnd="#a1d6e2"
           gradientDirection="diagonal"
           height={90}
           width={"100%"}
           radius={15}
           impact
           impactStyle="Light"
-          onPressAction={() => props.navigation.navigate("MixHexDynamicDifficulty")}
+          onPressAction={() =>
+            props.navigation.navigate("MixHexDynamicDifficulty")
+          }
         />
       </View>
     </View>

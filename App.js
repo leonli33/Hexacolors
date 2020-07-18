@@ -169,7 +169,7 @@ export default function App() {
             name="MixHexDynamicGameMode"
             component={MixColorsDynamicScreen}
             options={{
-              title: "Mix The Colors",
+              title: "Mix Colors",
               headerTitleAlign: "center",
               headerTitleStyle: {
                 fontWeight: "bold",

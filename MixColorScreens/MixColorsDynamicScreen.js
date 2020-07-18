@@ -14,6 +14,7 @@ import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import MixColors from "../Functions/MixColor";
 import MixHexDynamicGameWon from "../Components/MixColors/MixHexDynamicGameWon";
+import GetAnswer from "../Components/MixColors/GetAnswer";
 import {
   ResetColorsDynamixMix,
   RemoveUserChosenColorDynamixMix,
@@ -29,13 +30,27 @@ import "firebase/firestore";
 
 const MixColorsDynamicScreen = (props) => {
   const [gameWon, setGameWon] = useState(false);
+  const [getAnswer, setGetAnswer] = useState(false);
 
   const scrollRef = useRef();
 
   useEffect(() => {
     const { difficulty } = props.route.params;
+    props.navigation.setOptions({
+      headerStyle: { backgroundColor: getBackgroundColor(difficulty) },
+    });
     initializeGame(difficulty);
   }, []);
+
+  const getBackgroundColor = (difficulty) => {
+    let color = Colors.tropicalYellow;
+    if (difficulty === "10") {
+      color = Colors.tropicalBlue;
+    } else if (difficulty === "12") {
+      color = Colors.tropicalRed;
+    }
+    return color;
+  };
 
   const initializeGame = (difficulty) => {
     if (difficulty === "8") {
@@ -47,6 +62,10 @@ const MixColorsDynamicScreen = (props) => {
     }
     setGameWon(false);
     props.ResetColorsDynamixMix();
+  };
+
+  const handleGetAnswerPress = () => {
+    setGetAnswer(!getAnswer);
   };
 
   // This function handles the logic when a user presses a color
@@ -130,6 +149,9 @@ const MixColorsDynamicScreen = (props) => {
         />
       </View>
       <View>
+        <View style={{ marginLeft: "2.5%", justifyContent: "flex-start" }}>
+          <GetAnswer selected={getAnswer} handlePress={handleGetAnswerPress} />
+        </View>
         <View style={styles.scrollContainer}>
           <View style={styles.scrollHeader}>
             <Text
@@ -172,6 +194,8 @@ const MixColorsDynamicScreen = (props) => {
                         hints2={[]}
                         color={color}
                         key={index + arrIndex}
+                        notInAnswer={!props.answer.includes(color)}
+                        getAnswerSelected={getAnswer}
                       />
                     );
                   })}
@@ -235,6 +259,7 @@ function mapStateToProps(state) {
     prevColor: state.mixColorsDynamic.previousColor,
     currentColor: state.mixColorsDynamic.currentColorGuessed,
     numColors: state.mixColorsDynamic.numColors,
+    answer: state.mixColorsDynamic.answer
   };
 }
 

@@ -1,5 +1,11 @@
 import React, { Component, useDebugValue } from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedbackComponent,
+} from "react-native";
 import Colors from "../Constants/Colors";
 
 class GuessHexDifficultyChoice extends Component {

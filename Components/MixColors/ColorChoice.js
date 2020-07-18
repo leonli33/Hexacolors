@@ -69,7 +69,8 @@ class ColorChoice extends Component {
       (this.props.hint1Activated &&
         this.props.hints1.includes(this.props.color)) ||
       (this.props.hint2Activated &&
-        this.props.hints2.includes(this.props.color));
+        this.props.hints2.includes(this.props.color)) ||
+        (this.props.getAnswerSelected && this.props.notInAnswer);
     if (inHint) {
       displayOnHint = (
         <View>
