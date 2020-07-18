@@ -33,11 +33,14 @@ const currentState = {
   guessHexHardPercentCorrect: null,
 
   palette: undefined,
+
+  dynamic_colors_mixed: null,
 };
 
 export default (state = currentState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS_AUTH:
+      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       currentState.userID = action.payload.userid;
       currentState.signedIn = true;
       currentState.firstName = action.payload.first_name;
@@ -93,6 +96,7 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
       currentState.palette = action.payload.playground_palette;
+      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
     case AUTO_LOGIN_SUCCESS:
       currentState.userID = action.payload.userid;
@@ -121,6 +125,7 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
       currentState.palette = action.payload.playground_palette;
+      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
     case SIGN_OUT:
       currentState.userID = null;
@@ -141,6 +146,7 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = null;
       currentState.palette = undefined;
+      currentState.dynamic_colors_mixed = null;
       return { ...currentState };
     default:
       return state;

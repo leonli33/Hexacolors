@@ -91,21 +91,21 @@ export const IncrementFurthestLevel = (level) => {
 
 export const Generate8ColorPaletteAndMix = () => {
   return {
-    type: "GENERATE_8_COLOR_PALETTE_AND_MIX"
-  }
-}
+    type: "GENERATE_8_COLOR_PALETTE_AND_MIX",
+  };
+};
 
 export const Generate10ColorPaletteAndMix = () => {
   return {
-    type: "GENERATE_10_COLOR_PALETTE_AND_MIX"
-  }
-}
+    type: "GENERATE_10_COLOR_PALETTE_AND_MIX",
+  };
+};
 
 export const Generate12ColorPaletteAndMix = () => {
   return {
-    type: "GENERATE_12_COLOR_PALETTE_AND_MIX"
-  }
-}
+    type: "GENERATE_12_COLOR_PALETTE_AND_MIX",
+  };
+};
 
 export const CreateNewColorToGuess = () => {
   return {
@@ -248,6 +248,7 @@ export const createNewUser = (email, password, firstName, lastName) => {
         guess_hex_hard_total_right: 0,
         guess_hex_hard_total_tries: 0,
         guess_hex_colors_guessed: [],
+        dynamic_colors_mixed: [],
       };
       const ref = firebase.firestore().collection("users");
       ref.doc(userID).set(jsonObject);
@@ -305,7 +306,6 @@ export const autoLogin = (userId) => {
       let playgroundData = {
         palette: data.playground_palette,
       };
-      console.log(data);
       dispatch(loginAuto({ ...data, userid: userId }));
       dispatch(loginSuccessDataMixColors(mixColorData));
       dispatch(loginSuccessDataPlayground(playgroundData));

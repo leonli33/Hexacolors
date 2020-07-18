@@ -99,6 +99,7 @@ class GameScreen extends Component {
       this.props.IncrementFurthestLevel(levelID - 1);
       this.props.IncrementTotalLevelsCompleted();
       if (this.props.signedIn) this.incrementLevelFirebase(levelID - 1);
+      this.scroll.scrollTo({ x: 0, y: 0, animated: true });
     } else {
       this.props.navigation.navigate("Home");
     }

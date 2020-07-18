@@ -61,11 +61,14 @@ const MixColorsDynamicScreen = (props) => {
       props.Generate12ColorPaletteAndMix();
     }
     setGameWon(false);
+    setGetAnswer(false);
+    scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
     props.ResetColorsDynamixMix();
   };
 
   const handleGetAnswerPress = () => {
     setGetAnswer(!getAnswer);
+    props.ResetColorsDynamixMix();
   };
 
   // This function handles the logic when a user presses a color
@@ -108,10 +111,8 @@ const MixColorsDynamicScreen = (props) => {
   };
 
   const handlePlayAgainPress = () => {
-    setTimeout(() => {
-      const { difficulty } = props.route.params;
-      initializeGame(difficulty);
-    }, 100);
+    const { difficulty } = props.route.params;
+    initializeGame(difficulty);
   };
 
   const handleBackPress = () => {
@@ -120,6 +121,26 @@ const MixColorsDynamicScreen = (props) => {
 
   const handleGameWon = () => {
     setGameWon(true);
+    writeColorToFirebase();
+  };
+
+  const writeColorToFirebase = async () => {
+    if (props.signedIn) {
+      try {
+        await firebase
+          .firestore()
+          .collection("users")
+          .doc(props.userID)
+          .update({
+            dynamic_colors_mixed: firebase.firestore.FieldValue.arrayUnion(
+              props.targetColor
+            ),
+          });
+      } catch (error) {
+        console.log("There was an error when attempting to write to firebase.");
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -259,7 +280,9 @@ function mapStateToProps(state) {
     prevColor: state.mixColorsDynamic.previousColor,
     currentColor: state.mixColorsDynamic.currentColorGuessed,
     numColors: state.mixColorsDynamic.numColors,
-    answer: state.mixColorsDynamic.answer
+    answer: state.mixColorsDynamic.answer,
+    signedIn: state.auth.signedIn,
+    userID: state.auth.userID,
   };
 }
 
