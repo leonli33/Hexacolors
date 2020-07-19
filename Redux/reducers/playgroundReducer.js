@@ -42,13 +42,14 @@ export default (state = currentState, action) => {
       currentState.currentColorsChosen = [];
       return { ...currentState };
     case ADD_USER_CHOSEN_COLOR_PLAYGROUND:
-      currentState.currentColorsChosen.push(action.payload);
+      let arr = [...currentState.currentColorsChosen];
+      arr.push(action.payload);
+      currentState.currentColorsChosen = arr;
       return { ...currentState };
     case REMOVE_USER_CHOSEN_COLOR_PLAYGROUND:
-      currentState.currentColorsChosen.splice(
-        currentState.currentColorsChosen.indexOf(action.payload),
-        1
-      );
+      let array = [...currentState.currentColorsChosen];
+      array.splice(array.indexOf(action.payload), 1);
+      currentState.currentColorsChosen = array;
       return { ...currentState };
     case SIGN_OUT:
       currentState.currentColorsChosen = [];

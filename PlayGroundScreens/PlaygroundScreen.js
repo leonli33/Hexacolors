@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
 import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
-import ColorOption from "../Components/PlaygroundComponents/ColorOption";
+import ColorOptions from "../Components/PlaygroundComponents/ColorOption";
 import ColorValue from "../Components/PlaygroundComponents/ColorValue";
 import MixColors from "../Functions/MixColor";
 import Convert from "color-convert";
@@ -26,121 +26,134 @@ import {
   RemoveUserChosenColorPlayground,
 } from "../Redux/Actions";
 
-const PlaygroundScreen = (props) => {
-  useEffect(() => {
-    props.ResetPlaygroundColors();
-  }, []);
+class PlaygroundScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redValue: 0,
+      greenValue: 0,
+      blueValue: 0,
+      redHexValue: "00",
+      greenHexValue: "00",
+      blueHexValue: "00",
+    };
+  }
 
-  const scrollRef = useRef();
+  componentDidMount() {
+    this.props.ResetPlaygroundColors();
+    this.props.navigation.setOptions({
+      gestureEnabled: false,
+    });
+  }
 
-  const [redValue, setRedValue] = useState(0);
-  const [greenValue, setGreenValue] = useState(0);
-  const [blueValue, setBlueValue] = useState(0);
-
-  const [redHexValue, setRedHexValue] = useState("00");
-  const [greenHexValue, setGreenHexValue] = useState("00");
-  const [blueHexValue, setBlueHexValue] = useState("00");
-
-  props.navigation.setOptions({
-    gestureEnabled: false,
-  });
-
-  const handleSliderColorChange = (number, color) => {
-    props.ResetPlaygroundColors();
+  handleSliderColorChange = (number, color) => {
+    this.props.ResetPlaygroundColors();
     let hexString = number.toString(16);
     if (hexString.length === 1) hexString = `0${hexString}`;
     if (color === "red") {
-      setRedHexValue(hexString);
-      setRedValue(number);
+      this.setState({
+        redValue: number,
+        redHexValue: hexString,
+      });
     } else if (color === "green") {
-      setGreenHexValue(hexString);
-      setGreenValue(number);
+      this.setState({
+        greenValue: number,
+        greenHexValue: hexString,
+      });
     } else {
-      setBlueHexValue(hexString);
-      setBlueValue(number);
+      this.setState({
+        blueValue: number,
+        blueHexValue: hexString,
+      });
     }
   };
 
-  const handleColorOptionSelected = (color) => {
-    if (props.colors.includes(color)) {
+  handleColorOptionSelected = (color) => {
+    if (this.props.colors.includes(color)) {
       // Remove the color pressed
-      props.RemoveUserChosenColorPlayground(color);
+      this.props.RemoveUserChosenColorPlayground(color);
       // If there are no more selected colors, reset all the colors
-      if (props.colors.length === 0) {
-        props.ResetPlaygroundColors();
-
-        setRedHexValue("00");
-        setGreenHexValue("00");
-        setBlueHexValue("00");
-        setRedValue(0);
-        setGreenValue(0);
-        setBlueValue(0);
+      if (this.props.colors.length === 0) {
+        this.props.ResetPlaygroundColors();
+        this.setState({
+          redValue: 0,
+          greenValue: 0,
+          blueValue: 0,
+          redHexValue: "00",
+          greenHexValue: "00",
+          blueHexValue: "00",
+        });
       } else {
         // Get new colors that results from remaining selected colors
-        let newColor = MixColors(props.colors).toUpperCase();
-        setHexValuesOnMixColors(newColor);
+        let newColor = MixColors(this.props.colors).toUpperCase();
+        this.setHexValuesOnMixColors(newColor);
       }
     } else {
       // User wants to add a color to the mix
-      props.AddUserChosenColorPlayground(color);
-      if (props.colors.length === 0) {
+      if (this.props.colors.length === 0) {
         // If there are currently no selected colors, then the color that the user selects is the
         // color to be displayed
-        setHexValuesOnMixColors(color);
+        this.setHexValuesOnMixColors(color);
       } else {
         // Otherwise, mix all of the currently selected colors together and form a new color
-        let newColor = MixColors(props.colors).toUpperCase();
-        setHexValuesOnMixColors(newColor);
+        let newColor = MixColors(this.props.colors.concat([color])).toUpperCase();
+        this.setHexValuesOnMixColors(newColor);
       }
+      this.props.AddUserChosenColorPlayground(color);
     }
   };
 
-  const setHexValuesOnMixColors = (color) => {
+  setHexValuesOnMixColors = (color) => {
     let redHex = color.substring(1, 3);
     let greenHex = color.substring(3, 5);
     let blueHex = color.substring(5, 7);
-    setRedHexValue(redHex);
-    setGreenHexValue(greenHex);
-    setBlueHexValue(blueHex);
-
     let decimalValueRed = parseInt(redHex, 16);
     let decimalValueGreen = parseInt(greenHex, 16);
     let decimalValueBlue = parseInt(blueHex, 16);
-    setRedValue(decimalValueRed);
-    setGreenValue(decimalValueGreen);
-    setBlueValue(decimalValueBlue);
+    this.setState({
+      redHexValue: redHex,
+      greenHexValue: greenHex,
+      blueHexValue: blueHex,
+      redValue: decimalValueRed,
+      greenValue: decimalValueGreen,
+      blueValue: decimalValueBlue,
+    });
   };
 
-  const clearSelectedColors = () => {
-    props.ResetPlaygroundColors();
-    setRedHexValue("00");
-    setGreenHexValue("00");
-    setBlueHexValue("00");
-    setRedValue(0);
-    setGreenValue(0);
-    setBlueValue(0);
+  clearSelectedColors = () => {
+    this.props.ResetPlaygroundColors();
+    this.setState({
+      redValue: 0,
+      greenValue: 0,
+      blueValue: 0,
+      redHexValue: "00",
+      greenHexValue: "00",
+      blueHexValue: "00",
+    });
   };
 
-  const handleAddColorPressed = () => {
+  handleAddColorPressed = () => {
     if (
-      `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
+      `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}` !=
         "#000000" &&
-      !props.playgroundColors.has(
-        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`
+      !this.props.playgroundColors.has(
+        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
       )
     ) {
-      props.AddColorToPlaygroundList(
-        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`
+      this.props.AddColorToPlaygroundList(
+        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
       );
-      if (props.signedIn) {
-        setPaletteFirebase();
+      if (this.props.signedIn) {
+        this.setPaletteFirebase();
       }
 
-      clearSelectedColors();
-      scrollRef.current.scrollToEnd({ animated: true });
+      this.clearSelectedColors();
+      setTimeout(() => {
+        this.scrollRef.scrollToEnd({ animated: true });
+      }, 50);
     } else {
       if (
-        `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}` !=
+        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}` !=
         "#000000"
       ) {
         alert("This color is already present in your palette");
@@ -148,21 +161,21 @@ const PlaygroundScreen = (props) => {
     }
   };
 
-  const setPaletteFirebase = () => {
+  setPaletteFirebase = () => {
     try {
       firebase
         .firestore()
         .collection("users")
-        .doc(props.userID)
+        .doc(this.props.userID)
         .update({
-          playground_palette: convertToNonNestedArray(props.palette),
+          playground_palette: this.convertToNonNestedArray(this.props.palette),
         });
     } catch (error) {
       alert(error.toString());
     }
   };
 
-  const convertToNonNestedArray = (arr) => {
+  convertToNonNestedArray = (arr) => {
     let newArr = [];
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr[i].length; j++) {
@@ -173,194 +186,199 @@ const PlaygroundScreen = (props) => {
     return newArr;
   };
 
-  const handleRemoveColorsPressed = () => {
-    props.RemoveColorFromPlaygroundList(props.colors);
-    if (props.signedIn && props.colors.length != 0) {
+  handleRemoveColorsPressed = () => {
+    this.props.RemoveColorFromPlaygroundList(this.props.colors);
+    if (this.props.signedIn && this.props.colors.length != 0) {
       try {
         firebase
           .firestore()
           .collection("users")
-          .doc(props.userID)
+          .doc(this.props.userID)
           .update({
-            playground_palette: Array.from(props.playgroundColors),
+            playground_palette: Array.from(this.props.playgroundColors),
           });
       } catch (error) {
         alert(error.toString());
       }
     }
 
-    clearSelectedColors();
+    this.clearSelectedColors();
   };
 
-  let hexColor = `#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`;
-  let color = Convert.hex.keyword(hexColor);
+  render() {
+    let hexColor = `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`;
+    let color = Convert.hex.keyword(hexColor);
 
-  return (
-    <View style={styles.container}>
-      <View
-        style={{
-          width: "90%",
-          height: "35%",
-          flexDirection: "row",
-          marginTop: "3%",
-        }}
-      >
-        <View style={styles.sliderColorContainer}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
-          >
-            <ColorValue
-              borderColor={Colors.tropicalRed}
-              currentValue={redValue}
+    return (
+      <View style={styles.container}>
+        <View
+          style={{
+            width: "90%",
+            height: "35%",
+            flexDirection: "row",
+            marginTop: "3%",
+          }}
+        >
+          <View style={styles.sliderColorContainer}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <ColorValue
+                borderColor={Colors.tropicalRed}
+                currentValue={this.state.redValue}
+              />
+              <ColorValue
+                borderColor={Colors.tropicalGreen}
+                currentValue={this.state.greenValue}
+              />
+              <ColorValue
+                borderColor={Colors.tropicalBlue}
+                currentValue={this.state.blueValue}
+              />
+            </View>
+            <Slider
+              maximumValue={255}
+              style={{ width: "100%" }}
+              thumbTintColor={Colors.tropicalRed}
+              minimumTrackTintColor={Colors.tropicalRed}
+              value={this.state.redValue}
+              onValueChange={(value) => {
+                this.handleSliderColorChange(Math.round(value), "red");
+              }}
             />
-            <ColorValue
-              borderColor={Colors.tropicalGreen}
-              currentValue={greenValue}
+            <Slider
+              maximumValue={255}
+              style={{ width: "100%" }}
+              thumbTintColor={Colors.tropicalGreen}
+              minimumTrackTintColor={Colors.tropicalGreen}
+              value={this.state.greenValue}
+              onValueChange={(value) => {
+                this.handleSliderColorChange(Math.round(value), "green");
+              }}
             />
-            <ColorValue
-              borderColor={Colors.tropicalBlue}
-              currentValue={blueValue}
+            <Slider
+              maximumValue={255}
+              style={{ width: "100%", marginBottom: -10 }}
+              thumbTintColor={Colors.tropicalBlue}
+              minimumTrackTintColor={Colors.tropicalBlue}
+              value={this.state.blueValue}
+              onValueChange={(value) => {
+                this.handleSliderColorChange(Math.round(value), "blue");
+              }}
             />
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={this.handleAddColorPressed}
+            >
+              <Text>Add Color</Text>
+            </TouchableOpacity>
           </View>
-          <Slider
-            maximumValue={255}
-            style={{ width: "100%" }}
-            thumbTintColor={Colors.tropicalRed}
-            minimumTrackTintColor={Colors.tropicalRed}
-            value={redValue}
-            onValueChange={(value) => {
-              handleSliderColorChange(Math.round(value), "red");
+          <View
+            style={{
+              width: "40%",
+              height: "100%",
+              alignSelf: "center",
+              margin: "3%",
+              marginLeft: "8%",
             }}
-          />
-          <Slider
-            maximumValue={255}
-            style={{ width: "100%" }}
-            thumbTintColor={Colors.tropicalGreen}
-            minimumTrackTintColor={Colors.tropicalGreen}
-            value={greenValue}
-            onValueChange={(value) => {
-              handleSliderColorChange(Math.round(value), "green");
-            }}
-          />
-          <Slider
-            maximumValue={255}
-            style={{ width: "100%", marginBottom: -10 }}
-            thumbTintColor={Colors.tropicalBlue}
-            minimumTrackTintColor={Colors.tropicalBlue}
-            value={blueValue}
-            onValueChange={(value) => {
-              handleSliderColorChange(Math.round(value), "blue");
-            }}
-          />
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={handleAddColorPressed}
           >
-            <Text>Add Color</Text>
-          </TouchableOpacity>
+            <Text
+              style={{ fontSize: 20, alignSelf: "center", marginBottom: 5 }}
+            >{`#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`}</Text>
+            <View
+              style={{
+                ...styles.colorView,
+                backgroundColor: `#${this.state.redHexValue}${this.state.greenHexValue}${this.state.blueHexValue}`,
+              }}
+            />
+            <Text
+              style={{
+                fontSize: 17,
+                alignSelf: "center",
+                marginTop: 10,
+                textAlign: "center",
+              }}
+            >
+              {color}
+            </Text>
+          </View>
+        </View>
+        <View style={{ height: "15%", width: "100%", marginTop: -4 }}>
+          <ScrollView
+            horizontal={true}
+            style={styles.scroll}
+            showsHorizontalScrollIndicator={false}
+            directionalLockEnabled={true}
+            showsVerticalScrollIndicator={false}
+            automaticallyAdjustContentInsets={false}
+            disableIntervalMomentum={true}
+            decelerationRate={0}
+          >
+            {this.props.colors.map((color, index) => {
+              return <ColorMixedBox color={color} key={index} />;
+            })}
+          </ScrollView>
         </View>
         <View
           style={{
-            width: "40%",
-            height: "100%",
+            flexDirection: "row",
+            width: "90%",
+            height: 50,
+            alignItems: "center",
+            marginTop: "3%",
             alignSelf: "center",
-            margin: "3%",
-            marginLeft: "8%",
+            justifyContent: "space-between",
           }}
         >
-          <Text
-            style={{ fontSize: 20, alignSelf: "center", marginBottom: 5 }}
-          >{`#${redHexValue.toUpperCase()}${greenHexValue.toUpperCase()}${blueHexValue.toUpperCase()}`}</Text>
-          <View
-            style={{
-              ...styles.colorView,
-              backgroundColor: `#${redHexValue}${greenHexValue}${blueHexValue}`,
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 17,
-              alignSelf: "center",
-              marginTop: 10,
-              textAlign: "center",
-            }}
+          <TouchableOpacity
+            style={styles.clearSelectedColors}
+            onPress={this.clearSelectedColors}
           >
-            {color}
-          </Text>
+            <Text>Clear Selected Colors</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.removeSelectedColors}
+            onPress={this.handleRemoveColorsPressed}
+          >
+            <Text>Remove Colors</Text>
+          </TouchableOpacity>
         </View>
-      </View>
-      <View style={{ height: "15%", width: "100%", marginTop: -4 }}>
         <ScrollView
-          horizontal={true}
-          style={styles.scroll}
-          showsHorizontalScrollIndicator={false}
-          directionalLockEnabled={true}
+          style={styles.scrollViewColorMix}
           showsVerticalScrollIndicator={false}
-          automaticallyAdjustContentInsets={false}
-          disableIntervalMomentum={true}
-          decelerationRate={0}
+          ref={(node) => (this.scrollRef = node)}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: "space-evenly",
+          }}
         >
-          {props.colors.map((color, index) => {
-            return <ColorMixedBox color={color} key={index} />;
+          {this.props.palette.map((playColors, rowindex) => {
+            return (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
+                  height: Dimensions.get("window").width * (4 / 13),
+                }}
+                key={rowindex + 1000}
+              >
+                {playColors.map((color, index) => {
+                  return (
+                    <ColorOptions
+                      key={index + rowindex * 4}
+                      color={color}
+                      handleSelected={this.handleColorOptionSelected}
+                    />
+                  );
+                })}
+              </View>
+            );
           })}
         </ScrollView>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          width: "90%",
-          height: 50,
-          alignItems: "center",
-          marginTop: "3%",
-          alignSelf: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <TouchableOpacity
-          style={styles.clearSelectedColors}
-          onPress={clearSelectedColors}
-        >
-          <Text>Clear Selected Colors</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.removeSelectedColors}
-          onPress={handleRemoveColorsPressed}
-        >
-          <Text>Remove Colors</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView
-        style={styles.scrollViewColorMix}
-        showsVerticalScrollIndicator={false}
-        ref={scrollRef}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "space-evenly" }}
-      >
-        {props.palette.map((playColors, rowindex) => {
-          return (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                height: Dimensions.get("window").width * (4 / 13),
-              }}
-              key={rowindex + 1000}
-            >
-              {playColors.map((color, index) => {
-                return (
-                  <ColorOption
-                    key={index + rowindex * 4}
-                    color={color}
-                    handleSelected={handleColorOptionSelected}
-                  />
-                );
-              })}
-            </View>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
-};
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return {

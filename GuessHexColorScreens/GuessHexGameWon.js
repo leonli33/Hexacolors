@@ -52,14 +52,16 @@ const GuessHexGameWon = (props) => {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={props.backPress} style={styles.button}>
-              <Text style={{ fontSize: 18 }}>Back</Text>
+              <Text style={{ fontSize: 18, marginVertical: 10 }}>Back</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={props.playAgainPress}
               style={styles.button}
             >
-              <Text style={{ fontSize: 18 }}>Play Again</Text>
+              <Text style={{ fontSize: 18, marginVertical: 10 }}>
+                Play Again
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -70,7 +72,6 @@ const GuessHexGameWon = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "60%",
     width: "95%",
     backgroundColor: "whitesmoke",
     alignSelf: "center",
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     marginTop: "10%",
+    justifyContent: "space-evenly",
   },
   colorBox: {
     width: 30,
@@ -110,16 +112,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    height: "20%",
-    marginTop: "70%",
+    marginTop: "20%",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    position: "absolute",
+    marginBottom: 40,
   },
   button: {
     width: "40%",
-    height: "70%",
     backgroundColor: Colors.buttonBackground,
     justifyContent: "center",
     alignItems: "center",

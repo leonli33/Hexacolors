@@ -14,6 +14,7 @@ import {
   Dimensions,
   Alert,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 
 const RegisterScreen = (props) => {
@@ -22,6 +23,7 @@ const RegisterScreen = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState();
+  const [iconName, setIconName] = useState("ios-eye");
 
   const dispatch = useDispatch();
   const handleSignUp = async () => {
@@ -47,7 +49,10 @@ const RegisterScreen = (props) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <TouchableOpacity
-          style={{ alignSelf: "flex-start", marginTop: 25 }}
+          style={{
+            alignSelf: "flex-start",
+            marginTop: Dimensions.get("window").height > 700 ? 55 : 25,
+          }}
           onPress={() => props.navigation.navigate("AuthOptions")}
         >
           <Ionicons
@@ -61,45 +66,78 @@ const RegisterScreen = (props) => {
           style={{
             transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
             resizeMode: "contain",
-            marginTop: "2%",
           }}
         />
-        <TextInput
-          placeholder="First Name"
-          style={{ ...styles.textInput, marginTop: "5%" }}
-          onChangeText={(firstName) => {
-            setFirstName(firstName);
+        <View
+          style={{
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            height: "50%",
+            marginBottom: "5%",
           }}
-        />
-        <TextInput
-          placeholder="Last Name"
-          style={{ ...styles.textInput, marginTop: "5%" }}
-          onChangeText={(lastName) => {
-            setLastName(lastName);
-          }}
-        />
+        >
+          <TextInput
+            placeholder="First Name"
+            style={{ ...styles.textInput }}
+            onChangeText={(firstName) => {
+              setFirstName(firstName);
+            }}
+            autoCapitalize="none"
+            returnKeyType="next"
+          />
+          <TextInput
+            placeholder="Last Name"
+            style={{ ...styles.textInput }}
+            onChangeText={(lastName) => {
+              setLastName(lastName);
+            }}
+            autoCapitalize="none"
+            returnKeyType="next"
+          />
 
-        <TextInput
-          placeholder="Email"
-          style={{ ...styles.textInput, marginTop: "12%" }}
-          onChangeText={(email) => {
-            setEmail(email);
-          }}
-        />
-        <TouchableOpacity style={{ width: "90%" }}>
-          <Text
-            style={{ color: "silver", marginTop: "5%", alignSelf: "flex-end" }}
+          <TextInput
+            placeholder="Email"
+            style={{ ...styles.textInput }}
+            onChangeText={(email) => {
+              setEmail(email);
+            }}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            returnKeyType="next"
+          />
+          <View
+            style={{
+              width: "100%",
+              alignItems: "center",
+              marginTop: -15,
+            }}
           >
-            show password
-          </Text>
-        </TouchableOpacity>
-
-        <TextInput
-          placeholder="Password"
-          style={{ ...styles.textInput, marginTop: "3.5%" }}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <TouchableOpacity onPress={handleSignUp}>
+            <View style={{ width: "90%" }}>
+              <TouchableOpacity
+                onPress={() => {
+                  let name = "ios-eye-off";
+                  if (iconName === "ios-eye-off") name = "ios-eye";
+                  setIconName(name);
+                }}
+                style={{ alignSelf: "flex-end" }}
+              >
+                <Ionicons color="gray" size={30} name={iconName} />
+              </TouchableOpacity>
+            </View>
+            <TextInput
+              placeholder="Password"
+              style={{ ...styles.textInput, marginTop: 2 }}
+              onChangeText={(password) => setPassword(password)}
+              autoCapitalize="none"
+              secureTextEntry={iconName === "ios-eye"}
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          onPress={handleSignUp}
+          style={styles.createAccountContainer}
+        >
           <Text style={styles.createAccountText}>Create Account</Text>
         </TouchableOpacity>
       </View>
@@ -134,11 +172,14 @@ const styles = StyleSheet.create({
   createAccountText: {
     fontSize: 20,
     color: "white",
+  },
+  createAccountContainer: {
     backgroundColor: Colors.tropicalBlue,
-    paddingVertical: 5,
-    paddingHorizontal: 35,
     borderRadius: 15,
-    marginTop: "20%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 35,
+    paddingVertical: 5,
   },
   registerInformation: {
     width: "80%",

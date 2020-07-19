@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -96,13 +96,13 @@ const OptionScreen = (props) => {
               }}
               style={{ alignSelf: "flex-end" }}
             >
-              <Ionicons color="gray" size={30} name={iconName} style={{}} />
+              <Ionicons color="gray" size={30} name={iconName} />
             </TouchableOpacity>
           </View>
-
+            
           <TextInput
             placeholder="Password"
-            style={{ ...styles.textInput, marginTop: 5 }}
+            style={{ ...styles.textInput, marginTop: 5, marginBottom: Dimensions.get("window").height / 12}}
             onChangeText={(password) => setPassword(password)}
             autoCapitalize="none"
             secureTextEntry={iconName === "ios-eye"}
@@ -114,14 +114,21 @@ const OptionScreen = (props) => {
               style={{ marginTop: "15%", height: 55 }}
             />
           ) : (
-            <TouchableOpacity onPress={handleLogIn}>
+            <TouchableOpacity
+              onPress={handleLogIn}
+              style={styles.loginContainer}
+            >
               <Text style={styles.loginText}>Sign In</Text>
             </TouchableOpacity>
           )}
           <View style={styles.makeAccountContainer}>
             <Text style={styles.makeAccountText}>Don't have an account?</Text>
             <TouchableOpacity
-              style={{ marginTop: "2%" }}
+              style={{
+                marginTop: "2%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
               onPress={() => {
                 props.navigation.navigate("RegisterScreen");
               }}
@@ -141,10 +148,6 @@ const OptionScreen = (props) => {
     </TouchableWithoutFeedback>
   );
 };
-
-function mapStateToProps(state) {
-  return {};
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -168,11 +171,14 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 20,
     color: "white",
+  },
+  loginContainer: {
+    borderRadius: 15,
     backgroundColor: Colors.tropicalBlue,
     paddingVertical: 5,
     paddingHorizontal: 35,
-    borderRadius: 15,
-    marginTop: "15%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   loginInformation: {
     borderWidth: 1,
@@ -210,4 +216,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, { login })(OptionScreen);
+export default connect(null, { login })(OptionScreen);

@@ -1,5 +1,6 @@
 // Thanks to https://github.com/GirkovArpa/hex-color-mixer for the color mixing algorithm!
 export default MixColors = (hexes) => {
+  console.log(hexes, "hexes")
   let rgbs = hexes.map((hex) => this.hex2dec(hex));
   let cmyks = rgbs.map((rgb) => this.rgb2cmyk(...rgb));
   let mixture_cmyk = this.mix_cmyks(...cmyks);

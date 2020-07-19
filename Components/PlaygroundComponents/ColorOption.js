@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -12,14 +12,6 @@ const ColorOptions = (props) => {
   const handleColorPressed = () => {
     props.handleSelected(props.color);
   };
-
-  let shaded = props.currentColorsChosen.includes(props.color) ? (
-    <View
-      style={{ ...styles.colorBox, backgroundColor: "black", opacity: 0.6 }}
-    />
-  ) : (
-    <View />
-  );
 
   return (
     <TouchableWithoutFeedback
@@ -40,7 +32,17 @@ const ColorOptions = (props) => {
             opacity: props.color ? 1 : 0,
           }}
         >
-          {shaded}
+          {props.currentColorsChosen.includes(props.color) ? (
+            <View
+              style={{
+                ...styles.colorBox,
+                backgroundColor: "black",
+                opacity: 0.6,
+              }}
+            />
+          ) : (
+            <View />
+          )}
         </View>
         <Text style={styles.hexText}>{props.color}</Text>
       </View>

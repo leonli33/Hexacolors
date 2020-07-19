@@ -113,9 +113,10 @@ const Spinner = () => {
   useEffect(() => {
     Animated.timing(spinSquare, {
       toValue: 1,
-      duration: 3000,
-      easing: Easing.linear,
+      duration: 2000,
+      easing: Easing.bezier[0,1],
       useNativeDriver: true,
+      
     }).start();
   });
 
