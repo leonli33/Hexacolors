@@ -13,6 +13,7 @@ import ColorChoice from "../Components/MixColors/ColorChoice";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import MixColors from "../Functions/MixColor";
+import { Feather } from "@expo/vector-icons";
 import * as firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
@@ -303,15 +304,32 @@ class GameScreen extends Component {
           <View style={styles.scrollContainer}>
             <View style={styles.scrollHeader}>
               <Text style={{ fontSize: 17 }}>{selectedText}</Text>
-              <TouchableOpacity
-                onPress={() => this.scroll.scrollToEnd({ animated: true })}
-                style={{ justifyContent: "center", alignItems: "center" }}
-              >
-                <Image
-                  style={{ marginRight: 40 }}
-                  source={require("../Icons/rightarrow.png")}
-                />
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.scroll.scrollTo({ x: 0, y: 0, animated: true })
+                  }
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Feather
+                    name="arrow-left-circle"
+                    size={30}
+                    color="black"
+                    style={{ marginRight: 10 }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.scroll.scrollToEnd({ animated: true })}
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Feather
+                    name="arrow-right-circle"
+                    size={30}
+                    color="black"
+                    style={{ marginRight: 31 }}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
             <ScrollView
               showsHorizontalScrollIndicator={false}

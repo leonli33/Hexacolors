@@ -70,10 +70,8 @@ class PlaygroundScreen extends Component {
 
   handleColorOptionSelected = (color) => {
     if (this.props.colors.includes(color)) {
-      // Remove the color pressed
-      this.props.RemoveUserChosenColorPlayground(color);
       // If there are no more selected colors, reset all the colors
-      if (this.props.colors.length === 0) {
+      if (this.props.colors.length <= 1) {
         this.props.ResetPlaygroundColors();
         this.setState({
           redValue: 0,
@@ -85,9 +83,14 @@ class PlaygroundScreen extends Component {
         });
       } else {
         // Get new colors that results from remaining selected colors
-        let newColor = MixColors(this.props.colors).toUpperCase();
+        let newArr = [...this.props.colors];
+        let index = newArr.indexOf(color);
+        newArr.splice(index, 1);
+        let newColor = MixColors(newArr).toUpperCase();
         this.setHexValuesOnMixColors(newColor);
       }
+      // Remove the color pressed
+      this.props.RemoveUserChosenColorPlayground(color);
     } else {
       // User wants to add a color to the mix
       if (this.props.colors.length === 0) {
@@ -96,7 +99,9 @@ class PlaygroundScreen extends Component {
         this.setHexValuesOnMixColors(color);
       } else {
         // Otherwise, mix all of the currently selected colors together and form a new color
-        let newColor = MixColors(this.props.colors.concat([color])).toUpperCase();
+        let newColor = MixColors(
+          this.props.colors.concat([color])
+        ).toUpperCase();
         this.setHexValuesOnMixColors(newColor);
       }
       this.props.AddUserChosenColorPlayground(color);

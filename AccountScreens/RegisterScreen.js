@@ -73,7 +73,7 @@ const RegisterScreen = (props) => {
             width: "100%",
             alignItems: "center",
             justifyContent: "space-evenly",
-            height: "50%",
+            height: Dimensions.get("window").height / 2,
             marginBottom: "5%",
           }}
         >

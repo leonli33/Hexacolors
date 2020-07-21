@@ -66,7 +66,8 @@ export default (state = currentState, action) => {
         action.payload.guess_hex_hard_total_tries;
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
-      currentState.palette = action.payload.playground_palette;
+      let arr = splitArray(action.payload.playground_palette);
+      currentState.palette = arr;
       return { ...currentState };
     case SET_WARNING_SHOWN_FALSE:
       currentState.warningShown = true;
@@ -95,7 +96,10 @@ export default (state = currentState, action) => {
         action.payload.guess_hex_hard_total_tries;
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
-      currentState.palette = action.payload.playground_palette;
+
+      let formattedArr = splitArray(action.payload.playground_palette);
+      currentState.palette = formattedArr;
+
       currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
     case AUTO_LOGIN_SUCCESS:
@@ -124,7 +128,8 @@ export default (state = currentState, action) => {
         action.payload.guess_hex_hard_total_tries;
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
-      currentState.palette = action.payload.playground_palette;
+      let array = splitArray(action.payload.playground_palette);
+      currentState.palette = array;
       currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
     case SIGN_OUT:
@@ -152,3 +157,21 @@ export default (state = currentState, action) => {
       return state;
   }
 };
+
+function splitArray(colorArr) {
+  let newArr = [];
+  let row = ["", "", "", ""];
+  let counter = 0;
+  for (let i = 0; i < colorArr.length; i++) {
+    row[counter] = colorArr[i];
+    if (counter === 3) {
+      newArr.push(row);
+      row = ["", "", "", ""];
+      counter = 0;
+    } else {
+      counter++;
+    }
+  }
+  if (row[0] != "") newArr.push(row);
+  return newArr;
+}

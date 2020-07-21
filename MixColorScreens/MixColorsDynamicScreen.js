@@ -14,6 +14,7 @@ import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import MixColors from "../Functions/MixColor";
 import MixHexDynamicGameWon from "../Components/MixColors/MixHexDynamicGameWon";
+import { Feather } from "@expo/vector-icons";
 import GetAnswer from "../Components/MixColors/GetAnswer";
 import {
   ResetColorsDynamixMix,
@@ -178,15 +179,34 @@ const MixColorsDynamicScreen = (props) => {
             <Text
               style={{ fontSize: 17 }}
             >{`Select ${props.numColors} Colors`}</Text>
-            <TouchableOpacity
-              onPress={() => scrollRef.current.scrollToEnd({ animated: true })}
-              style={{ justifyContent: "center", alignItems: "center" }}
-            >
-              <Image
-                style={{ marginRight: 40 }}
-                source={require("../Icons/rightarrow.png")}
-              />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() =>
+                  scrollRef.current.scrollTo({ x: 0, y: 0, animated: true })
+                }
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <Feather
+                  name="arrow-left-circle"
+                  size={30}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  scrollRef.current.scrollToEnd({ animated: true })
+                }
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <Feather
+                  name="arrow-right-circle"
+                  size={30}
+                  color="black"
+                  style={{ marginRight: 31}}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           <ScrollView
             showsHorizontalScrollIndicator={false}

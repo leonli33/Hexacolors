@@ -111,7 +111,7 @@ const OptionScreen = (props) => {
             <ActivityIndicator
               size="large"
               color={Colors.tropicalBlue}
-              style={{ marginTop: "15%", height: 55 }}
+              style={{height: 40 }}
             />
           ) : (
             <TouchableOpacity
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
   makeAccountText: {
     color: "gray",
     fontSize: 15,
+    minHeight: 25
   },
   backButton: {
     color: "gray",

@@ -5,7 +5,13 @@ import ColorMixerWonScreen from "../MixColors/ColorMixerWonScreen";
 const ColorMixedBox = (props) => {
   return (
     <View style={styles.container}>
-      <View style={{ ...styles.colorBox, backgroundColor: props.color }} />
+      <View
+        style={{
+          ...styles.colorBox,
+          backgroundColor: props.color,
+          borderWidth: props.color === "" ? 0 : 1,
+        }}
+      />
       <Text>{props.color}</Text>
     </View>
   );
@@ -19,12 +25,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   container: {
-      justifyContent: 'center',
-      flex: 1,
-      alignItems: 'center',
-      marginBottom: 5,
-      marginRight: 15
-  }
+    justifyContent: "center",
+    flex: 1,
+    alignItems: "center",
+    marginBottom: 5,
+    marginRight: 15,
+  },
 });
 
 export default ColorMixedBox;

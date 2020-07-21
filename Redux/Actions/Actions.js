@@ -252,7 +252,7 @@ export const createNewUser = (email, password, firstName, lastName) => {
       };
       const ref = firebase.firestore().collection("users");
       ref.doc(userID).set(jsonObject);
-      dispatch({ type: "CREATE_NEW_USER" });
+      // dispatch(login(email, password));
     }
   };
 };

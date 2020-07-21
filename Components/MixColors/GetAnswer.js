@@ -26,12 +26,14 @@ class GetAnswer extends Component {
             alignItems: "center",
             shadowColor: "black",
             shadowOffset: { width: 0, height: 1 },
-            shadowOpacity: 0.4,
+            shadowOpacity: 0.26,
             shadowRadius: 4,
-            elevation: 5,
+            elevation: 4,
           }}
         >
-          <Text style={{ color: textColor, marginHorizontal: 12 }}>Get Answer</Text>
+          <Text style={{ color: textColor, marginHorizontal: 12 }}>
+            Get Answer
+          </Text>
         </View>
       </TouchableWithoutFeedback>
     );

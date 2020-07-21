@@ -7,7 +7,7 @@ const ColorCircle = (props) => {
       style={{
         ...styles.container,
         backgroundColor: props.color,
-        borderWidth: 1,
+        borderWidth: props.color === "" ? 0 : 1,
       }}
     ></View>
   );
@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     borderRadius: 25,
+    marginBottom: 4,
     marginRight: 10,
-    marginBottom: 4
   },
 });
 

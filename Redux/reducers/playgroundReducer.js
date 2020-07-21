@@ -50,6 +50,7 @@ export default (state = currentState, action) => {
       let array = [...currentState.currentColorsChosen];
       array.splice(array.indexOf(action.payload), 1);
       currentState.currentColorsChosen = array;
+      console.log(array, "array")
       return { ...currentState };
     case SIGN_OUT:
       currentState.currentColorsChosen = [];
@@ -117,11 +118,12 @@ function removeColorsFromPalette(colors) {
 
 function addColorToPalette(color) {
   let len = currentState.playgroundModePalette.length;
+  let newArr = [...currentState.playgroundModePalette];
   if (len === 0) {
     let colorArr = [color, "", "", ""];
-    currentState.playgroundModePalette.push(colorArr);
+    newArr.push(colorArr);
   } else {
-    let lastColorArray = currentState.playgroundModePalette[len - 1];
+    let lastColorArray = newArr[len - 1];
     let spaceAvailable = false;
     for (let i = 0; i < 4; i++) {
       let colorArr = lastColorArray[i];
@@ -133,9 +135,10 @@ function addColorToPalette(color) {
     }
     if (!spaceAvailable) {
       let newColorRow = [color, "", "", ""];
-      currentState.playgroundModePalette.push(newColorRow);
+      newArr.push(newColorRow);
     }
   }
+  currentState.playgroundModePalette = newArr;
 
   currentState.paletteColorsSet.add(color);
 }

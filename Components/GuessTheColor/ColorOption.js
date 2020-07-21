@@ -41,13 +41,11 @@ const ColorOption = (props) => {
             : props.color,
         opacity: !props.hiddenColors.includes(props.color) ? state.colorCircleToFade : 0,
         shadowColor:
-          props.hiddenColors.includes(props.color) &&
-          props.lastGuessedColor != props.color
+          props.hiddenColors.includes(props.color)
             ? Colors.buttonBackground
             : "black",
         elevation:
-          props.hiddenColors.includes(props.color) &&
-          props.lastGuessedColor != props.color
+          props.hiddenColors.includes(props.color)
             ? 0
             : 6,
         borderWidth: props.hiddenColors.includes(props.color) ? 0 : 1,

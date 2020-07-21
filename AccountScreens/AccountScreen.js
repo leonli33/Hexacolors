@@ -9,6 +9,7 @@ import {
   FlatList,
 } from "react-native";
 import ColorCircle from "../Components/AccountComponents/ColorCircle";
+import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
@@ -99,9 +100,11 @@ const AccountScreen = (props) => {
               <Text style={styles.informationText}>Colors Mixed:</Text>
               <ScrollView
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                  flexGrow: 1,
                   alignItems: "center",
+                  justifyContent: "center",
+                  paddingRight: 7,
                 }}
                 style={styles.mixColorScrollView}
               >
@@ -224,10 +227,15 @@ const AccountScreen = (props) => {
                 data={guessHexColors}
                 style={styles.hexGuesserScroll}
                 horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  paddingTop: 2,
+                  paddingRight: 7,
+                }}
                 renderItem={({ item }) => (
                   <View>
                     {item.map((color, index) => {
-                      return <ColorCircle color={color} />;
+                      return <ColorCircle color={color} key={index} />;
                     })}
                   </View>
                 )}
@@ -235,7 +243,20 @@ const AccountScreen = (props) => {
             </View>
           </View>
           <Text style={styles.gameHeader}>Playground Palette</Text>
-          <ScrollView style={styles.colorPaletteScroll}></ScrollView>
+          <FlatList
+            data={props.playgroundPalette}
+            style={styles.colorPaletteScroll}
+            renderItem={({ item }) => (
+              <View style={{ flexDirection: "row", marginTop: 5 }}>
+                {item.map((color, index) => {
+                  return <ColorMixedBox color={color} index={index} />;
+                })}
+              </View>
+            )}
+            contentContainerStyle={{
+              justifyContent: "space-evenly",
+            }}
+          ></FlatList>
           <TouchableOpacity style={styles.logoutButton} onPress={handleSignout}>
             <Text style={styles.logoutText}>Sign Out</Text>
           </TouchableOpacity>
@@ -259,6 +280,7 @@ function mapStateToProps(state) {
     guessHexHardTotalRight: state.auth.guessHexHardTotalRight,
     guessHexHardTotalTries: state.auth.guessHexHardTotalTries,
     mixColorLevelAnswers: state.mixColors.levelAnswer,
+    playgroundPalette: state.auth.palette,
   };
 }
 
@@ -314,6 +336,7 @@ const styles = StyleSheet.create({
     backgroundColor: "ivory",
     padding: 5,
     paddingRight: 10,
+    paddingBottom: 0,
   },
   sectionHeader: {
     fontSize: 22,
@@ -334,13 +357,15 @@ const styles = StyleSheet.create({
   },
   colorPaletteScroll: {
     width: "100%",
-    height: 150,
     borderWidth: 3,
     alignSelf: "center",
     borderColor: "#1995ad",
     borderRadius: 10,
     backgroundColor: "ivory",
     marginTop: 10,
+    padding: 10,
+    paddingRight: 0,
+    flex: 1,
   },
   gameHeader: {
     fontSize: 25,
