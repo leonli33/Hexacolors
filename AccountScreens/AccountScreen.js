@@ -97,7 +97,7 @@ const AccountScreen = (props) => {
             </View>
 
             <View style={styles.informationTextRow}>
-              <Text style={styles.informationText}>Colors Mixed:</Text>
+              <Text style={styles.informationText}>Colors Mixed</Text>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -218,11 +218,18 @@ const AccountScreen = (props) => {
                 borderRadius: 10,
               }}
             >
-              <Text
-                style={{ ...styles.informationText, alignSelf: "flex-start" }}
-              >
-                Colors Guessed:
-              </Text>
+              <View style={{ width: "90%", alignSelf: "center" }}>
+                <Text
+                  style={{
+                    ...styles.informationText,
+                    alignSelf: "flex-start",
+                    marginLeft: 0,
+                  }}
+                >
+                  Colors Guessed
+                </Text>
+              </View>
+
               <FlatList
                 data={guessHexColors}
                 style={styles.hexGuesserScroll}
@@ -247,9 +254,9 @@ const AccountScreen = (props) => {
             data={props.playgroundPalette}
             style={styles.colorPaletteScroll}
             renderItem={({ item }) => (
-              <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <View style={{ flexDirection: "row", marginTop: 5, height: 65 }}>
                 {item.map((color, index) => {
-                  return <ColorMixedBox color={color} index={index} />;
+                  return <ColorMixedBox color={color} key={color + index} />;
                 })}
               </View>
             )}
@@ -365,7 +372,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
     paddingRight: 0,
-    flex: 1,
   },
   gameHeader: {
     fontSize: 25,
@@ -381,6 +387,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.tropicalBlue,
     backgroundColor: "ivory",
     padding: 5,
+    minHeight: 50,
   },
   hexGuesser: {
     width: "100%",

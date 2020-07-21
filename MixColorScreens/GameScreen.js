@@ -100,6 +100,7 @@ class GameScreen extends Component {
       this.props.IncrementFurthestLevel(levelID - 1);
       this.props.IncrementTotalLevelsCompleted();
       if (this.props.signedIn) this.incrementLevelFirebase(levelID - 1);
+
       this.scroll.scrollTo({ x: 0, y: 0, animated: true });
     } else {
       this.props.navigation.navigate("Home");
@@ -132,7 +133,9 @@ class GameScreen extends Component {
         .collection("users")
         .doc(this.props.userID)
         .update({
-          mix_colors_answers_correct: this.props.totalLevels + 1,
+          mix_colors_answers_correct: firebase.firestore.FieldValue.increment(
+            1
+          ),
         });
     } catch (error) {
       alert(error.toString());

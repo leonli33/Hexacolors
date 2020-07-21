@@ -122,9 +122,10 @@ const MixColorsDynamicScreen = (props) => {
 
   const handleGameWon = () => {
     setGameWon(true);
-    writeColorToFirebase();
+    // writeColorToFirebase();
   };
 
+  /*
   const writeColorToFirebase = async () => {
     if (props.signedIn) {
       try {
@@ -143,6 +144,7 @@ const MixColorsDynamicScreen = (props) => {
       }
     }
   };
+  */
 
   return (
     <View style={styles.container}>
@@ -179,7 +181,7 @@ const MixColorsDynamicScreen = (props) => {
             <Text
               style={{ fontSize: 17 }}
             >{`Select ${props.numColors} Colors`}</Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
                 onPress={() =>
                   scrollRef.current.scrollTo({ x: 0, y: 0, animated: true })
@@ -203,7 +205,7 @@ const MixColorsDynamicScreen = (props) => {
                   name="arrow-right-circle"
                   size={30}
                   color="black"
-                  style={{ marginRight: 31}}
+                  style={{ marginRight: 31 }}
                 />
               </TouchableOpacity>
             </View>

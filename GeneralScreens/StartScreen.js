@@ -16,6 +16,15 @@ import { connect, useDispatch } from "react-redux";
 import { SetWarningShownFalse, updateAuthData } from "../Redux/Actions";
 
 class StartScreen extends Component {
+  handleAccountClicked = async () => {
+    if (this.props.loggedIn) {
+      await this.updateUserAccountInformation();
+      this.props.navigation.navigate("Profile");
+    } else {
+      this.props.navigation.navigate("AuthOptions");
+    }
+  };
+
   updateUserAccountInformation = async () => {
     try {
       await firebase
@@ -121,14 +130,7 @@ class StartScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.infoButton}
-            onPress={() => {
-              if (this.props.loggedIn) {
-                this.updateUserAccountInformation();
-              }
-              this.props.navigation.navigate(
-                this.props.loggedIn ? "Profile" : "AuthOptions"
-              );
-            }}
+            onPress={this.handleAccountClicked}
           >
             <Text style={styles.textOption}>Account</Text>
           </TouchableOpacity>

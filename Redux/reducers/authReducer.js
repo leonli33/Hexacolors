@@ -3,6 +3,7 @@ const SET_WARNING_SHOWN_FALSE = "SET_WARNING_SHOWN_FALSE";
 const UPDATE_AUTH_DATA = "UPDATE_AUTH_DATA";
 const AUTO_LOGIN_SUCCESS = "AUTO_LOGIN_SUCCESS";
 const SIGN_OUT = "SIGN_OUT";
+const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
 const currentState = {
   signedIn: false,
@@ -33,14 +34,11 @@ const currentState = {
   guessHexHardPercentCorrect: null,
 
   palette: undefined,
-
-  dynamic_colors_mixed: null,
 };
 
 export default (state = currentState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS_AUTH:
-      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       currentState.userID = action.payload.userid;
       currentState.signedIn = true;
       currentState.firstName = action.payload.first_name;
@@ -69,9 +67,11 @@ export default (state = currentState, action) => {
       let arr = splitArray(action.payload.playground_palette);
       currentState.palette = arr;
       return { ...currentState };
+
     case SET_WARNING_SHOWN_FALSE:
       currentState.warningShown = true;
       return { ...currentState };
+
     case UPDATE_AUTH_DATA:
       currentState.firstName = action.payload.first_name;
       currentState.lastName = action.payload.last_name;
@@ -100,8 +100,8 @@ export default (state = currentState, action) => {
       let formattedArr = splitArray(action.payload.playground_palette);
       currentState.palette = formattedArr;
 
-      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
+
     case AUTO_LOGIN_SUCCESS:
       currentState.userID = action.payload.userid;
       currentState.signedIn = true;
@@ -129,9 +129,10 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
       let array = splitArray(action.payload.playground_palette);
+      console.log(array, "array")
       currentState.palette = array;
-      currentState.dynamic_colors_mixed = action.payload.dynamic_colors_mixed;
       return { ...currentState };
+
     case SIGN_OUT:
       currentState.userID = null;
       currentState.signedIn = false;
@@ -151,8 +152,40 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = null;
       currentState.palette = undefined;
-      currentState.dynamic_colors_mixed = null;
       return { ...currentState };
+
+    case REGISTER_SUCCESS:
+      console.log("register success")
+      currentState.userID = action.payload.userid;
+      currentState.signedIn = true;
+      currentState.firstName = action.payload.first_name;
+      currentState.lastName = action.payload.last_name;
+      currentState.mixColorsTotalCorrect = 0;
+      currentState.mixColorsCorrectPercentage = 0;
+      currentState.guessHexTotalColors = [];
+      currentState.guessHexEasyTotalRight = 0;
+      currentState.guessHexEasyTotalTries = 0;
+      currentState.guessHexEasyPercentCorrect = 0;
+      currentState.guessHexMediumTotalRight = 0;
+      currentState.guessHexMediumTotalTries = 0;
+      currentState.guessHexMediumPercentCorrect = 0;
+      currentState.guessHexHardTotalRight = 0;
+      currentState.guessHexHardTotalTries = 0;
+      currentState.guessHexHardPercentCorrect = 0;
+      currentState.mixColorsFurthestLevel = 0;
+      let arr2 = splitArray([
+        "#EA4335",
+        "#4285F4",
+        "#FFED1C",
+        "#34A853",
+        "#942EBE",
+        "#00ECFA",
+        "#F8712E",
+        "#181762",
+      ]);
+      currentState.palette = arr2;
+      return { ...currentState };
+
     default:
       return state;
   }
