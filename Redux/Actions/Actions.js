@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
+import { Alert } from "react-native";
 
 export const SetCurrentColorAndColorsUsed = (task) => {
   return {
@@ -248,12 +249,11 @@ export const createNewUser = (email, password, firstName, lastName) => {
           );
         });
     } catch (error) {
-      const errorMessage = error.error.message;
-      let message = "Something went wrong.";
+      let errorMessage = error.message;
       if (errorMessage === "EMAIL_EXISTS") {
-        message = "This email has already been used.";
+        errorMessage = "This email has already been used.";
       }
-      throw new Error(message);
+      throw new Error(errorMessage);
     }
   };
 };
@@ -342,9 +342,8 @@ export const login = (email, password) => {
           dispatch(loginSuccessDataPlayground(playgroundData));
         });
     } catch (error) {
-      console.log("Login Request Error");
-      console.log(error);
-      throw new Error(error.toString());
+      let errorMessage = error.message;
+      throw new Error(errorMessage);
     }
   };
 };
@@ -369,7 +368,10 @@ export const autoLogin = (userId) => {
       dispatch(loginSuccessDataMixColors(mixColorData));
       dispatch(loginSuccessDataPlayground(playgroundData));
     } catch (error) {
-      console.log(error);
+      let errorMessage = error.message;
+      Alert.alert("An error has occured!", "" + errorMessage, [
+        { text: "Okay" },
+      ]);
     }
   };
 };
@@ -380,7 +382,10 @@ export const logout = () => {
       await firebase.auth().signOut();
       dispatch(signUserOut());
     } catch (error) {
-      console.log("error with sign out: ", error);
+      let errorMessage = error.message;
+      Alert.alert("An error has occured!", "" + errorMessage, [
+        { text: "Okay" },
+      ]);
     }
   };
 };

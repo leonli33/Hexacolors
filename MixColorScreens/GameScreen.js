@@ -124,7 +124,10 @@ class GameScreen extends Component {
             mix_furthest_level: level,
           });
       } catch (error) {
-        alert(error.toString());
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
       }
     }
     try {
@@ -138,7 +141,10 @@ class GameScreen extends Component {
           ),
         });
     } catch (error) {
-      alert(error.toString());
+      let errorMessage = error.message;
+      Alert.alert("An error has occured!", "" + errorMessage, [
+        { text: "Okay" },
+      ]);
     }
   };
 

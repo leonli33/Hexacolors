@@ -176,7 +176,10 @@ class PlaygroundScreen extends Component {
           playground_palette: this.convertToNonNestedArray(this.props.palette),
         });
     } catch (error) {
-      alert(error.toString());
+      let errorMessage = error.message;
+      Alert.alert("An error has occured!", "" + errorMessage, [
+        { text: "Okay" },
+      ]);
     }
   };
 
@@ -203,7 +206,10 @@ class PlaygroundScreen extends Component {
             playground_palette: Array.from(this.props.playgroundColors),
           });
       } catch (error) {
-        alert(error.toString());
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
       }
     }
 

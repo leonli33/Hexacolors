@@ -166,9 +166,16 @@ class GuessColorScreen extends Component {
             guess_hex_easy_total_right: firebase.firestore.FieldValue.increment(
               1
             ),
-            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(color),
+            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(
+              color
+            ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     } else if (difficulty === "Medium") {
       try {
         await firebase
@@ -179,9 +186,16 @@ class GuessColorScreen extends Component {
             guess_hex_medium_total_right: firebase.firestore.FieldValue.increment(
               1
             ),
-            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(color),
+            guess_hex_colors_guessed: firebase.firestore.FieldValue.arrayUnion(
+              color
+            ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     } else {
       try {
         await firebase
@@ -196,7 +210,12 @@ class GuessColorScreen extends Component {
               color
             ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     }
   };
 
@@ -213,7 +232,12 @@ class GuessColorScreen extends Component {
               1
             ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     } else if (difficulty === "Medium") {
       try {
         await firebase
@@ -225,7 +249,12 @@ class GuessColorScreen extends Component {
               1
             ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     } else {
       try {
         await firebase
@@ -237,7 +266,12 @@ class GuessColorScreen extends Component {
               1
             ),
           });
-      } catch (error) {}
+      } catch (error) {
+        let errorMessage = error.message;
+        Alert.alert("An error has occured!", "" + errorMessage, [
+          { text: "Okay" },
+        ]);
+      }
     }
   };
 

@@ -74,7 +74,7 @@ const RegisterScreen = (props) => {
             alignItems: "center",
             justifyContent: "space-evenly",
             height: Dimensions.get("window").height / 2,
-            marginBottom: "5%",
+            marginBottom: Dimensions.get("window").height / 20,
           }}
         >
           <TextInput
@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "silver",
     fontSize: 18,
-    padding: 5,
     backgroundColor: "white",
     borderRadius: 10,
     paddingLeft: 10,

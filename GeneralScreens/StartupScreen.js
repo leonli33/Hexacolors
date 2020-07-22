@@ -24,7 +24,7 @@ const StartupScreen = (props) => {
     const listener = firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
-        var uid = user.uid;
+        let uid = user.uid;
         // console.log(uid, "signed in");
         props.autoLogin(uid);
         props.navigation.navigate("Home");

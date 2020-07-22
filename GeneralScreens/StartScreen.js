@@ -37,10 +37,8 @@ class StartScreen extends Component {
           this.props.updateAuthData(data);
         });
     } catch (error) {
-      console.log(
-        "there was an error when attempting to fetch updated user information"
-      );
-      console.log(error, "err");
+      let errorMessage = error.message;
+      Alert.alert("An error has occured!", "" + errorMessage, [{ text: "Okay" }]);
     }
   };
 
