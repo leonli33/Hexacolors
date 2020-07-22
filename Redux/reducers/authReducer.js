@@ -129,7 +129,7 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
       let array = splitArray(action.payload.playground_palette);
-      console.log(array, "array")
+      console.log(array, "array");
       currentState.palette = array;
       return { ...currentState };
 
@@ -155,7 +155,6 @@ export default (state = currentState, action) => {
       return { ...currentState };
 
     case REGISTER_SUCCESS:
-      console.log("register success")
       currentState.userID = action.payload.userid;
       currentState.signedIn = true;
       currentState.firstName = action.payload.first_name;
@@ -185,7 +184,6 @@ export default (state = currentState, action) => {
       ]);
       currentState.palette = arr2;
       return { ...currentState };
-
     default:
       return state;
   }
@@ -193,13 +191,13 @@ export default (state = currentState, action) => {
 
 function splitArray(colorArr) {
   let newArr = [];
-  let row = ["", "", "", ""];
+  let row = ["", ""];
   let counter = 0;
   for (let i = 0; i < colorArr.length; i++) {
     row[counter] = colorArr[i];
-    if (counter === 3) {
+    if (counter === 1) {
       newArr.push(row);
-      row = ["", "", "", ""];
+      row = ["", ""];
       counter = 0;
     } else {
       counter++;

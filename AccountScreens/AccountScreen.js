@@ -251,17 +251,31 @@ const AccountScreen = (props) => {
           </View>
           <Text style={styles.gameHeader}>Playground Palette</Text>
           <FlatList
+            nestedScrollEnabled={true}
             data={props.playgroundPalette}
             style={styles.colorPaletteScroll}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              <View style={{ flexDirection: "row", marginTop: 5, height: 65 }}>
+              <View
+                style={{
+                  alignItems: "center",
+                  alignSelf: "center",
+                  justifyContent: "space-evenly",
+                  paddingTop: 6,
+                  alignItems: "center",
+                }}
+              >
                 {item.map((color, index) => {
                   return <ColorMixedBox color={color} key={color + index} />;
                 })}
               </View>
             )}
             contentContainerStyle={{
+              paddingRight: 10,
+              paddingLeft: 5,
               justifyContent: "space-evenly",
+              flexGrow: 1,
             }}
           ></FlatList>
           <TouchableOpacity style={styles.logoutButton} onPress={handleSignout}>
@@ -372,6 +386,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
     paddingRight: 0,
+    height: 170,
   },
   gameHeader: {
     fontSize: 25,
