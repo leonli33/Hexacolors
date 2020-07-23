@@ -15,7 +15,9 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 
 const RegisterScreen = (props) => {
   const [email, setEmail] = useState("");
@@ -29,12 +31,19 @@ const RegisterScreen = (props) => {
   const handleSignUp = async () => {
     setError(null);
     try {
-      await dispatch(() =>
-        props.createNewUser(email, password, firstName, lastName)
-      );
-      props.navigation.navigate("Profile");
+      if (password.length < 8) {
+        Alert.alert(
+          "An error has occured!",
+          "Please make sure your password is at least 8 characters long.",
+          [{ text: "Okay" }]
+        );
+      } else {
+        await dispatch(() =>
+          props.createNewUser(email, password, firstName, lastName)
+        );
+        props.navigation.navigate("Profile");
+      }
     } catch (error) {
-      console.log(error);
       setError(error);
     }
   };
@@ -46,102 +55,106 @@ const RegisterScreen = (props) => {
   }, [error]);
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={{
-            alignSelf: "flex-start",
-            marginTop: Dimensions.get("window").height > 700 ? 55 : 25,
-          }}
-          onPress={() => props.navigation.navigate("AuthOptions")}
-        >
-          <Ionicons
-            style={styles.backButton}
-            name="ios-arrow-round-back"
-            size={30}
-          />
-        </TouchableOpacity>
-        <Image
-          source={require("../Icons/hexacolorslight.png")}
-          style={{
-            transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
-            resizeMode: "contain",
-          }}
-        />
-        <View
-          style={{
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            height: Dimensions.get("window").height / 2,
-            marginBottom: Dimensions.get("window").height / 20,
-          }}
-        >
-          <TextInput
-            placeholder="First Name"
-            style={{ ...styles.textInput }}
-            onChangeText={(firstName) => {
-              setFirstName(firstName);
+    <KeyboardAwareScrollView
+      style={{ height: "100%", width: "100%", backgroundColor: "black" }}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={{
+              alignSelf: "flex-start",
+              marginTop: Dimensions.get("window").height > 700 ? 55 : 25,
             }}
-            autoCapitalize="none"
-            returnKeyType="next"
-          />
-          <TextInput
-            placeholder="Last Name"
-            style={{ ...styles.textInput }}
-            onChangeText={(lastName) => {
-              setLastName(lastName);
+            onPress={() => props.navigation.navigate("AuthOptions")}
+          >
+            <Ionicons
+              style={styles.backButton}
+              name="ios-arrow-round-back"
+              size={30}
+            />
+          </TouchableOpacity>
+          <Image
+            source={require("../Icons/hexacolorslight.png")}
+            style={{
+              transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
+              resizeMode: "contain",
             }}
-            autoCapitalize="none"
-            returnKeyType="next"
-          />
-
-          <TextInput
-            placeholder="Email"
-            style={{ ...styles.textInput }}
-            onChangeText={(email) => {
-              setEmail(email);
-            }}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            returnKeyType="next"
           />
           <View
             style={{
               width: "100%",
               alignItems: "center",
-              marginTop: -15,
+              justifyContent: "space-evenly",
+              height: Dimensions.get("window").height / 2,
+              marginBottom: Dimensions.get("window").height / 20,
             }}
           >
-            <View style={{ width: "90%" }}>
-              <TouchableOpacity
-                onPress={() => {
-                  let name = "ios-eye-off";
-                  if (iconName === "ios-eye-off") name = "ios-eye";
-                  setIconName(name);
-                }}
-                style={{ alignSelf: "flex-end" }}
-              >
-                <Ionicons color="gray" size={30} name={iconName} />
-              </TouchableOpacity>
-            </View>
             <TextInput
-              placeholder="Password"
-              style={{ ...styles.textInput, marginTop: 2 }}
-              onChangeText={(password) => setPassword(password)}
+              placeholder="First Name"
+              style={{ ...styles.textInput }}
+              onChangeText={(firstName) => {
+                setFirstName(firstName);
+              }}
               autoCapitalize="none"
-              secureTextEntry={iconName === "ios-eye"}
+              returnKeyType="next"
             />
+            <TextInput
+              placeholder="Last Name"
+              style={{ ...styles.textInput }}
+              onChangeText={(lastName) => {
+                setLastName(lastName);
+              }}
+              autoCapitalize="none"
+              returnKeyType="next"
+            />
+
+            <TextInput
+              placeholder="Email"
+              style={{ ...styles.textInput }}
+              onChangeText={(email) => {
+                setEmail(email);
+              }}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              returnKeyType="next"
+            />
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                marginTop: -15,
+              }}
+            >
+              <View style={{ width: "90%" }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    let name = "ios-eye-off";
+                    if (iconName === "ios-eye-off") name = "ios-eye";
+                    setIconName(name);
+                  }}
+                  style={{ alignSelf: "flex-end" }}
+                >
+                  <Ionicons color="gray" size={30} name={iconName} />
+                </TouchableOpacity>
+              </View>
+              <TextInput
+                placeholder="Password"
+                style={{ ...styles.textInput, marginTop: 2 }}
+                onChangeText={(password) => setPassword(password)}
+                autoCapitalize="none"
+                secureTextEntry={iconName === "ios-eye"}
+              />
+            </View>
           </View>
+          <TouchableOpacity
+            onPress={handleSignUp}
+            style={styles.createAccountContainer}
+          >
+            <Text style={styles.createAccountText}>Create Account</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={handleSignUp}
-          style={styles.createAccountContainer}
-        >
-          <Text style={styles.createAccountText}>Create Account</Text>
-        </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 

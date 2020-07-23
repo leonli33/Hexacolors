@@ -24,7 +24,6 @@ import {
   GenerateColorsToGuessMedium,
   GenerateColorsToGuessHard,
 } from "../Redux/Actions";
-import { diff } from "react-native-reanimated";
 
 class GuessColorScreen extends Component {
   constructor() {

@@ -7,6 +7,8 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
+  Animated,
+  Easing,
 } from "react-native";
 import ColorCircle from "../Components/AccountComponents/ColorCircle";
 import ColorMixedBox from "../Components/PlaygroundComponents/ColorMixedBox";
@@ -17,6 +19,12 @@ import { logout } from "../Redux/Actions";
 
 const AccountScreen = (props) => {
   const [guessHexColors, setGuessHexColor] = useState([]);
+
+  const leftValueFirstView = useState(new Animated.Value(-600))[0];
+  const leftValueSecondView = useState(new Animated.Value(-600))[0];
+  const leftValueThirdView = useState(new Animated.Value(-600))[0];
+  const leftValueFourthView = useState(new Animated.Value(-600))[0];
+  const leftValueFifthView = useState(new Animated.Value(-600))[0];
 
   const calcPercentage = (totalRight, totalTries) => {
     if (totalRight === 0 || totalTries === 0) return "0%";
@@ -43,7 +51,29 @@ const AccountScreen = (props) => {
     }
     if (row[0] != "") newArr.push(row);
     setGuessHexColor(newArr);
+
+    animateSlideRight(leftValueFirstView);
+    setTimeout(() => {
+      animateSlideRight(leftValueSecondView);
+    }, 100);
+    setTimeout(() => {
+      animateSlideRight(leftValueThirdView);
+    }, 200);
+    setTimeout(() => {
+      animateSlideRight(leftValueFourthView);
+    }, 300);
+    setTimeout(() => {
+      animateSlideRight(leftValueFifthView);
+    }, 400);
   }, []);
+
+  function animateSlideRight(valueToAnimate) {
+    Animated.timing(valueToAnimate, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }
 
   const handleSignout = () => {
     props.logout();
@@ -80,7 +110,12 @@ const AccountScreen = (props) => {
             }}
           />
           <Text style={styles.gameHeader}>Color Mixer</Text>
-          <View style={styles.mixColors}>
+          <Animated.View
+            style={{
+              ...styles.mixColors,
+              transform: [{ translateX: leftValueFirstView }],
+            }}
+          >
             <View style={styles.informationTextRow}>
               <Text style={styles.informationText}>Furthest Level:</Text>
               <Text style={styles.informationText}>
@@ -115,15 +150,16 @@ const AccountScreen = (props) => {
                   })}
               </ScrollView>
             </View>
-          </View>
+          </Animated.View>
           <Text style={styles.gameHeader}>Hex Guesser</Text>
           <View style={styles.hexGuesser}>
-            <View
+            <Animated.View
               style={{
                 borderWidth: 3,
                 borderColor: Colors.tropicalYellow,
                 marginTop: 10,
                 borderRadius: 10,
+                transform: [{ translateX: leftValueSecondView }],
               }}
             >
               <View style={styles.informationTextRow}>
@@ -147,13 +183,14 @@ const AccountScreen = (props) => {
                   )}
                 </Text>
               </View>
-            </View>
-            <View
+            </Animated.View>
+            <Animated.View
               style={{
                 borderWidth: 3,
                 borderColor: Colors.tropicalBlue,
                 borderRadius: 10,
                 marginTop: 10,
+                transform: [{ translateX: leftValueThirdView }],
               }}
             >
               <View style={styles.informationTextRow}>
@@ -177,13 +214,14 @@ const AccountScreen = (props) => {
                   )}
                 </Text>
               </View>
-            </View>
-            <View
+            </Animated.View>
+            <Animated.View
               style={{
                 borderWidth: 3,
                 borderColor: Colors.tropicalRed,
                 marginVertical: 10,
                 borderRadius: 10,
+                transform: [{ translateX: leftValueFourthView }],
               }}
             >
               <View style={styles.informationTextRow}>
@@ -207,8 +245,8 @@ const AccountScreen = (props) => {
                   )}
                 </Text>
               </View>
-            </View>
-            <View
+            </Animated.View>
+            <Animated.View
               style={{
                 width: "100%",
                 alignItems: "center",
@@ -216,6 +254,7 @@ const AccountScreen = (props) => {
                 borderColor: Colors.tropicalGreen,
                 paddingBottom: 15,
                 borderRadius: 10,
+                transform: [{ translateX: leftValueFifthView }],
               }}
             >
               <View style={{ width: "90%", alignSelf: "center" }}>
@@ -246,8 +285,9 @@ const AccountScreen = (props) => {
                     })}
                   </View>
                 )}
-              ></FlatList>
-            </View>
+                keyExtractor={(item) => item[0]}
+              />
+            </Animated.View>
           </View>
           <Text style={styles.gameHeader}>Playground Palette</Text>
           <FlatList
@@ -277,7 +317,8 @@ const AccountScreen = (props) => {
               justifyContent: "space-evenly",
               flexGrow: 1,
             }}
-          ></FlatList>
+            keyExtractor={(item) => item[0]}
+          />
           <TouchableOpacity style={styles.logoutButton} onPress={handleSignout}>
             <Text style={styles.logoutText}>Sign Out</Text>
           </TouchableOpacity>

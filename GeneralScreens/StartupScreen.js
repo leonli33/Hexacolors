@@ -11,6 +11,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import { connect } from "react-redux";
 import { autoLogin } from "../Redux/Actions";
+import { CommonActions } from "@react-navigation/native";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -19,7 +20,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 const StartupScreen = (props) => {
-  
+  const resetStackAndNavigate = CommonActions.reset({
+    index: 0,
+    routes: [{ name: "Home" }],
+  });
+
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -27,11 +32,12 @@ const StartupScreen = (props) => {
         let uid = user.uid;
         // console.log(uid, "signed in");
         props.autoLogin(uid);
-        props.navigation.navigate("Home");
-      } else {
-        props.navigation.navigate("Home");
-        console.log("signed out");
       }
+
+      // user cannot navigate back to the startup screen
+      props.navigation.dispatch(resetStackAndNavigate);
+
+      // close the listener
       listener();
     });
   }, []);
