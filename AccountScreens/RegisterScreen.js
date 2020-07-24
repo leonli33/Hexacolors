@@ -14,8 +14,6 @@ import {
   Dimensions,
   Alert,
   Image,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 
@@ -30,11 +28,18 @@ const RegisterScreen = (props) => {
   const dispatch = useDispatch();
   const handleSignUp = async () => {
     setError(null);
+    Keyboard.dismiss();
     try {
       if (password.length < 8) {
         Alert.alert(
           "An error has occured!",
           "Please make sure your password is at least 8 characters long.",
+          [{ text: "Okay" }]
+        );
+      } else if (!email || !firstName || !lastName) {
+        Alert.alert(
+          "An error has occured!",
+          "Please make sure all fields are valid.",
           [{ text: "Okay" }]
         );
       } else {
@@ -107,7 +112,6 @@ const RegisterScreen = (props) => {
               autoCapitalize="none"
               returnKeyType="next"
             />
-
             <TextInput
               placeholder="Email"
               style={{ ...styles.textInput }}
@@ -157,10 +161,6 @@ const RegisterScreen = (props) => {
     </KeyboardAwareScrollView>
   );
 };
-
-function mapStateToProps(state) {
-  return {};
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -228,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, { createNewUser })(RegisterScreen);
+export default connect(null, { createNewUser })(RegisterScreen);

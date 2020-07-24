@@ -28,6 +28,7 @@ const OptionScreen = (props) => {
   const dispatch = useDispatch();
   const handleLogIn = async () => {
     setLoading(true);
+    Keyboard.dismiss()
     setError(null);
     try {
       await dispatch(() => props.login(email, password));
@@ -99,10 +100,14 @@ const OptionScreen = (props) => {
               <Ionicons color="gray" size={30} name={iconName} />
             </TouchableOpacity>
           </View>
-            
+
           <TextInput
             placeholder="Password"
-            style={{ ...styles.textInput, marginTop: 5, marginBottom: Dimensions.get("window").height / 12}}
+            style={{
+              ...styles.textInput,
+              marginTop: 5,
+              marginBottom: Dimensions.get("window").height / 12,
+            }}
             onChangeText={(password) => setPassword(password)}
             autoCapitalize="none"
             secureTextEntry={iconName === "ios-eye"}
@@ -111,7 +116,7 @@ const OptionScreen = (props) => {
             <ActivityIndicator
               size="large"
               color={Colors.tropicalBlue}
-              style={{height: 40 }}
+              style={{ height: 40 }}
             />
           ) : (
             <TouchableOpacity
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
   makeAccountText: {
     color: "gray",
     fontSize: 15,
-    minHeight: 25
+    minHeight: 25,
   },
   backButton: {
     color: "gray",

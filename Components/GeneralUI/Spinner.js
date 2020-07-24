@@ -111,10 +111,15 @@ const Spinner = () => {
   let spinSquare = new Animated.Value(0);
 
   useEffect(() => {
+    valBlue = 0;
+    valGreen = 0;
+    valRed = 0;
+    valYellow = 0;
     topIndex = 0;
     bottomIndex = 0;
     rightIndex = 0;
     leftIndex = 0;
+
     Animated.timing(spinSquare, {
       toValue: 1,
       duration: 1500,

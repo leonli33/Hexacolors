@@ -343,13 +343,11 @@ class GameScreen extends Component {
             <ScrollView
               showsHorizontalScrollIndicator={false}
               automaticallyAdjustContentInsets={false}
-              disableIntervalMomentum={true}
               directionalLockEnabled={true}
               style={styles.scroll}
               decelerationRate={0}
               horizontal={true}
               snapToAlignment={"end"}
-              snapToInterval={width - 45}
               ref={(node) => (this.scroll = node)}
             >
               {this.props.colorElements.map((elementArr, arrIndex) => {

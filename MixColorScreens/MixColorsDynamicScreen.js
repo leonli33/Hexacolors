@@ -213,13 +213,10 @@ const MixColorsDynamicScreen = (props) => {
           <ScrollView
             showsHorizontalScrollIndicator={false}
             automaticallyAdjustContentInsets={false}
-            disableIntervalMomentum={true}
             directionalLockEnabled={true}
             style={styles.scroll}
-            decelerationRate={0}
             horizontal={true}
             snapToAlignment={"end"}
-            snapToInterval={Dimensions.get("window").width - 45}
             ref={scrollRef}
           >
             {props.currentPalette.map((elementArr, arrIndex) => {
