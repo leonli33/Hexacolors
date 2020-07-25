@@ -50,7 +50,6 @@ export default (state = currentState, action) => {
       let array = [...currentState.currentColorsChosen];
       array.splice(array.indexOf(action.payload), 1);
       currentState.currentColorsChosen = array;
-      console.log(array, "array")
       return { ...currentState };
     case SIGN_OUT:
       currentState.currentColorsChosen = [];

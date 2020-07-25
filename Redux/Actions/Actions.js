@@ -206,6 +206,7 @@ export const register = (info) => {
   };
 };
 
+// register a user
 export const createNewUser = (email, password, firstName, lastName) => {
   return async (dispatch) => {
     try {
@@ -258,64 +259,7 @@ export const createNewUser = (email, password, firstName, lastName) => {
   };
 };
 
-/*
-  const response = await fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBNhvMO_n8O8TzCEFLC24KRGev9kH8Rh3k",
-      {
-        method: "Post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }),
-      }
-    );
-    if (!response.ok) {
-      const error = await response.json();
-      const errorMessage = error.error.message;
-      let message = "Something went wrong.";
-      if (errorMessage === "EMAIL_EXISTS") {
-        message = "This email has already been used.";
-      }
-      throw new Error(message);
-    } else {
-      const resData = await response.json();
-      const userID = resData.localId;
-
-      let jsonObject = {
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
-        mix_colors_answers_correct: 0,
-        mix_furthest_level: 0,
-        playground_palette: [
-          "#EA4335",
-          "#4285F4",
-          "#FFED1C",
-          "#34A853",
-          "#942EBE",
-          "#00ECFA",
-          "#F8712E",
-          "#181762",
-        ],
-        guess_hex_easy_total_right: 0,
-        guess_hex_easy_total_tries: 0,
-        guess_hex_medium_total_right: 0,
-        guess_hex_medium_total_tries: 0,
-        guess_hex_hard_total_right: 0,
-        guess_hex_hard_total_tries: 0,
-        guess_hex_colors_guessed: [],
-        dynamic_colors_mixed: [],
-      };
-      const ref = firebase.firestore().collection("users");
-      ref.doc(userID).set(jsonObject);
-      // dispatch(login(email, password));
-    }
-*/
-
+// Regular login
 export const login = (email, password) => {
   return async (dispatch) => {
     try {
@@ -348,6 +292,7 @@ export const login = (email, password) => {
   };
 };
 
+// Log the user in if they were previously logged in
 export const autoLogin = (userId) => {
   return async function autoLoginFunc(dispatch) {
     try {
@@ -376,6 +321,7 @@ export const autoLogin = (userId) => {
   };
 };
 
+// log the user out
 export const logout = () => {
   return async function signout(dispatch) {
     try {

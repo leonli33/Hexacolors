@@ -35,6 +35,7 @@ export default (state = currentState, action) => {
   }
 };
 
+// create a new color to guess
 function createNewColor() {
   let hexCode = "#";
   while (hexCode.length < 7) {
@@ -103,6 +104,7 @@ function genderateHardColorOptions() {
   return options;
 }
 
+// randomly shuffle the elements in an array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

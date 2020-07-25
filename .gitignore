@@ -10,5 +10,6 @@ npm-debug.*
 web-build/
 web-report/
 
+Constants/FirebaseApi.js
 # macOS
 .DS_Store

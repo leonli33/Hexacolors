@@ -1,5 +1,4 @@
 import MixColors from "../../Functions/MixColor";
-
 const RESET_LEVEL_COLORS_DYNAMIC_MIX = "RESET_LEVEL_COLORS_DYNAMIC_MIX";
 const REMOVE_USER_CHOSEN_COLOR_DYNAMIC_MIX =
   "REMOVE_USER_CHOSEN_COLOR_DYNAMIC_MIX";
@@ -61,6 +60,7 @@ export default (state = currentState, action) => {
   }
 };
 
+// create a random color
 function createNewColor() {
   let hexCode = "#";
   while (hexCode.length < 7) {
@@ -72,6 +72,7 @@ function createNewColor() {
   return hexCode.toUpperCase();
 }
 
+// create a palette with num amount of colors in it
 function createPalette(num) {
   let cols = num / 2;
   let palette = [];
@@ -87,6 +88,7 @@ function createPalette(num) {
   generateTargetColor(palette);
 }
 
+// generate the a target color to try and mix
 function generateTargetColor(arr) {
   let numColorsToMix = generateRandomNumber(2, 3);
   currentState.numColors = numColorsToMix;
@@ -113,6 +115,7 @@ function generateTargetColor(arr) {
   currentState.colorToMix = targetColor.toUpperCase();
 }
 
+// Generate a random number netween lowNum and highNum
 function generateRandomNumber(lowNum, highNum) {
   return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }

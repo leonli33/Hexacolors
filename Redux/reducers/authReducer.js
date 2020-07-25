@@ -5,6 +5,7 @@ const AUTO_LOGIN_SUCCESS = "AUTO_LOGIN_SUCCESS";
 const SIGN_OUT = "SIGN_OUT";
 const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 
+// All the information needed in the account screen
 const currentState = {
   signedIn: false,
   userID: "empty",
@@ -96,10 +97,8 @@ export default (state = currentState, action) => {
         action.payload.guess_hex_hard_total_tries;
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
-
       let formattedArr = splitArray(action.payload.playground_palette);
       currentState.palette = formattedArr;
-
       return { ...currentState };
 
     case AUTO_LOGIN_SUCCESS:
@@ -129,7 +128,6 @@ export default (state = currentState, action) => {
       currentState.guessHexHardPercentCorrect = 0;
       currentState.mixColorsFurthestLevel = action.payload.mix_furthest_level;
       let array = splitArray(action.payload.playground_palette);
-      console.log(array, "array");
       currentState.palette = array;
       return { ...currentState };
 
@@ -189,6 +187,7 @@ export default (state = currentState, action) => {
   }
 };
 
+// Split the array so that the colors are in arrays of 2
 function splitArray(colorArr) {
   let newArr = [];
   let row = ["", ""];

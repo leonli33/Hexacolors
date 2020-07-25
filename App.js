@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import LevelsScreen from "./MixColorScreens/LevelsScreen";
 import GameScreen from "./MixColorScreens/GameScreen";
 import StartScreen from "./GeneralScreens/StartScreen";
