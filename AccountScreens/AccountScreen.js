@@ -175,7 +175,7 @@ const AccountScreen = (props) => {
                 </Text>
               </View>
               <View style={styles.informationTextRow}>
-                <Text style={styles.informationText}>Correct %:</Text>
+                <Text style={styles.informationText}>Accuracy:</Text>
                 <Text style={styles.informationText}>
                   {calcPercentage(
                     props.guessHexEasyTotalRight,
@@ -206,7 +206,7 @@ const AccountScreen = (props) => {
                 </Text>
               </View>
               <View style={styles.informationTextRow}>
-                <Text style={styles.informationText}>Correct %:</Text>
+                <Text style={styles.informationText}>Accuracy:</Text>
                 <Text style={styles.informationText}>
                   {calcPercentage(
                     props.guessHexMediumTotalRight,
@@ -237,7 +237,7 @@ const AccountScreen = (props) => {
                 </Text>
               </View>
               <View style={styles.informationTextRow}>
-                <Text style={styles.informationText}>Correct %:</Text>
+                <Text style={styles.informationText}>Accuracy:</Text>
                 <Text style={styles.informationText}>
                   {calcPercentage(
                     props.guessHexHardTotalRight,

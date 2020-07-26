@@ -149,7 +149,9 @@ class PlaygroundScreen extends Component {
         `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
       );
       if (this.props.signedIn) {
-        this.setPaletteFirebase();
+        this.addColorFirebase(
+          `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
+        );
       }
 
       this.clearSelectedColors();
@@ -166,14 +168,14 @@ class PlaygroundScreen extends Component {
     }
   };
 
-  setPaletteFirebase = () => {
+  addColorFirebase = (color) => {
     try {
       firebase
         .firestore()
         .collection("users")
         .doc(this.props.userID)
         .update({
-          playground_palette: this.convertToNonNestedArray(this.props.palette),
+          playground_palette: firebase.firestore.FieldValue.arrayUnion(color),
         });
     } catch (error) {
       let errorMessage = error.message;
@@ -181,17 +183,6 @@ class PlaygroundScreen extends Component {
         { text: "Okay" },
       ]);
     }
-  };
-
-  convertToNonNestedArray = (arr) => {
-    let newArr = [];
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr[i].length; j++) {
-        let color = arr[i][j];
-        if (color != "") newArr.push(color);
-      }
-    }
-    return newArr;
   };
 
   handleRemoveColorsPressed = () => {
