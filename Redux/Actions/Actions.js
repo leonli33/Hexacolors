@@ -77,16 +77,10 @@ export const RemoveUserChosenColorPlayground = (color) => {
   };
 };
 
-export const IncrementFurthestLevelHexMix = (level) => {
+export const IncrementFurthestLevel = (level) => {
   return {
     type: "INCREMENT_FURTHEST_LEVEL",
     payload: level,
-  };
-};
-
-export const IncrementFurthestLevel = (level) => {
-  return async (dispatch) => {
-    dispatch(IncrementFurthestLevelHexMix(level));
   };
 };
 

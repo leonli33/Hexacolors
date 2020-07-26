@@ -81,7 +81,7 @@ class GameScreen extends Component {
       hint2: false,
       hint3: false,
     });
-    this.props.IncrementFurthestLevel(level);
+    this.incrementFixedLevel(level);
     this.props.IncrementTotalLevelsCompleted();
     if (this.props.signedIn) this.incrementLevelFirebase(level);
   };
@@ -97,8 +97,8 @@ class GameScreen extends Component {
           backgroundColor: this.getBackgroundColorForLevel(levelID),
         },
       });
-      this.props.IncrementFurthestLevel(levelID - 1);
       this.props.IncrementTotalLevelsCompleted();
+      this.incrementFixedLevel(levelID - 1);
       if (this.props.signedIn) this.incrementLevelFirebase(levelID - 1);
 
       this.scroll.scrollTo({ x: 0, y: 0, animated: true });
@@ -111,6 +111,12 @@ class GameScreen extends Component {
       hint3: false,
     });
     this.props.ResetColors();
+  };
+
+  incrementFixedLevel = (level) => {
+    if (level > this.props.furthestLevelCompleted && level <= 18) {
+      this.props.IncrementFurthestLevel(level);
+    }
   };
 
   incrementLevelFirebase = async (level) => {
@@ -264,7 +270,7 @@ class GameScreen extends Component {
       );
     }
 
-    // selectedText tells the user how many colors they need to select in order to beat the level.
+    // SelectedText tells the user how many colors they need to select in order to beat the level.
     // This count is determined through the logic below
     let selectedText = "";
     let numberOfColors = this.props.numColors[level];

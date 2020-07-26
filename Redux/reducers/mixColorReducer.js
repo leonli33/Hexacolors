@@ -150,11 +150,8 @@ export default (state = currentState, action) => {
       currentState.lastColorHexcode = "";
       return { ...currentState };
     case INCREMENT_FURTHEST_LEVEL:
-      currentState.furthestLevelCompleted <= 17 &&
-      action.payload >= currentState.furthestLevelCompleted
-        ? currentState.furthestLevelCompleted++
-        : "";
-      return { ...currentState };
+      currentState.furthestLevelCompleted++;
+      return { ...currentState }; 
     case INCREMENT_TOTAL_LEVELS_COMPLETED:
       currentState.totalLevelsComplete++;
       return { ...currentState };
