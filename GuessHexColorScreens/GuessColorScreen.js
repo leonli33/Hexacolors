@@ -290,7 +290,6 @@ class GuessColorScreen extends Component {
         return (
           <View
             style={{
-              marginRight: 20,
               justifyContent: "space-evenly",
               marginRight: 25,
             }}
@@ -298,7 +297,10 @@ class GuessColorScreen extends Component {
           >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
+                <View
+                  key={index + arrIndex * 2}
+                  style={{ marginTop: index === 0 ? 0 : 30 }}
+                >
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -317,7 +319,6 @@ class GuessColorScreen extends Component {
         return (
           <View
             style={{
-              marginRight: 20,
               justifyContent: "space-evenly",
               marginRight: 25,
             }}
@@ -325,7 +326,10 @@ class GuessColorScreen extends Component {
           >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
+                <View
+                  key={index + arrIndex * 2}
+                  style={{ marginTop: index === 0 ? 0 : 30 }}
+                >
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -344,7 +348,6 @@ class GuessColorScreen extends Component {
         return (
           <View
             style={{
-              marginRight: 20,
               justifyContent: "space-evenly",
               marginRight: 25,
             }}
@@ -352,7 +355,10 @@ class GuessColorScreen extends Component {
           >
             {colorArr.map((color, index) => {
               return (
-                <View key={index + arrIndex * 2} style={{ marginTop: 15 }}>
+                <View
+                  key={index + arrIndex * 2}
+                  style={{ marginTop: index === 0 ? 0 : 30 }}
+                >
                   <ColorOption
                     hiddenColors={this.state.hiddenColors}
                     pressed={this.handleColorPressed}
@@ -419,6 +425,7 @@ class GuessColorScreen extends Component {
             flexDirection: "row",
             marginTop: "3%",
             alignItems: "center",
+            marginTop: -15,
           }}
         >
           <View style={styles.sliderColorContainer}>
@@ -514,36 +521,38 @@ class GuessColorScreen extends Component {
             </View>
           </View>
         </View>
-        <View style={styles.resultText}>
-          <Text style={styles.resultGuessText}>
-            {this.state.resultAfterGuess}
-          </Text>
-          <View
-            style={{
-              alignSelf: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "93%",
-              position: "absolute",
-            }}
-          >
-            <ResultTextColorBox color={this.state.lastGuessedColor} />
+        <View style={{ width: "100%", alignItems: "center"}}>
+          <View style={styles.resultText}>
+            <Text style={styles.resultGuessText}>
+              {this.state.resultAfterGuess}
+            </Text>
+            <View
+              style={{
+                alignSelf: "center",
+                justifyContent: "center",
+                height: "100%",
+                width: "93%",
+                position: "absolute",
+              }}
+            >
+              <ResultTextColorBox color={this.state.lastGuessedColor} />
+            </View>
           </View>
+          <ScrollView
+            style={styles.scroll}
+            horizontal={true}
+            contentContainerStyle={{
+              justifyContent: "space-evenly",
+              flexGrow: 1,
+              alignItems: "center",
+            }}
+            showsHorizontalScrollIndicator={false}
+            automaticallyAdjustContentInsets={false}
+            directionalLockEnabled={true}
+          >
+            {this.getColorOptions()}
+          </ScrollView>
         </View>
-
-        <ScrollView
-          style={styles.scroll}
-          horizontal={true}
-          contentContainerStyle={{
-            justifyContent: "space-evenly",
-            flexGrow: 1,
-          }}
-          showsHorizontalScrollIndicator={false}
-          automaticallyAdjustContentInsets={false}
-          directionalLockEnabled={true}
-        >
-          {this.getColorOptions()}
-        </ScrollView>
       </View>
     );
   }
@@ -571,13 +580,15 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     backgroundColor: "lavender",
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
   },
   scroll: {
     width: "100%",
-    paddingLeft: 10,
-    marginTop: "5%",
+    paddingVertical: 15,
+    paddingLeft: 20,
+    marginTop: 15,
     backgroundColor: Colors.buttonBackground,
+    paddingRight: 5,
   },
   colorView: {
     width: "35%",
