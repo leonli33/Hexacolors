@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 
 const GameModeColorMix = (props) => {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   option: {
-    height: 90,
+    height: Dimensions.get("window").height / 9,
     width: "100%",
     borderRadius: 15,
     justifyContent: "center",

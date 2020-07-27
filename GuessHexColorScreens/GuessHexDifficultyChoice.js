@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
-  TouchableWithoutFeedbackComponent,
+  Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   option: {
-    height: 80,
+    height: Dimensions.get("window").height / 9,
     width: "100%",
     borderRadius: 15,
     elevation: 5,

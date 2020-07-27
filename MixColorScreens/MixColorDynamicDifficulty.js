@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import { ResetColorsDynamixMix } from "../Redux/Actions";
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   option: {
-    height: 80,
+    height: Dimensions.get("window").height / 9,
     width: "100%",
     borderRadius: 15,
     elevation: 5,

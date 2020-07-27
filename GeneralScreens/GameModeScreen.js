@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 
 class GameModeScreen extends Component {
@@ -19,7 +19,9 @@ class GameModeScreen extends Component {
             radius={15}
             impact
             impactStyle="Light"
-            onPressAction={() => this.props.navigation.navigate("MixHexGameMode")}
+            onPressAction={() =>
+              this.props.navigation.navigate("MixHexGameMode")
+            }
           />
 
           <GradientButton
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   option: {
-    height: 90,
+    height: Dimensions.get("window").height / 9,
     width: "100%",
     borderRadius: 15,
     justifyContent: "center",

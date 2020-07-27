@@ -31,7 +31,7 @@ const OptionScreen = (props) => {
   // Executes whenever the user presses the login button
   const handleLogIn = async () => {
     setLoading(true);
-    Keyboard.dismiss()
+    Keyboard.dismiss();
     setError(null);
     try {
       await dispatch(() => props.login(email, password));
@@ -81,11 +81,12 @@ const OptionScreen = (props) => {
               transform: [{ scaleX: 0.45 }, { scaleY: 0.45 }],
               resizeMode: "contain",
               marginTop: "5%",
+              marginBottom: "10%",
             }}
           />
           <TextInput
             placeholder="Email"
-            style={{ ...styles.textInput, marginTop: "10%" }}
+            style={{ ...styles.textInput }}
             onChangeText={(email) => setEmail(email)}
             keyboardType="email-address"
             autoCapitalize="none"

@@ -19,7 +19,6 @@ class ColorChoice extends Component {
         height: colorWidth,
         backgroundColor: Colors.tropicalBlue,
         borderRadius: 10,
-        marginRight: Math.round(width / 20),
         borderWidth: 1,
         elevation: 6,
         shadowColor: "black",
@@ -31,13 +30,13 @@ class ColorChoice extends Component {
         marginBottom: Math.round(width / 20),
       },
       hex: {
-        marginLeft: Math.round(colorWidth / 10),
         marginTop: 2,
         marginBottom: -4,
         shadowColor: "black",
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.4,
         shadowRadius: 4,
+        alignSelf: "center",
       },
     });
 
@@ -51,14 +50,20 @@ class ColorChoice extends Component {
             backgroundColor: "black",
             opacity: 0.6,
             borderWidth: 0,
+            marginRight: Math.round(width / 20),
           }}
         />
       );
     }
 
     let displayOnHint = (
-      <View>
-        <View style={{ ...styles.color, backgroundColor: this.props.color }}>
+      <View style={{ marginRight: Math.round(width / 20) }}>
+        <View
+          style={{
+            ...styles.color,
+            backgroundColor: this.props.color,
+          }}
+        >
           {shaded}
         </View>
         <Text style={styles.hex}>{this.props.color}</Text>
@@ -71,7 +76,7 @@ class ColorChoice extends Component {
         this.props.hints1.includes(this.props.color)) ||
       (this.props.hint2Activated &&
         this.props.hints2.includes(this.props.color)) ||
-        (this.props.getAnswerSelected && this.props.notInAnswer);
+      (this.props.getAnswerSelected && this.props.notInAnswer);
     if (inHint) {
       displayOnHint = (
         <View>
@@ -82,6 +87,7 @@ class ColorChoice extends Component {
               borderWidth: 0,
               elevation: 0,
               shadowColor: Colors.buttonBackground,
+              marginRight: Math.round(width / 20),
             }}
           ></View>
           <Text
