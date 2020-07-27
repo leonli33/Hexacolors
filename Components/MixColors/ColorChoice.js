@@ -7,11 +7,12 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Colors from "../../Constants/Colors";
+import Font from "../../Constants/Font";
 
 // One of the color choices in the mix color palette
 class ColorChoice extends Component {
   render() {
-    const { width } = Dimensions.get("window");
+    const { width, height } = Dimensions.get("window");
     const colorWidth = Math.round(width / 5);
     const styles = StyleSheet.create({
       color: {
@@ -37,6 +38,8 @@ class ColorChoice extends Component {
         shadowOpacity: 0.4,
         shadowRadius: 4,
         alignSelf: "center",
+        fontSize:
+          height > 1000 ? Font.tabletTextSize - 2 : Font.regularTextSize - 2,
       },
     });
 

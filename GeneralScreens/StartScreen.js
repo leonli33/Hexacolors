@@ -93,7 +93,10 @@ class StartScreen extends Component {
       },
       textOption: {
         color: "white",
-        fontSize: Dimensions.get("window").height > 1100 ? Font.tabletFontSize : Font.regularFontSize,
+        fontSize:
+          Dimensions.get("window").height > 1000
+            ? Font.tabletFontSize
+            : Font.regularFontSize,
         position: "absolute",
       },
     });
@@ -104,7 +107,10 @@ class StartScreen extends Component {
           <Image
             source={require("../Icons/hexacolorLogo.png")}
             style={{
-              transform: [{ scaleX: 0.3 }, { scaleY: 0.3 }],
+              transform:
+                Dimensions.get("window").height < 1000
+                  ? [{ scaleX: 0.3 }, { scaleY: 0.3 }]
+                  : [{ scaleX: 0.5 }, { scaleY: 0.5 }],
               resizeMode: "contain",
             }}
           />

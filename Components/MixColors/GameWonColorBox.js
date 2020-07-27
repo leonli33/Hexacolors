@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 // Colored box that appears on game won screen
 const GameWonColorBox = (props) => {
@@ -8,9 +8,9 @@ const GameWonColorBox = (props) => {
       borderWidth: 1,
       borderColor: "black",
       backgroundColor: props.color.trim(),
-      width: 40,
-      height: 40,
-      borderRadius: 5
+      width: Dimensions.get("window").height > 1000 ? 50 : 40,
+      height: Dimensions.get("window").height > 1000 ? 50 : 40,
+      borderRadius: 5,
     },
   });
 

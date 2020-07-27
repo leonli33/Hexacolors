@@ -1,4 +1,4 @@
-import React, { Component, useDebugValue } from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Colors from "../../Constants/Colors";
+import Font from "../../Constants/Font";
 
 // Level box displayed in the 'levels' screen
 class LevelBox extends Component {
@@ -96,7 +97,16 @@ class LevelBox extends Component {
           }
         >
           <View style={styles.topHalf}>
-            <Text>{this.props.level}</Text>
+            <Text
+              style={{
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize
+                    : Font.regularTextSize,
+              }}
+            >
+              {this.props.level}
+            </Text>
           </View>
           <View style={styles.bottomHalf}>{shadedBottom}</View>
         </View>

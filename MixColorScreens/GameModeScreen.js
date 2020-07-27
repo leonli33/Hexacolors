@@ -4,7 +4,6 @@ import GradientButton from "react-native-gradient-buttons";
 import Font from "../Constants/Font";
 
 const GameModeColorMix = (props) => {
-  console.log(Dimensions.get("window").height);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>

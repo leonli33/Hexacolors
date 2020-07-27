@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Image,
   Text,
   TouchableOpacity,
   Dimensions,
@@ -27,6 +26,7 @@ import {
 } from "../Redux/Actions";
 import Hint from "../Components/MixColors/Hint";
 import ColorMixerWonScreen from "../Components/MixColors/ColorMixerWonScreen";
+import Font from "../Constants/Font";
 
 class GameScreen extends Component {
   constructor(props) {
@@ -325,7 +325,16 @@ class GameScreen extends Component {
           {hints}
           <View style={styles.scrollContainer}>
             <View style={styles.scrollHeader}>
-              <Text style={{ fontSize: 17 }}>{selectedText}</Text>
+              <Text
+                style={{
+                  fontSize:
+                    Dimensions.get("window").height > 1000
+                      ? Font.tabletTextSize
+                      : Font.regularTextSize,
+                }}
+              >
+                {selectedText}
+              </Text>
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
                   onPress={() =>
@@ -335,7 +344,7 @@ class GameScreen extends Component {
                 >
                   <Feather
                     name="arrow-left-circle"
-                    size={30}
+                    size={Dimensions.get("window").height > 1000 ? 38 : 30}
                     color="black"
                     style={{ marginRight: 10 }}
                   />
@@ -346,7 +355,7 @@ class GameScreen extends Component {
                 >
                   <Feather
                     name="arrow-right-circle"
-                    size={30}
+                    size={Dimensions.get("window").height > 1000 ? 38 : 30}
                     color="black"
                   />
                 </TouchableOpacity>

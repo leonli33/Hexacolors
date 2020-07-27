@@ -1,8 +1,15 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
+import Font from "../../Constants/Font";
 
 // Screen displayed when the user wins a game
 class ColorMixerWonScreen extends Component {
@@ -39,7 +46,9 @@ class ColorMixerWonScreen extends Component {
         width: "40%",
       },
       text: {
-        fontSize: 15,
+        fontSize: Dimensions.get("window").height > 1000
+        ? Font.tabletTextSize
+        : Font.regularTextSize,
         marginVertical: 10,
       },
     });
@@ -58,7 +67,13 @@ class ColorMixerWonScreen extends Component {
         backdropTransitionInTiming={1500}
       >
         <View style={styles.background}>
-          <Text style={{ fontSize: 25 }}>Nice Job!</Text>
+          <Text
+            style={{
+              fontSize: Dimensions.get("window").height > 1000 ? 37 : 25,
+            }}
+          >
+            Nice Job!
+          </Text>
           <View
             style={{
               width: "90%",
@@ -75,7 +90,17 @@ class ColorMixerWonScreen extends Component {
             >
               <GameWonColorBox color={this.props.targetColor} />
               <View style={{ height: 52, justifyContent: "center" }}>
-                <Text style={{ fontSize: 25, marginLeft: 10 }}>=</Text>
+                <Text
+                  style={{
+                    fontSize:
+                      Dimensions.get("window").height > 1000
+                        ? Font.tabletTextSize
+                        : Font.regularTextSize,
+                    marginLeft: 10,
+                  }}
+                >
+                  =
+                </Text>
               </View>
             </View>
 

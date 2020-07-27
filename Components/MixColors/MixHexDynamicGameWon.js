@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
+import Font from "../../Constants/Font";
 import Modal from "react-native-modal";
 
 // Screen displayed when the user wins a game in dynamic mode
@@ -39,7 +46,10 @@ class MixHexDynamicGameWon extends Component {
         justifyContent: "space-evenly",
       },
       text: {
-        fontSize: 15,
+        fontSize:
+          Dimensions.get("window").height > 1000
+            ? Font.tabletTextSize
+            : Font.regularTextSize,
         marginVertical: 10,
       },
     });
@@ -58,7 +68,13 @@ class MixHexDynamicGameWon extends Component {
         backdropTransitionInTiming={1500}
       >
         <View style={styles.background}>
-          <Text style={{ fontSize: 25 }}>Nice Job!</Text>
+          <Text
+            style={{
+              fontSize: Dimensions.get("window").height > 1000 ? 37 : 25,
+            }}
+          >
+            Nice Job!
+          </Text>
           <View
             style={{
               width: "90%",

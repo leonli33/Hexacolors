@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
+import Font from "../../Constants/Font";
 
 // Get answer button
 class GetAnswer extends Component {
   render() {
-    const { width } = Dimensions.get("window");
+    const { width, height } = Dimensions.get("window");
     let backColor = "lavender";
     let outline = "black";
     let textColor = "black";
@@ -36,6 +37,8 @@ class GetAnswer extends Component {
               color: textColor,
               marginHorizontal: 12,
               marginVertical: 6,
+              fontSize:
+                height > 1000 ? Font.tabletTextSize : Font.regularTextSize,
             }}
           >
             Get Answer

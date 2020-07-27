@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, Animated } from "react-native";
+import { View, StyleSheet, Text, Animated, Dimensions } from "react-native";
 
 // This is the component displaying the current color and the target color
 class ColorBox extends Component {
@@ -90,7 +90,7 @@ class ColorBox extends Component {
       },
       boxTitle: {
         marginTop: "5%",
-        fontSize: 18,
+        fontSize: Dimensions.get("window").height < 1000 ? 18 : 28,
       },
     });
 

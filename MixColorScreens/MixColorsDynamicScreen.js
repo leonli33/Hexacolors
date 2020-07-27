@@ -25,9 +25,7 @@ import {
   Generate10ColorPaletteAndMix,
   Generate12ColorPaletteAndMix,
 } from "../Redux/Actions";
-import * as firebase from "firebase";
-import "firebase/auth";
-import "firebase/firestore";
+import Font from "../Constants/Font";
 
 const MixColorsDynamicScreen = (props) => {
   const [gameWon, setGameWon] = useState(false);
@@ -159,7 +157,12 @@ const MixColorsDynamicScreen = (props) => {
         <View style={styles.scrollContainer}>
           <View style={styles.scrollHeader}>
             <Text
-              style={{ fontSize: 17 }}
+              style={{
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize
+                    : Font.regularTextSize,
+              }}
             >{`Select ${props.numColors} Colors`}</Text>
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
@@ -170,7 +173,7 @@ const MixColorsDynamicScreen = (props) => {
               >
                 <Feather
                   name="arrow-left-circle"
-                  size={30}
+                  size={Dimensions.get("window").height > 1000 ? 38 : 30}
                   color="black"
                   style={{ marginRight: 10 }}
                 />
@@ -183,7 +186,7 @@ const MixColorsDynamicScreen = (props) => {
               >
                 <Feather
                   name="arrow-right-circle"
-                  size={30}
+                  size={Dimensions.get("window").height > 1000 ? 38 : 30}
                   color="black"
                 />
               </TouchableOpacity>
