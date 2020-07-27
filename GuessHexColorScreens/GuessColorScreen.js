@@ -8,9 +8,10 @@ import {
   Animated,
   Text,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
+import Font from "../Constants/Font";
 import Slider from "react-native-slider";
 import ColorOption from "../Components/GuessTheColor/ColorOption";
 import { connect } from "react-redux";
@@ -556,7 +557,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   resultGuessText: {
-    fontSize: 17,
+    fontSize:
+      Dimensions.get("window").height > 1000
+        ? Font.tabletTextSize
+        : Font.regularTextSize,
     alignSelf: "center",
     position: "absolute",
   },
@@ -568,7 +572,7 @@ const styles = StyleSheet.create({
   },
   resultText: {
     width: "90%",
-    height: 40,
+    height: Dimensions.get("window").height > 1000 ? 55 : 40,
     backgroundColor: "white",
     borderRadius: 10,
     elevation: 3,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 const ColorSliderResult = (props) => {
   return (
@@ -10,7 +10,7 @@ const ColorSliderResult = (props) => {
         borderWidth: props.borderCol === "black" ? 1 : 2.5,
         borderColor: props.borderCol,
       }}
-    ></View>
+    />
   );
 };
 

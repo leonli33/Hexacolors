@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import Colors from "../Constants/Colors";
+import Font from "../Constants/Font";
 
 const GuessHexGameWon = (props) => {
   return (
@@ -28,13 +29,25 @@ const GuessHexGameWon = (props) => {
         <Text style={{ fontSize: 30, marginTop: "5%" }}>Nice Job!</Text>
         <View style={styles.informationContainer}>
           <View style={styles.colorGuess}>
-            <Text style={{ fontSize: 20 }}>{props.targetColor}:</Text>
+            <Text
+              style={{
+                fontSize: Dimensions.get("window").height > 1000 ? 30 : 20,
+              }}
+            >
+              {props.targetColor}:
+            </Text>
             <View
               style={{ ...styles.colorBox, backgroundColor: props.targetColor }}
             />
           </View>
           <View style={styles.colorGussed}>
-            <Text style={{ fontSize: 20 }}>Guesses:</Text>
+            <Text
+              style={{
+                fontSize: Dimensions.get("window").height > 1000 ? 30 : 20,
+              }}
+            >
+              Guesses:
+            </Text>
             <View style={styles.guessedColors}>
               {props.colorsGuessed.map((color, index) => {
                 return (
@@ -52,14 +65,32 @@ const GuessHexGameWon = (props) => {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={props.backPress} style={styles.button}>
-              <Text style={{ fontSize: 18, marginVertical: 10 }}>Back</Text>
+              <Text
+                style={{
+                  fontSize:
+                    Dimensions.get("window").height > 1000
+                      ? Font.tabletTextSize + 2
+                      : Font.regularTextSize + 2,
+                  marginVertical: 10,
+                }}
+              >
+                Back
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={props.playAgainPress}
               style={styles.button}
             >
-              <Text style={{ fontSize: 18, marginVertical: 10 }}>
+              <Text
+                style={{
+                  fontSize:
+                    Dimensions.get("window").height > 1000
+                      ? Font.tabletTextSize + 2
+                      : Font.regularTextSize + 2,
+                  marginVertical: 10,
+                }}
+              >
                 Play Again
               </Text>
             </TouchableOpacity>
@@ -81,18 +112,16 @@ const styles = StyleSheet.create({
   colorGuess: {
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 1,
   },
   informationContainer: {
     width: "90%",
     alignSelf: "center",
     marginTop: "10%",
     justifyContent: "space-evenly",
-    borderWidth: 1,
   },
   colorBox: {
-    width: 30,
-    height: 30,
+    width: Dimensions.get("window").height > 1000 ? 40 : 30,
+    height: Dimensions.get("window").height > 1000 ? 40 : 30,
     borderRadius: 5,
     borderWidth: 1,
     marginLeft: "5%",
@@ -102,7 +131,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: "8%",
-    borderWidth: 1,
   },
   guessedColors: {
     marginLeft: "2%",
@@ -119,9 +147,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    borderWidth: 1,
-    marginBottom: 30,
-    marginTop: Dimensions.get("window").height / 10
+    marginBottom: Dimensions.get("window").height / 20,
+    marginTop: Dimensions.get("window").height / 10,
   },
   button: {
     width: "40%",

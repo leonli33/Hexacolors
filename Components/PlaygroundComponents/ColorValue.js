@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import Font from "../../Constants/Font";
 
 // This is the small box above the sliders
 const ColorValue = (props) => {
@@ -11,15 +12,24 @@ const ColorValue = (props) => {
         backgroundColor: props.currentValue === "" ? "dimgray" : "ivory",
       }}
     >
-      <Text>{props.currentValue}</Text>
+      <Text
+        style={{
+          fontSize:
+            Dimensions.get("window").height > 1000
+              ? Font.tabletTextSize
+              : Font.regularTextSize,
+        }}
+      >
+        {props.currentValue}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 50,
-    height: 30,
+    width: Dimensions.get("window").height > 1000 ? 80 : 50,
+    height: Dimensions.get("window").height > 1000 ? 50 : 30,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
