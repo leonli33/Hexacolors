@@ -8,7 +8,6 @@ import {
   Animated,
   Text,
   ScrollView,
-  Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
@@ -49,6 +48,7 @@ class GuessColorScreen extends Component {
     this.fadeInText();
   }
 
+  // Fade in the color to be guessed
   fadeInText = () => {
     setTimeout(() => {
       Animated.timing(this.state.textToFadeIn, {
@@ -58,6 +58,7 @@ class GuessColorScreen extends Component {
     }, 400);
   };
 
+  // Reset all properties and render new colors for the level
   renderAllColors = () => {
     const { difficulty } = this.props.route.params;
     let color = this.getBackgroundColorForLevel(difficulty);
@@ -84,6 +85,7 @@ class GuessColorScreen extends Component {
     this.createColorOptions(difficulty);
   };
 
+  // Generate the color options based on the difficulty
   createColorOptions = (difficulty) => {
     if (difficulty === "Easy") {
       this.props.GenerateColorsToGuessEasy();
@@ -94,6 +96,7 @@ class GuessColorScreen extends Component {
     }
   };
 
+  // Get the appropriate background color for the title
   getBackgroundColorForLevel = (difficulty) => {
     let color = Colors.tropicalYellow;
     if (difficulty === "Medium") {
@@ -104,6 +107,7 @@ class GuessColorScreen extends Component {
     return color;
   };
 
+  // Updates color whenever the slider changes
   handleSliderColorChange = (number, color) => {
     let hexString = number.toString(16);
     if (hexString.length === 1) hexString = `0${hexString}`;
@@ -128,6 +132,7 @@ class GuessColorScreen extends Component {
     }
   };
 
+  // Logic for when a color is guessed
   handleColorPressed = (color) => {
     let arr = this.state.hiddenColors;
     arr.push(color);
@@ -135,7 +140,6 @@ class GuessColorScreen extends Component {
       if (this.props.signedIn) {
         this.updateColorsCompletedFirebase(this.props.targetColor);
       }
-
       this.setState({
         lastGuessedColor: "",
         gameWon: true,
@@ -153,6 +157,7 @@ class GuessColorScreen extends Component {
     }
   };
 
+  // Update the information in firebase
   updateColorsCompletedFirebase = async (color) => {
     const { difficulty } = this.props.route.params;
     if (difficulty === "Easy") {
@@ -218,6 +223,7 @@ class GuessColorScreen extends Component {
     }
   };
 
+  // Update the color guessed in firebase
   updatedColorsClicked = async () => {
     const { difficulty } = this.props.route.params;
     if (difficulty === "Easy") {
@@ -283,98 +289,48 @@ class GuessColorScreen extends Component {
     this.fadeInText();
   };
 
+  // Return the appropriate amount of color options based on difficulty
   getColorOptions = () => {
     const { difficulty } = this.props.route.params;
+    let colors;
     if (difficulty === "Easy") {
-      return this.props.easyColorOptions.map((colorArr, arrIndex) => {
-        return (
-          <View
-            style={{
-              justifyContent: "space-evenly",
-              marginRight: 25,
-            }}
-            key={arrIndex}
-          >
-            {colorArr.map((color, index) => {
-              return (
-                <View
-                  key={index + arrIndex * 2}
-                  style={{ marginTop: index === 0 ? 0 : 30 }}
-                >
-                  <ColorOption
-                    hiddenColors={this.state.hiddenColors}
-                    pressed={this.handleColorPressed}
-                    color={color}
-                    lastGuessedColor={this.state.lastGuessedColor}
-                    sliderMoving={this.state.sliderMoving}
-                  />
-                </View>
-              );
-            })}
-          </View>
-        );
-      });
+      colors = this.props.easyColorOptions;
     } else if (difficulty === "Medium") {
-      return this.props.mediumColorOptions.map((colorArr, arrIndex) => {
-        return (
-          <View
-            style={{
-              justifyContent: "space-evenly",
-              marginRight: 25,
-            }}
-            key={arrIndex}
-          >
-            {colorArr.map((color, index) => {
-              return (
-                <View
-                  key={index + arrIndex * 2}
-                  style={{ marginTop: index === 0 ? 0 : 30 }}
-                >
-                  <ColorOption
-                    hiddenColors={this.state.hiddenColors}
-                    pressed={this.handleColorPressed}
-                    color={color}
-                    lastGuessedColor={this.state.lastGuessedColor}
-                    sliderMoving={this.state.sliderMoving}
-                  />
-                </View>
-              );
-            })}
-          </View>
-        );
-      });
+      colors = this.props.mediumColorOptions;
     } else {
-      return this.props.hardColorOptions.map((colorArr, arrIndex) => {
-        return (
-          <View
-            style={{
-              justifyContent: "space-evenly",
-              marginRight: 25,
-            }}
-            key={arrIndex}
-          >
-            {colorArr.map((color, index) => {
-              return (
-                <View
-                  key={index + arrIndex * 2}
-                  style={{ marginTop: index === 0 ? 0 : 30 }}
-                >
-                  <ColorOption
-                    hiddenColors={this.state.hiddenColors}
-                    pressed={this.handleColorPressed}
-                    color={color}
-                    lastGuessedColor={this.state.lastGuessedColor}
-                    sliderMoving={this.state.sliderMoving}
-                  />
-                </View>
-              );
-            })}
-          </View>
-        );
-      });
+      colors = this.props.hardColorOptions;
     }
+    return colors.map((colorArr, arrIndex) => {
+      return (
+        <View
+          style={{
+            justifyContent: "space-evenly",
+            marginRight: 25,
+          }}
+          key={arrIndex}
+        >
+          {colorArr.map((color, index) => {
+            return (
+              <View
+                key={index + arrIndex * 2}
+                style={{ marginTop: index === 0 ? 0 : 30 }}
+              >
+                <ColorOption
+                  hiddenColors={this.state.hiddenColors}
+                  pressed={this.handleColorPressed}
+                  color={color}
+                  lastGuessedColor={this.state.lastGuessedColor}
+                  sliderMoving={this.state.sliderMoving}
+                />
+              </View>
+            );
+          })}
+        </View>
+      );
+    });
   };
 
+  // Show the appropriate text in the boxes above the color sliders based on difficuly
   returnCurrentColorValue = (color) => {
     const { difficulty } = this.props.route.params;
     let index = 0;
@@ -521,7 +477,7 @@ class GuessColorScreen extends Component {
             </View>
           </View>
         </View>
-        <View style={{ width: "100%", alignItems: "center"}}>
+        <View style={{ width: "100%", alignItems: "center" }}>
           <View style={styles.resultText}>
             <Text style={styles.resultGuessText}>
               {this.state.resultAfterGuess}

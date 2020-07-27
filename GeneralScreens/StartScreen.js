@@ -16,6 +16,8 @@ import { connect, useDispatch } from "react-redux";
 import { SetWarningShownFalse, updateAuthData } from "../Redux/Actions";
 
 class StartScreen extends Component {
+
+  // Go to the account screen
   handleAccountClicked = async () => {
     if (this.props.loggedIn) {
       await this.updateUserAccountInformation();
@@ -25,6 +27,8 @@ class StartScreen extends Component {
     }
   };
 
+  // If the user wants to go to their account and they are already log in,
+  // read their information from firebase to display the most up to date info
   updateUserAccountInformation = async () => {
     try {
       await firebase
@@ -38,7 +42,9 @@ class StartScreen extends Component {
         });
     } catch (error) {
       let errorMessage = error.message;
-      Alert.alert("An error has occured!", "" + errorMessage, [{ text: "Okay" }]);
+      Alert.alert("An error has occured!", "" + errorMessage, [
+        { text: "Okay" },
+      ]);
     }
   };
 
@@ -91,6 +97,7 @@ class StartScreen extends Component {
         position: "absolute",
       },
     });
+
     return (
       <View style={styles.container}>
         <View style={{ height: 90, justifyContent: "center", marginTop: -15 }}>

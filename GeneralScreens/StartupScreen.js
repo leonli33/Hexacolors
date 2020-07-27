@@ -1,10 +1,5 @@
-import React, { useEffect, useDispatch } from "react";
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  AsyncStorage,
-} from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import Colors from "../Constants/Colors";
 import * as firebase from "firebase";
 import "firebase/auth";
@@ -20,6 +15,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const StartupScreen = (props) => {
+  // Delete this screen from the stack after the user goes to the home screen
   const resetStackAndNavigate = CommonActions.reset({
     index: 0,
     routes: [{ name: "Home" }],
@@ -32,7 +28,6 @@ const StartupScreen = (props) => {
         let uid = user.uid;
         props.autoLogin(uid);
       }
-
       // user cannot navigate back to the startup screen
       props.navigation.dispatch(resetStackAndNavigate);
 
