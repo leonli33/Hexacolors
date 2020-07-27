@@ -81,12 +81,14 @@ const styles = StyleSheet.create({
   colorGuess: {
     flexDirection: "row",
     alignItems: "center",
+    borderWidth: 1,
   },
   informationContainer: {
     width: "90%",
     alignSelf: "center",
     marginTop: "10%",
     justifyContent: "space-evenly",
+    borderWidth: 1,
   },
   colorBox: {
     width: 30,
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: "8%",
+    borderWidth: 1,
   },
   guessedColors: {
     marginLeft: "2%",
@@ -109,14 +112,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginRight: "5%",
     width: "75%",
+    alignSelf: "center",
   },
   buttonContainer: {
     flexDirection: "row",
-    marginTop: "20%",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    marginBottom: 40,
+    borderWidth: 1,
+    marginBottom: 30,
+    marginTop: Dimensions.get("window").height / 10
   },
   button: {
     width: "40%",

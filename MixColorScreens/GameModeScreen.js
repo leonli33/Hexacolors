@@ -1,15 +1,17 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
+import Font from "../Constants/Font";
 
 const GameModeColorMix = (props) => {
+  console.log(Dimensions.get("window").height);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <GradientButton
           style={styles.option}
           text="Fixed Palette"
-          textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+          textStyle={styles.optionText}
           gradientBegin="#003b46"
           gradientEnd="#66a5ad"
           gradientDirection="diagonal"
@@ -24,7 +26,7 @@ const GameModeColorMix = (props) => {
         <GradientButton
           style={styles.option}
           text="Dynamic Palette"
-          textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+          textStyle={styles.optionText}
           gradientBegin="#1995ad"
           gradientEnd="#a1d6e2"
           gradientDirection="diagonal"
@@ -70,7 +72,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   optionText: {
-    fontSize: 25,
+    fontSize:
+      Dimensions.get("window").height > 1000
+        ? Font.tabletFontSize
+        : Font.regularFontSize,
     color: "white",
     fontWeight: "bold",
   },

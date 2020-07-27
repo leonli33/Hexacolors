@@ -348,7 +348,6 @@ class GameScreen extends Component {
                     name="arrow-right-circle"
                     size={30}
                     color="black"
-                    style={{ marginRight: 31 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -414,7 +413,7 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     flexDirection: "row",
     height: 35,
-    width: "100%",
+    width: "93%",
     justifyContent: "space-between",
     alignItems: "center",
   },

@@ -17,7 +17,6 @@ class Hint extends Component {
       <TouchableWithoutFeedback onPress={this.props.handlePress}>
         <View
           style={{
-            height: Math.round(width / 12),
             width: Math.round(width / 5),
             borderRadius: 10,
             borderWidth: 1,
@@ -33,7 +32,7 @@ class Hint extends Component {
             elevation: 5,
           }}
         >
-          <Text style={{ color: textColor }}>
+          <Text style={{ color: textColor, marginVertical: 5 }}>
             {"Hint " + this.props.number}
           </Text>
         </View>

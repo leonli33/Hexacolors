@@ -8,6 +8,7 @@ import {
   Animated,
   Text,
   ScrollView,
+  Dimensions
 } from "react-native";
 import Colors from "../Constants/Colors";
 import Slider from "react-native-slider";
@@ -516,7 +517,7 @@ class GuessColorScreen extends Component {
 
 const styles = StyleSheet.create({
   hex: {
-    fontSize: 45,
+    fontSize: Dimensions.get("window").height > 1000 ? 65 : 45,
     paddingHorizontal: 25,
     paddingVertical: 5,
   },

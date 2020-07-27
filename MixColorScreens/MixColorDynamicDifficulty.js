@@ -9,8 +9,10 @@ import {
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import { ResetColorsDynamixMix } from "../Redux/Actions";
+import Font from "../Constants/Font";
 
 const MixColorDynamicDifficulty = (props) => {
+  console.log(Dimensions.get("window").height);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -80,7 +82,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   optionText: {
-    fontSize: 25,
+    fontSize:
+      Dimensions.get("window").height > 1000
+        ? Font.tabletFontSize
+        : Font.regularFontSize,
   },
 });
 

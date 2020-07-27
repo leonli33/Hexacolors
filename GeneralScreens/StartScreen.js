@@ -14,9 +14,9 @@ import "firebase/firestore";
 import * as firebase from "firebase";
 import { connect, useDispatch } from "react-redux";
 import { SetWarningShownFalse, updateAuthData } from "../Redux/Actions";
+import Font from "../Constants/Font";
 
 class StartScreen extends Component {
-
   // Go to the account screen
   handleAccountClicked = async () => {
     if (this.props.loggedIn) {
@@ -93,7 +93,7 @@ class StartScreen extends Component {
       },
       textOption: {
         color: "white",
-        fontSize: 25,
+        fontSize: Dimensions.get("window").height > 1100 ? Font.tabletFontSize : Font.regularFontSize,
         position: "absolute",
       },
     });

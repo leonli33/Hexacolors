@@ -17,7 +17,6 @@ class GetAnswer extends Component {
       <TouchableWithoutFeedback onPress={this.props.handlePress}>
         <View
           style={{
-            height: Math.round(width / 12),
             width: Math.round(width / 3),
             borderRadius: 10,
             borderWidth: 1,
@@ -32,7 +31,13 @@ class GetAnswer extends Component {
             elevation: 4,
           }}
         >
-          <Text style={{ color: textColor, marginHorizontal: 12 }}>
+          <Text
+            style={{
+              color: textColor,
+              marginHorizontal: 12,
+              marginVertical: 6,
+            }}
+          >
             Get Answer
           </Text>
         </View>

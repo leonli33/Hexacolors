@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
+import Font from '../Constants/Font'
 
 class GameModeScreen extends Component {
   render() {
@@ -10,7 +11,7 @@ class GameModeScreen extends Component {
           <GradientButton
             style={styles.option}
             text="Color Mixer"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            textStyle={styles.optionText}
             gradientBegin="#5bc8ac"
             gradientEnd="#e6d72a"
             gradientDirection="diagonal"
@@ -27,7 +28,7 @@ class GameModeScreen extends Component {
           <GradientButton
             style={styles.option}
             text="Hex Guesser"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            textStyle={styles.optionText}
             gradientBegin="#e6d72a"
             gradientEnd="#f18d9e"
             gradientDirection="diagonal"
@@ -44,7 +45,7 @@ class GameModeScreen extends Component {
           <GradientButton
             style={styles.option}
             text="Playground"
-            textStyle={{ fontSize: 25, color: "white", fontWeight: "bold" }}
+            textStyle={styles.optionText}
             gradientBegin="#f18d9e"
             gradientEnd="#1995ad"
             gradientDirection="diagonal"
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   optionText: {
-    fontSize: 25,
+    fontSize: Dimensions.get("window").height > 1000 ? Font.tabletFontSize : Font.regularFontSize,
     color: "white",
     fontWeight: "bold",
   },

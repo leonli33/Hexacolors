@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from "react-native";
 import Colors from "../Constants/Colors";
+import Font from '../Constants/Font'
 
 class GuessHexDifficultyChoice extends Component {
   componentDidMount() {
@@ -83,7 +84,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   optionText: {
-    fontSize: 25,
+    fontSize: Dimensions.get("window").height > 1000
+    ? Font.tabletFontSize
+    : Font.regularFontSize,
   },
 });
 
