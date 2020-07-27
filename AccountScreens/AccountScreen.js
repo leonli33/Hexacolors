@@ -20,12 +20,14 @@ import { logout } from "../Redux/Actions";
 const AccountScreen = (props) => {
   const [guessHexColors, setGuessHexColor] = useState([]);
 
+  // Animate the boxes to slide in from the left
   const leftValueFirstView = useState(new Animated.Value(-600))[0];
   const leftValueSecondView = useState(new Animated.Value(-600))[0];
   const leftValueThirdView = useState(new Animated.Value(-600))[0];
   const leftValueFourthView = useState(new Animated.Value(-600))[0];
   const leftValueFifthView = useState(new Animated.Value(-600))[0];
 
+  // Calculate accuracy
   const calcPercentage = (totalRight, totalTries) => {
     if (totalRight === 0 || totalTries === 0) return "0%";
     let num = (totalRight / totalTries) * 100;

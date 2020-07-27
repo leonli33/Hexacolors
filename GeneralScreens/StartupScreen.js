@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const StartupScreen = (props) => {
-  // Delete this screen from the stack after the user goes to the home screen
+  // Delete this screen from the stack and navigate the user to the home screen
   const resetStackAndNavigate = CommonActions.reset({
     index: 0,
     routes: [{ name: "Home" }],

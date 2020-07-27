@@ -4,6 +4,7 @@ import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
 
+// Screen displayed when the user wins a game in dynamic mode
 class MixHexDynamicGameWon extends Component {
   constructor() {
     super();
@@ -21,8 +22,7 @@ class MixHexDynamicGameWon extends Component {
         borderWidth: 5,
         borderColor: this.props.targetColor,
         minHeight: 200,
-        justifyContent: 'space-evenly',
-
+        justifyContent: "space-evenly",
       },
       LevelsButton: {
         backgroundColor: Colors.buttonBackground,
@@ -36,7 +36,7 @@ class MixHexDynamicGameWon extends Component {
         shadowOpacity: 0.4,
         shadowRadius: 4,
         width: "40%",
-        justifyContent: 'space-evenly'
+        justifyContent: "space-evenly",
       },
       text: {
         fontSize: 15,
@@ -58,7 +58,7 @@ class MixHexDynamicGameWon extends Component {
         backdropTransitionInTiming={1500}
       >
         <View style={styles.background}>
-          <Text style={{fontSize: 25 }}>Nice Job!</Text>
+          <Text style={{ fontSize: 25 }}>Nice Job!</Text>
           <View
             style={{
               width: "90%",
@@ -85,8 +85,8 @@ class MixHexDynamicGameWon extends Component {
                 flexWrap: "wrap",
                 justifyContent: "flex-start",
                 width: "80%",
-                alignSelf: 'center',
-                alignItems: 'center'
+                alignSelf: "center",
+                alignItems: "center",
               }}
             >
               {this.props.colorsNeeded.map((color, index) => {
@@ -122,9 +122,7 @@ class MixHexDynamicGameWon extends Component {
               onPress={this.props.playAgainPress}
               style={styles.LevelsButton}
             >
-              <Text style={styles.text}>
-                Play Again
-              </Text>
+              <Text style={styles.text}>Play Again</Text>
             </TouchableOpacity>
           </View>
         </View>

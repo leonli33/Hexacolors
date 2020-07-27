@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Colors from "../../Constants/Colors";
 
+// One of the color choices in the mix color palette
 class ColorChoice extends Component {
   render() {
     const { width } = Dimensions.get("window");

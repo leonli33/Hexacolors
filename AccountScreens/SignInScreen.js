@@ -17,6 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { connect, useDispatch } from "react-redux";
 import { login } from "../Redux/Actions";
 
+// Login screen
 const OptionScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +27,8 @@ const OptionScreen = (props) => {
   const [iconName, setIconName] = useState("ios-eye");
 
   const dispatch = useDispatch();
+
+  // Executes whenever the user presses the login button
   const handleLogIn = async () => {
     setLoading(true);
     Keyboard.dismiss()
@@ -39,6 +42,7 @@ const OptionScreen = (props) => {
     }
   };
 
+  // Display error is there are any
   useEffect(() => {
     if (error) {
       Alert.alert("An error has occured!", "" + error, [{ text: "Okay" }]);

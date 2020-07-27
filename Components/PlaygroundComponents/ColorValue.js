@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+// This is the small box above the sliders
 const ColorValue = (props) => {
   return (
     <View

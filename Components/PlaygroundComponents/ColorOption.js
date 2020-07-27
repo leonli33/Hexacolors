@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+// Represents a color in the user's playground palette
 const ColorOptions = (props) => {
   const handleColorPressed = () => {
     props.handleSelected(props.color);

@@ -1,33 +1,15 @@
 import React from "react";
 import {
-  View,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Animated,
 } from "react-native";
 import Colors from "../../Constants/Colors";
 
 const ColorOption = (props) => {
-  const state = {
-    colorCircleToFade: new Animated.Value(1),
-  };
-
-  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-
-  function fadeOut() {
-    Animated.timing(state.colorCircleToFade, {
-      toValue: 0,
-      timing: 500,
-    }).start();
-  }
-
-  if (props.lastGuessedColor === props.color && !props.sliderMoving) {
-    fadeOut();
-  }
 
   return (
-    <AnimatedTouchable
+    <TouchableOpacity
       onPress={() =>
         props.hiddenColors.includes(props.color)
           ? ""
@@ -39,7 +21,7 @@ const ColorOption = (props) => {
           ? Colors.buttonBackground
           : props.color,
         opacity: !props.hiddenColors.includes(props.color)
-          ? state.colorCircleToFade
+          ? 1
           : 0,
         shadowColor: props.hiddenColors.includes(props.color)
           ? Colors.buttonBackground

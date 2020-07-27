@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Colors from "../../Constants/Colors";
 
+// This is the spinning square in the start screen
 const Spinner = () => {
   let topColors = [
     Colors.tropicalRed,

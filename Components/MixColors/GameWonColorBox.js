@@ -1,6 +1,7 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
+// Colored box that appears on game won screen
 const GameWonColorBox = (props) => {
   const styles = StyleSheet.create({
     box: {

@@ -4,6 +4,7 @@ import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
 
+// Screen displayed when the user wins a game
 class ColorMixerWonScreen extends Component {
   constructor() {
     super();

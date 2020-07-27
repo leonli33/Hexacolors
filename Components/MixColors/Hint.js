@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
-import Colors from "../../Constants/Colors";
 
+// Hint button
 class Hint extends Component {
   render() {
     const { width, height } = Dimensions.get("window");

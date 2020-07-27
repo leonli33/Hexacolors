@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Dimensions, Text, Animated } from "react-native";
+import { View, StyleSheet, Text, Animated } from "react-native";
 
+// This is the component displaying the current color and the target color
 class ColorBox extends Component {
   state = {
     colorBoxAnimation: new Animated.Value(0),
@@ -58,7 +59,7 @@ class ColorBox extends Component {
           rgbVesionLastColor.b +
           ")";
 
-    // Animated the background color, going from the last color to the curret color
+    // Animated the background color, going from the last color to the current color
     const interpolateColor = this.state.colorBoxAnimation.interpolate({
       inputRange: [0, 150],
       outputRange: [fromColor, backColor],

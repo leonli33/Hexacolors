@@ -5,10 +5,10 @@ import {
   Text,
   Dimensions,
   TouchableWithoutFeedback,
-  Image,
 } from "react-native";
 import Colors from "../../Constants/Colors";
 
+// Level box displayed in the 'levels' screen
 class LevelBox extends Component {
   render() {
     const dimensions = Dimensions.get("window");

@@ -14,6 +14,7 @@ import {
   Dimensions,
   Alert,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 
@@ -24,8 +25,11 @@ const RegisterScreen = (props) => {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState();
   const [iconName, setIconName] = useState("ios-eye");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  // Register the user if all fields are filled out correctly
   const handleSignUp = async () => {
     setError(null);
     Keyboard.dismiss();
@@ -43,16 +47,19 @@ const RegisterScreen = (props) => {
           [{ text: "Okay" }]
         );
       } else {
+        setLoading(true);
         await dispatch(() =>
           props.createNewUser(email, password, firstName, lastName)
         );
         props.navigation.navigate("Profile");
       }
     } catch (error) {
+      setLoading(false);
       setError(error);
     }
   };
 
+  // Display error is one occurs
   useEffect(() => {
     if (error) {
       Alert.alert("An error has occured!", "" + error, [{ text: "Okay" }]);
@@ -150,12 +157,20 @@ const RegisterScreen = (props) => {
               />
             </View>
           </View>
-          <TouchableOpacity
-            onPress={handleSignUp}
-            style={styles.createAccountContainer}
-          >
-            <Text style={styles.createAccountText}>Create Account</Text>
-          </TouchableOpacity>
+          {loading ? (
+            <ActivityIndicator
+              size="large"
+              color={Colors.tropicalBlue}
+              style={{ height: 40 }}
+            />
+          ) : (
+            <TouchableOpacity
+              onPress={handleSignUp}
+              style={styles.createAccountContainer}
+            >
+              <Text style={styles.createAccountText}>Create Account</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>

@@ -1,7 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import ColorMixerWonScreen from "../MixColors/ColorMixerWonScreen";
 
+// These are the boxes displayed in the small horizontal scrollview
+// that indicates the current colors that the user has selected
 const ColorMixedBox = (props) => {
   return (
     <View style={styles.container}>

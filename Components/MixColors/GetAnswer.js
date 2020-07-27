@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
 
+// Get answer button
 class GetAnswer extends Component {
   render() {
-    const { width, height } = Dimensions.get("window");
+    const { width } = Dimensions.get("window");
     let backColor = "lavender";
     let outline = "black";
     let textColor = "black";
