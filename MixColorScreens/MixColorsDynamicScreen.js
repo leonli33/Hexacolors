@@ -43,6 +43,7 @@ const MixColorsDynamicScreen = (props) => {
     initializeGame(difficulty);
   }, []);
 
+  // Get the appropriate background color for the title
   const getBackgroundColor = (difficulty) => {
     let color = Colors.tropicalYellow;
     if (difficulty === "10") {
@@ -53,6 +54,7 @@ const MixColorsDynamicScreen = (props) => {
     return color;
   };
 
+  // Initialize the game and reset all properties
   const initializeGame = (difficulty) => {
     if (difficulty === "8") {
       props.Generate8ColorPaletteAndMix();
@@ -122,29 +124,7 @@ const MixColorsDynamicScreen = (props) => {
 
   const handleGameWon = () => {
     setGameWon(true);
-    // writeColorToFirebase();
   };
-
-  /*
-  const writeColorToFirebase = async () => {
-    if (props.signedIn) {
-      try {
-        await firebase
-          .firestore()
-          .collection("users")
-          .doc(props.userID)
-          .update({
-            dynamic_colors_mixed: firebase.firestore.FieldValue.arrayUnion(
-              props.targetColor
-            ),
-          });
-      } catch (error) {
-        console.log("There was an error when attempting to write to firebase.");
-        console.log(error);
-      }
-    }
-  };
-  */
 
   return (
     <View style={styles.container}>

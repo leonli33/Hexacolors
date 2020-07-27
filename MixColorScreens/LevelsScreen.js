@@ -16,6 +16,7 @@ class LevelsScreen extends Component {
 
   constructor() {
     super();
+    // Display all the levels
     const colors = [];
     for (let i = 0; i < 6; i++) {
       let colorArr = [];

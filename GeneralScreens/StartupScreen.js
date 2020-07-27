@@ -30,7 +30,6 @@ const StartupScreen = (props) => {
       if (user) {
         // User is signed in.
         let uid = user.uid;
-        // console.log(uid, "signed in");
         props.autoLogin(uid);
       }
 
@@ -58,40 +57,3 @@ const styles = StyleSheet.create({
 });
 
 export default connect(null, mapDispatchToProps)(StartupScreen);
-
-/*
-  const tryLogin = async () => {
-      try {
-        const userData = await AsyncStorage.getItem("userData");
-
-        if (!userData) {
-          props.navigation.navigate("Home");
-          return;
-        }
-        const transformedData = JSON.parse(userData);
-        const { token, userId } = transformedData;
-
-        await firebase
-          .auth()
-          .verifyIdToken(token, true)
-          .then((payload) => {
-            console.log(true)
-          })
-          .catch((error) => {
-            if (error.code == "auth/id-token-revoked") {
-              // Token has been revoked. Inform the user to reauthenticate or signOut() the user.
-              console.log("revoked")
-            } else {
-              console.log("error")
-            }
-          });
-
-        // console.log(token);
-        // console.log(userId);
-      } catch (error) {
-          console.log(error)
-      }
-    };
-    tryLogin();
-
-*/

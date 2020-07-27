@@ -46,6 +46,7 @@ class PlaygroundScreen extends Component {
     });
   }
 
+  // Executed whenever the user moves a color slider
   handleSliderColorChange = (number, color) => {
     this.props.ResetPlaygroundColors();
     let hexString = number.toString(16);
@@ -68,6 +69,7 @@ class PlaygroundScreen extends Component {
     }
   };
 
+  // Logic behind when a user selects a color option
   handleColorOptionSelected = (color) => {
     if (this.props.colors.includes(color)) {
       // If there are no more selected colors, reset all the colors
@@ -108,6 +110,7 @@ class PlaygroundScreen extends Component {
     }
   };
 
+  // Set the values of the new color mixed
   setHexValuesOnMixColors = (color) => {
     let redHex = color.substring(1, 3);
     let greenHex = color.substring(3, 5);
@@ -125,6 +128,7 @@ class PlaygroundScreen extends Component {
     });
   };
 
+  // Clear all the colors that are selected and reset color values
   clearSelectedColors = () => {
     this.props.ResetPlaygroundColors();
     this.setState({
@@ -137,21 +141,16 @@ class PlaygroundScreen extends Component {
     });
   };
 
+  // Add a color to the palette
   handleAddColorPressed = () => {
+    let colorToAdd = `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`;
     if (
-      `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}` !=
-        "#000000" &&
-      !this.props.playgroundColors.has(
-        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
-      )
+      colorToAdd != "#000000" &&
+      !this.props.playgroundColors.has(colorToAdd)
     ) {
-      this.props.AddColorToPlaygroundList(
-        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
-      );
+      this.props.AddColorToPlaygroundList(colorToAdd);
       if (this.props.signedIn) {
-        this.addColorFirebase(
-          `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`
-        );
+        this.addColorFirebase(colorToAdd);
       }
 
       this.clearSelectedColors();
@@ -159,15 +158,13 @@ class PlaygroundScreen extends Component {
         this.scrollRef.scrollToEnd({ animated: true });
       }, 50);
     } else {
-      if (
-        `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}` !=
-        "#000000"
-      ) {
+      if (colorToAdd != "#000000") {
         alert("This color is already present in your palette");
       }
     }
   };
 
+  // Store the new color in firebase
   addColorFirebase = (color) => {
     try {
       firebase
@@ -185,6 +182,7 @@ class PlaygroundScreen extends Component {
     }
   };
 
+  // Remove a color form the palette
   handleRemoveColorsPressed = () => {
     this.props.RemoveColorFromPlaygroundList(this.props.colors);
     if (this.props.signedIn && this.props.colors.length != 0) {
@@ -203,11 +201,11 @@ class PlaygroundScreen extends Component {
         ]);
       }
     }
-
     this.clearSelectedColors();
   };
 
   render() {
+    // Get the name of the color closest to currently selected color
     let hexColor = `#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`;
     let color = Convert.hex.keyword(hexColor);
 

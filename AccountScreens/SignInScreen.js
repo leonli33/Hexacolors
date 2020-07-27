@@ -34,7 +34,6 @@ const OptionScreen = (props) => {
       await dispatch(() => props.login(email, password));
       props.navigation.navigate("Profile");
     } catch (error) {
-      console.log(error);
       setError(error);
       setLoading(false);
     }

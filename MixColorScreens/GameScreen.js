@@ -39,6 +39,7 @@ class GameScreen extends Component {
   }
 
   componentDidMount() {
+    // Set the name of the screen
     const { level } = this.props.route.params;
     this.props.navigation.setOptions({
       title: "Level " + level,
@@ -74,6 +75,8 @@ class GameScreen extends Component {
     });
   };
 
+  // Executed whenever the back button is pressed after a user has successfully completed
+  // a level
   onBackPress = (level) => {
     this.props.navigation.navigate("Levels");
     this.setState({
@@ -86,6 +89,8 @@ class GameScreen extends Component {
     if (this.props.signedIn) this.incrementLevelFirebase(level);
   };
 
+  // Executed whenever the next level button is pressed after a user has successfully completed
+  // a level
   onForwardPress = (levelID) => {
     if (levelID !== 19) {
       this.props.navigation.navigate("Game", {
@@ -100,7 +105,6 @@ class GameScreen extends Component {
       this.props.IncrementTotalLevelsCompleted();
       this.incrementFixedLevel(levelID - 1);
       if (this.props.signedIn) this.incrementLevelFirebase(levelID - 1);
-
       this.scroll.scrollTo({ x: 0, y: 0, animated: true });
     } else {
       this.props.navigation.navigate("Home");
@@ -113,6 +117,7 @@ class GameScreen extends Component {
     this.props.ResetColors();
   };
 
+  // Increment the furthest level achieved
   incrementFixedLevel = (level) => {
     if (level > this.props.furthestLevelCompleted && level <= 18) {
       this.props.IncrementFurthestLevel(level);
@@ -120,7 +125,8 @@ class GameScreen extends Component {
   };
 
   incrementLevelFirebase = async (level) => {
-    if (level >= this.props.furthestLevelCompleted && level <= 18) {
+    // This will happen only if the level completed is greater than the previous level
+    if (level > this.props.furthestLevelCompleted && level <= 18) {
       try {
         await firebase
           .firestore()
@@ -136,6 +142,7 @@ class GameScreen extends Component {
         ]);
       }
     }
+    // This will happen every call
     try {
       await firebase
         .firestore()
