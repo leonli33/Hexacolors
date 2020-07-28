@@ -29,7 +29,7 @@ class ColorChoice extends Component {
         shadowRadius: 4,
       },
       container: {
-        marginBottom: Math.round(height / 40),
+        marginBottom: Math.round(width / 20),
       },
       hex: {
         marginTop: 2,
@@ -116,9 +116,7 @@ class ColorChoice extends Component {
       >
         <View
           style={
-            inHint
-              ? styles.container
-              : { marginBottom: Math.round(height / 40) }
+            inHint ? styles.container : { marginBottom: Math.round(width / 20) }
           }
         >
           {displayOnHint}

@@ -64,8 +64,10 @@ class MixHexDynamicGameWon extends Component {
         isVisible={this.props.visibility}
         animationType={"slide"}
         backdropOpacity={0.8}
-        animationInTiming={1500}
-        backdropTransitionInTiming={1500}
+        animationInTiming={1200}
+        backdropTransitionInTiming={1200}
+        animationOutTiming={200}
+        backdropTransitionOutTiming={200}
       >
         <View style={styles.background}>
           <Text
