@@ -112,15 +112,6 @@ const Spinner = () => {
   let spinSquare = new Animated.Value(0);
 
   useEffect(() => {
-    valBlue = 0;
-    valGreen = 0;
-    valRed = 0;
-    valYellow = 0;
-    topIndex = 0;
-    bottomIndex = 0;
-    rightIndex = 0;
-    leftIndex = 0;
-
     Animated.timing(spinSquare, {
       toValue: 1,
       duration: 1500,
@@ -488,9 +479,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.23,
-    shadowRadius: 5,
+    shadowRadius: 3,
     elevation: 3.5,
   },
   text: {

@@ -1,3 +1,3 @@
 export function isTablet(size) {
-  return size >= 1000;
+  return size >= 950;
 }

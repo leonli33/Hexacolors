@@ -208,7 +208,6 @@ class GameScreen extends Component {
   };
 
   render() {
-    let { width, height } = Dimensions.get("window");
     let gameWon = false;
     // Level represents the current level in the game we are in
     const { level } = this.props.route.params;
