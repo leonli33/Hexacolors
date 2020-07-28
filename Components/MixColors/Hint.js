@@ -38,7 +38,7 @@ class Hint extends Component {
               color: textColor,
               marginVertical: 5,
               fontSize:
-                height > 1000 ? Font.tabletTextSize : Font.regularTextSize,
+                height > 1000 ? Font.tabletTextSize : Font.regularTextSize - 1,
             }}
           >
             {"Hint " + this.props.number}

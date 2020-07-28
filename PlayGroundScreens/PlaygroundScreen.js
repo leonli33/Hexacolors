@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import * as firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
+import Font from "../Constants/Font";
 import {
   AddColorToPlaygroundList,
   RemoveColorFromPlaygroundList,
@@ -270,7 +271,18 @@ class PlaygroundScreen extends Component {
               style={styles.addButton}
               onPress={this.handleAddColorPressed}
             >
-              <Text>Add Color</Text>
+              <Text
+                style={{
+                  fontSize:
+                    Dimensions.get("window").height > 1000
+                      ? Font.tabletTextSize - 2
+                      : Font.regularTextSize - 2,
+                  marginVertical:
+                    Dimensions.get("window").height > 1000 ? 10 : 6,
+                }}
+              >
+                Add Color
+              </Text>
             </TouchableOpacity>
           </View>
           <View
@@ -283,7 +295,14 @@ class PlaygroundScreen extends Component {
             }}
           >
             <Text
-              style={{ fontSize: 20, alignSelf: "center", marginBottom: 5 }}
+              style={{
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize + 4
+                    : Font.regularTextSize + 4,
+                alignSelf: "center",
+                marginBottom: 5,
+              }}
             >{`#${this.state.redHexValue.toUpperCase()}${this.state.greenHexValue.toUpperCase()}${this.state.blueHexValue.toUpperCase()}`}</Text>
             <View
               style={{
@@ -293,9 +312,12 @@ class PlaygroundScreen extends Component {
             />
             <Text
               style={{
-                fontSize: 17,
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize + 1
+                    : Font.regularTextSize + 1,
                 alignSelf: "center",
-                marginTop: 10,
+                marginTop: Dimensions.get("window").height > 1000 ? 20 : 10,
                 textAlign: "center",
               }}
             >
@@ -334,13 +356,33 @@ class PlaygroundScreen extends Component {
             style={styles.clearSelectedColors}
             onPress={this.clearSelectedColors}
           >
-            <Text>Clear Selected Colors</Text>
+            <Text
+              style={{
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize - 2
+                    : Font.regularTextSize - 2,
+                marginVertical: 8,
+              }}
+            >
+              Clear Selected Colors
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.removeSelectedColors}
             onPress={this.handleRemoveColorsPressed}
           >
-            <Text>Remove Colors</Text>
+            <Text
+              style={{
+                fontSize:
+                  Dimensions.get("window").height > 1000
+                    ? Font.tabletTextSize - 2
+                    : Font.regularTextSize - 2,
+                marginVertical: 8,
+              }}
+            >
+              Remove Colors
+            </Text>
           </TouchableOpacity>
         </View>
         <ScrollView
@@ -410,7 +452,6 @@ const styles = StyleSheet.create({
   },
   addButton: {
     width: "100%",
-    height: 35,
     borderRadius: 10,
     backgroundColor: Colors.buttonBackground,
     elevation: 4,
@@ -439,7 +480,6 @@ const styles = StyleSheet.create({
     height: "55%",
   },
   clearSelectedColors: {
-    height: 40,
     borderRadius: 15,
     backgroundColor: Colors.buttonBackground,
     justifyContent: "center",
@@ -449,10 +489,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 1 },
-    paddingHorizontal: 17,
+    paddingHorizontal: Dimensions.get("window").height > 1000 ? 35 : 17,
   },
   removeSelectedColors: {
-    height: 40,
     borderRadius: 15,
     backgroundColor: Colors.buttonBackground,
     justifyContent: "center",
@@ -462,7 +501,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 1 },
-    paddingHorizontal: 17,
+    paddingHorizontal: Dimensions.get("window").height > 1000 ? 35 : 17,
   },
 });
 

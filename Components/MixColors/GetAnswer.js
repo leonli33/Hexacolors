@@ -38,7 +38,7 @@ class GetAnswer extends Component {
               marginHorizontal: 12,
               marginVertical: 6,
               fontSize:
-                height > 1000 ? Font.tabletTextSize : Font.regularTextSize,
+                height > 1000 ? Font.tabletTextSize : Font.regularTextSize - 1,
             }}
           >
             Get Answer

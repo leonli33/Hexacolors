@@ -309,7 +309,9 @@ const AccountScreen = (props) => {
                 }}
               >
                 {item.map((color, index) => {
-                  return <ColorMixedBox color={color} key={color + index} />;
+                  return (
+                      <ColorMixedBox color={color} key={color + index} />
+                  );
                 })}
               </View>
             )}
@@ -429,7 +431,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
     paddingRight: 0,
-    height: 170,
+    minHeight: 170,
   },
   gameHeader: {
     fontSize: 25,
