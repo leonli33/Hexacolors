@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Hint button
 class Hint extends Component {
@@ -38,7 +39,7 @@ class Hint extends Component {
               color: textColor,
               marginVertical: 5,
               fontSize:
-                height > 1000 ? Font.tabletTextSize : Font.regularTextSize - 1,
+              isTablet(height) ? Font.tabletTextSize : Font.regularTextSize - 1,
             }}
           >
             {"Hint " + this.props.number}

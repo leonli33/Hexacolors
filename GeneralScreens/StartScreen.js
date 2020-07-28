@@ -15,6 +15,7 @@ import * as firebase from "firebase";
 import { connect, useDispatch } from "react-redux";
 import { SetWarningShownFalse, updateAuthData } from "../Redux/Actions";
 import Font from "../Constants/Font";
+import { isTablet } from "../Functions/GeneralFunctions";
 
 class StartScreen extends Component {
   // Go to the account screen
@@ -93,10 +94,9 @@ class StartScreen extends Component {
       },
       textOption: {
         color: "white",
-        fontSize:
-          Dimensions.get("window").height > 1000
-            ? Font.tabletFontSize
-            : Font.regularFontSize,
+        fontSize: isTablet(Dimensions.get("window").height)
+          ? Font.tabletFontSize
+          : Font.regularFontSize,
         position: "absolute",
       },
     });
@@ -107,10 +107,9 @@ class StartScreen extends Component {
           <Image
             source={require("../Icons/hexacolorLogo.png")}
             style={{
-              transform:
-                Dimensions.get("window").height < 1000
-                  ? [{ scaleX: 0.3 }, { scaleY: 0.3 }]
-                  : [{ scaleX: 0.5 }, { scaleY: 0.5 }],
+              transform: !isTablet(Dimensions.get("window").height)
+                ? [{ scaleX: 0.3 }, { scaleY: 0.3 }]
+                : [{ scaleX: 0.5 }, { scaleY: 0.5 }],
               resizeMode: "contain",
             }}
           />

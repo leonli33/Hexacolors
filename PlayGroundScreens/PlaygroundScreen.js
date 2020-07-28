@@ -19,6 +19,7 @@ import * as firebase from "firebase";
 import "firebase/auth";
 import "firebase/firestore";
 import Font from "../Constants/Font";
+import { isTablet } from "../Functions/GeneralFunctions";
 import {
   AddColorToPlaygroundList,
   RemoveColorFromPlaygroundList,
@@ -273,12 +274,12 @@ class PlaygroundScreen extends Component {
             >
               <Text
                 style={{
-                  fontSize:
-                    Dimensions.get("window").height > 1000
-                      ? Font.tabletTextSize - 2
-                      : Font.regularTextSize - 2,
-                  marginVertical:
-                    Dimensions.get("window").height > 1000 ? 10 : 6,
+                  fontSize: isTablet(Dimensions.get("window").height)
+                    ? Font.tabletTextSize - 2
+                    : Font.regularTextSize - 2,
+                  marginVertical: isTablet(Dimensions.get("window").height)
+                    ? 10
+                    : 6,
                 }}
               >
                 Add Color
@@ -296,10 +297,9 @@ class PlaygroundScreen extends Component {
           >
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize + 4
-                    : Font.regularTextSize + 4,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize + 4
+                  : Font.regularTextSize + 4,
                 alignSelf: "center",
                 marginBottom: 5,
               }}
@@ -312,12 +312,11 @@ class PlaygroundScreen extends Component {
             />
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize + 1
-                    : Font.regularTextSize + 1,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize + 1
+                  : Font.regularTextSize + 1,
                 alignSelf: "center",
-                marginTop: Dimensions.get("window").height > 1000 ? 20 : 10,
+                marginTop: isTablet(Dimensions.get("window").height) ? 20 : 10,
                 textAlign: "center",
               }}
             >
@@ -325,7 +324,7 @@ class PlaygroundScreen extends Component {
             </Text>
           </View>
         </View>
-        <View style={{ height: "15%", width: "100%", marginTop: -4 }}>
+        <View style={{ minHeight: "15%", width: "100%", marginTop: -4 }}>
           <ScrollView
             horizontal={true}
             style={styles.scroll}
@@ -358,10 +357,9 @@ class PlaygroundScreen extends Component {
           >
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize - 2
-                    : Font.regularTextSize - 2,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize - 2
+                  : Font.regularTextSize - 2,
                 marginVertical: 8,
               }}
             >
@@ -374,10 +372,9 @@ class PlaygroundScreen extends Component {
           >
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize - 2
-                    : Font.regularTextSize - 2,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize - 2
+                  : Font.regularTextSize - 2,
                 marginVertical: 8,
               }}
             >
@@ -471,6 +468,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: "5%",
     paddingLeft: 10,
+    paddingBottom: 5,
   },
   scrollViewColorMix: {
     width: "100%",
@@ -489,7 +487,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 1 },
-    paddingHorizontal: Dimensions.get("window").height > 1000 ? 35 : 17,
+    paddingHorizontal: isTablet(Dimensions.get("window").height) ? 35 : 17,
   },
   removeSelectedColors: {
     borderRadius: 15,
@@ -501,7 +499,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOpacity: 0.4,
     shadowOffset: { width: 0, height: 1 },
-    paddingHorizontal: Dimensions.get("window").height > 1000 ? 35 : 17,
+    paddingHorizontal: isTablet(Dimensions.get("window").height) ? 35 : 17,
   },
 });
 

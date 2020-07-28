@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 const ResultTextColorBox = (props) => {
   return (
@@ -14,9 +15,9 @@ const ResultTextColorBox = (props) => {
 
 const styles = StyleSheet.create({
   box: {
-    height: Dimensions.get("window").height > 1000 ? 40 : 25,
-    width: Dimensions.get("window").height > 1000 ? 40 : 25,
-    borderRadius: Dimensions.get("window").height > 1000 ? 25 : 15,
+    height: isTablet(Dimensions.get("window").height) ? 40 : 25,
+    width: isTablet(Dimensions.get("window").height) ? 40 : 25,
+    borderRadius: isTablet(Dimensions.get("window").height) ? 25 : 15,
     position: "absolute",
     alignSelf: "flex-end",
     marginRight: 20,

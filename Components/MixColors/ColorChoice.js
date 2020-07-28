@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Colors from "../../Constants/Colors";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // One of the color choices in the mix color palette
 class ColorChoice extends Component {
@@ -38,8 +39,9 @@ class ColorChoice extends Component {
         shadowOpacity: 0.4,
         shadowRadius: 4,
         alignSelf: "center",
-        fontSize:
-          height > 1000 ? Font.tabletTextSize - 2 : Font.regularTextSize - 2,
+        fontSize: isTablet(height)
+          ? Font.tabletTextSize - 2
+          : Font.regularTextSize - 2,
       },
     });
 

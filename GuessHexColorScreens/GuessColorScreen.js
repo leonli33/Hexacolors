@@ -13,6 +13,7 @@ import {
 import Colors from "../Constants/Colors";
 import Font from "../Constants/Font";
 import Slider from "react-native-slider";
+import { isTablet } from "../Functions/GeneralFunctions";
 import ColorOption from "../Components/GuessTheColor/ColorOption";
 import { connect } from "react-redux";
 import ResultTextColorBox from "../Components/GuessTheColor/ResultTextColorBox";
@@ -518,7 +519,7 @@ class GuessColorScreen extends Component {
 
 const styles = StyleSheet.create({
   hex: {
-    fontSize: Dimensions.get("window").height > 1000 ? 65 : 45,
+    fontSize: isTablet(Dimensions.get("window").height) ? 65 : 45,
     paddingHorizontal: 25,
     paddingVertical: 5,
   },
@@ -557,10 +558,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   resultGuessText: {
-    fontSize:
-      Dimensions.get("window").height > 1000
-        ? Font.tabletTextSize
-        : Font.regularTextSize,
+    fontSize: isTablet(Dimensions.get("window").height)
+      ? Font.tabletTextSize
+      : Font.regularTextSize,
     alignSelf: "center",
     position: "absolute",
   },
@@ -572,7 +572,7 @@ const styles = StyleSheet.create({
   },
   resultText: {
     width: "90%",
-    height: Dimensions.get("window").height > 1000 ? 55 : 40,
+    height: isTablet(Dimensions.get("window").height) ? 55 : 40,
     backgroundColor: "white",
     borderRadius: 10,
     elevation: 3,

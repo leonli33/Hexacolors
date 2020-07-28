@@ -10,6 +10,7 @@ import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Modal from "react-native-modal";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Screen displayed when the user wins a game
 class ColorMixerWonScreen extends Component {
@@ -46,9 +47,9 @@ class ColorMixerWonScreen extends Component {
         width: "40%",
       },
       text: {
-        fontSize: Dimensions.get("window").height > 1000
-        ? Font.tabletTextSize
-        : Font.regularTextSize,
+        fontSize: isTablet(Dimensions.get("window").height)
+          ? Font.tabletTextSize
+          : Font.regularTextSize,
         marginVertical: 10,
       },
     });
@@ -69,7 +70,7 @@ class ColorMixerWonScreen extends Component {
         <View style={styles.background}>
           <Text
             style={{
-              fontSize: Dimensions.get("window").height > 1000 ? 37 : 25,
+              fontSize: isTablet(Dimensions.get("window").height) ? 37 : 25,
             }}
           >
             Nice Job!
@@ -92,10 +93,9 @@ class ColorMixerWonScreen extends Component {
               <View style={{ height: 52, justifyContent: "center" }}>
                 <Text
                   style={{
-                    fontSize:
-                      Dimensions.get("window").height > 1000
-                        ? Font.tabletTextSize
-                        : Font.regularTextSize,
+                    fontSize: isTablet(Dimensions.get("window").height)
+                      ? Font.tabletTextSize
+                      : Font.regularTextSize,
                     marginLeft: 10,
                   }}
                 >

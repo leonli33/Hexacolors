@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Colors from "../../Constants/Colors";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Level box displayed in the 'levels' screen
 class LevelBox extends Component {
@@ -99,10 +100,9 @@ class LevelBox extends Component {
           <View style={styles.topHalf}>
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize
-                    : Font.regularTextSize,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize
+                  : Font.regularTextSize,
               }}
             >
               {this.props.level}

@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Represents a color in the user's playground palette
 const ColorOptions = (props) => {
@@ -70,10 +71,9 @@ const styles = StyleSheet.create({
   hexText: {
     alignSelf: "center",
     marginBottom: 17,
-    fontSize:
-      Dimensions.get("window").height > 1000
-        ? Font.tabletTextSize - 2
-        : Font.regularTextSize - 2,
+    fontSize: isTablet(Dimensions.get("window").height)
+      ? Font.tabletTextSize - 2
+      : Font.regularTextSize - 2,
   },
 });
 

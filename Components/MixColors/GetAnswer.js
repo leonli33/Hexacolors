@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Get answer button
 class GetAnswer extends Component {
@@ -37,8 +38,9 @@ class GetAnswer extends Component {
               color: textColor,
               marginHorizontal: 12,
               marginVertical: 6,
-              fontSize:
-                height > 1000 ? Font.tabletTextSize : Font.regularTextSize - 1,
+              fontSize: isTablet(height)
+                ? Font.tabletTextSize
+                : Font.regularTextSize - 1,
             }}
           >
             Get Answer

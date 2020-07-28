@@ -26,6 +26,7 @@ import {
   Generate12ColorPaletteAndMix,
 } from "../Redux/Actions";
 import Font from "../Constants/Font";
+import { isTablet } from "../Functions/GeneralFunctions";
 
 const MixColorsDynamicScreen = (props) => {
   const [gameWon, setGameWon] = useState(false);
@@ -158,10 +159,9 @@ const MixColorsDynamicScreen = (props) => {
           <View style={styles.scrollHeader}>
             <Text
               style={{
-                fontSize:
-                  Dimensions.get("window").height > 1000
-                    ? Font.tabletTextSize
-                    : Font.regularTextSize,
+                fontSize: isTablet(Dimensions.get("window").height)
+                  ? Font.tabletTextSize
+                  : Font.regularTextSize,
               }}
             >{`Select ${props.numColors} Colors`}</Text>
             <View style={{ flexDirection: "row" }}>
@@ -173,7 +173,7 @@ const MixColorsDynamicScreen = (props) => {
               >
                 <Feather
                   name="arrow-left-circle"
-                  size={Dimensions.get("window").height > 1000 ? 38 : 30}
+                  size={isTablet(Dimensions.get("window").height) ? 38 : 30}
                   color="black"
                   style={{ marginRight: 10 }}
                 />
@@ -186,7 +186,7 @@ const MixColorsDynamicScreen = (props) => {
               >
                 <Feather
                   name="arrow-right-circle"
-                  size={Dimensions.get("window").height > 1000 ? 38 : 30}
+                  size={isTablet(Dimensions.get("window").height) ? 38 : 30}
                   color="black"
                 />
               </TouchableOpacity>

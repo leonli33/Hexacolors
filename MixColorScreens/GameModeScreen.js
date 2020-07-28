@@ -2,8 +2,10 @@ import React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import GradientButton from "react-native-gradient-buttons";
 import Font from "../Constants/Font";
+import { isTablet } from "../Functions/GeneralFunctions";
 
 const GameModeColorMix = (props) => {
+  console.log(Dimensions.get("window").width);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -71,10 +73,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   optionText: {
-    fontSize:
-      Dimensions.get("window").height > 1000
-        ? Font.tabletFontSize
-        : Font.regularFontSize,
+    fontSize: isTablet(Dimensions.get("window").height)
+      ? Font.tabletFontSize
+      : Font.regularFontSize,
     color: "white",
     fontWeight: "bold",
   },

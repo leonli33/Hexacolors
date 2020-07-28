@@ -10,6 +10,7 @@ import GameWonColorBox from "./GameWonColorBox";
 import Colors from "../../Constants/Colors";
 import Font from "../../Constants/Font";
 import Modal from "react-native-modal";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // Screen displayed when the user wins a game in dynamic mode
 class MixHexDynamicGameWon extends Component {
@@ -46,10 +47,9 @@ class MixHexDynamicGameWon extends Component {
         justifyContent: "space-evenly",
       },
       text: {
-        fontSize:
-          Dimensions.get("window").height > 1000
-            ? Font.tabletTextSize
-            : Font.regularTextSize,
+        fontSize: isTablet(Dimensions.get("window").height)
+          ? Font.tabletTextSize
+          : Font.regularTextSize,
         marginVertical: 10,
       },
     });
@@ -70,7 +70,7 @@ class MixHexDynamicGameWon extends Component {
         <View style={styles.background}>
           <Text
             style={{
-              fontSize: Dimensions.get("window").height > 1000 ? 37 : 25,
+              fontSize: isTablet(Dimensions.get("window").height) ? 37 : 25,
             }}
           >
             Nice Job!

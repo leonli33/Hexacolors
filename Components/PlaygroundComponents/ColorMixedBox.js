@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // These are the boxes displayed in the small horizontal scrollview
 // that indicates the current colors that the user has selected
@@ -16,10 +17,9 @@ const ColorMixedBox = (props) => {
       />
       <Text
         style={{
-          fontSize:
-            Dimensions.get("window").height > 1000
-              ? Font.tabletTextSize - 2
-              : Font.regularTextSize - 2,
+          fontSize: isTablet(Dimensions.get("window").height)
+            ? Font.tabletTextSize - 2
+            : Font.regularTextSize - 2,
         }}
       >
         {props.color}
@@ -30,8 +30,8 @@ const ColorMixedBox = (props) => {
 
 const styles = StyleSheet.create({
   colorBox: {
-    width: Dimensions.get("window").height > 1000 ? 55 : 40,
-    height: Dimensions.get("window").height > 1000 ? 55 : 40,
+    width: isTablet(Dimensions.get("window").height) ? 55 : 40,
+    height: isTablet(Dimensions.get("window").height) ? 55 : 40,
     borderRadius: 5,
     borderWidth: 1,
   },

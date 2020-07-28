@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Font from "../../Constants/Font";
+import { isTablet } from "../../Functions/GeneralFunctions";
 
 // This is the small box above the sliders
 const ColorValue = (props) => {
@@ -14,10 +15,9 @@ const ColorValue = (props) => {
     >
       <Text
         style={{
-          fontSize:
-            Dimensions.get("window").height > 1000
-              ? Font.tabletTextSize
-              : Font.regularTextSize,
+          fontSize: isTablet(Dimensions.get("window").height)
+            ? Font.tabletTextSize
+            : Font.regularTextSize,
         }}
       >
         {props.currentValue}
@@ -28,8 +28,8 @@ const ColorValue = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").height > 1000 ? 80 : 50,
-    height: Dimensions.get("window").height > 1000 ? 50 : 30,
+    width: isTablet(Dimensions.get("window").height) ? 80 : 50,
+    height: isTablet(Dimensions.get("window").height) ? 50 : 30,
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",

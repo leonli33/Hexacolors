@@ -12,6 +12,7 @@ import ColorChoice from "../Components/MixColors/ColorChoice";
 import Colors from "../Constants/Colors";
 import { connect } from "react-redux";
 import MixColors from "../Functions/MixColor";
+import { isTablet } from "../Functions/GeneralFunctions";
 import { Feather } from "@expo/vector-icons";
 import * as firebase from "firebase";
 import "firebase/auth";
@@ -327,10 +328,9 @@ class GameScreen extends Component {
             <View style={styles.scrollHeader}>
               <Text
                 style={{
-                  fontSize:
-                    Dimensions.get("window").height > 1000
-                      ? Font.tabletTextSize
-                      : Font.regularTextSize,
+                  fontSize: isTablet(Dimensions.get("window").height)
+                    ? Font.tabletTextSize
+                    : Font.regularTextSize,
                 }}
               >
                 {selectedText}
@@ -344,7 +344,7 @@ class GameScreen extends Component {
                 >
                   <Feather
                     name="arrow-left-circle"
-                    size={Dimensions.get("window").height > 1000 ? 38 : 30}
+                    size={isTablet(Dimensions.get("window").height) ? 38 : 30}
                     color="black"
                     style={{ marginRight: 10 }}
                   />
@@ -355,7 +355,7 @@ class GameScreen extends Component {
                 >
                   <Feather
                     name="arrow-right-circle"
-                    size={Dimensions.get("window").height > 1000 ? 38 : 30}
+                    size={isTablet(Dimensions.get("window").height) ? 38 : 30}
                     color="black"
                   />
                 </TouchableOpacity>

@@ -9,6 +9,7 @@ import {
 import Modal from "react-native-modal";
 import Colors from "../Constants/Colors";
 import Font from "../Constants/Font";
+import { isTablet } from "../Functions/GeneralFunctions";
 
 const GuessHexGameWon = (props) => {
   return (
@@ -31,7 +32,7 @@ const GuessHexGameWon = (props) => {
           <View style={styles.colorGuess}>
             <Text
               style={{
-                fontSize: Dimensions.get("window").height > 1000 ? 30 : 20,
+                fontSize: isTablet(Dimensions.get("window").height) ? 30 : 20,
               }}
             >
               {props.targetColor}:
@@ -43,7 +44,7 @@ const GuessHexGameWon = (props) => {
           <View style={styles.colorGussed}>
             <Text
               style={{
-                fontSize: Dimensions.get("window").height > 1000 ? 30 : 20,
+                fontSize: isTablet(Dimensions.get("window").height) ? 30 : 20,
               }}
             >
               Guesses:
@@ -67,10 +68,9 @@ const GuessHexGameWon = (props) => {
             <TouchableOpacity onPress={props.backPress} style={styles.button}>
               <Text
                 style={{
-                  fontSize:
-                    Dimensions.get("window").height > 1000
-                      ? Font.tabletTextSize + 2
-                      : Font.regularTextSize + 2,
+                  fontSize: isTablet(Dimensions.get("window").height)
+                    ? Font.tabletTextSize + 2
+                    : Font.regularTextSize + 2,
                   marginVertical: 10,
                 }}
               >
@@ -84,10 +84,9 @@ const GuessHexGameWon = (props) => {
             >
               <Text
                 style={{
-                  fontSize:
-                    Dimensions.get("window").height > 1000
-                      ? Font.tabletTextSize + 2
-                      : Font.regularTextSize + 2,
+                  fontSize: isTablet(Dimensions.get("window").height)
+                    ? Font.tabletTextSize + 2
+                    : Font.regularTextSize + 2,
                   marginVertical: 10,
                 }}
               >
@@ -120,8 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   colorBox: {
-    width: Dimensions.get("window").height > 1000 ? 40 : 30,
-    height: Dimensions.get("window").height > 1000 ? 40 : 30,
+    width: isTablet(Dimensions.get("window").height) ? 40 : 30,
+    height: isTablet(Dimensions.get("window").height) ? 40 : 30,
     borderRadius: 5,
     borderWidth: 1,
     marginLeft: "5%",
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     flexDirection: "row",
     marginRight: "5%",
-    width: "75%",
+    width: "72%",
     alignSelf: "center",
   },
   buttonContainer: {
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     width: "100%",
     marginBottom: Dimensions.get("window").height / 20,
-    marginTop: Dimensions.get("window").height / 10,
+    marginTop: Dimensions.get("window").height / 15,
   },
   button: {
     width: "40%",
