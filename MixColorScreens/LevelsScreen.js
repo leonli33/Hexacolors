@@ -8,7 +8,7 @@ import { ResetColors } from "../Redux/Actions";
 
 class LevelsScreen extends Component {
   navigateTo = (levelID) => {
-    this.props.navigation.navigate("Game", {
+    this.props.navigation.navigate("MixColorGame", {
       level: levelID,
     });
     this.props.ResetColors();

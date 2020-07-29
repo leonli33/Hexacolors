@@ -94,7 +94,7 @@ class GameScreen extends Component {
   // a level
   onForwardPress = (levelID) => {
     if (levelID !== 19) {
-      this.props.navigation.navigate("Game", {
+      this.props.navigation.navigate("MixColorGame", {
         level: levelID,
       });
       this.props.navigation.setOptions({
